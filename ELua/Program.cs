@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
 namespace ELua {
@@ -17,7 +16,7 @@ namespace ELua {
 //				}
 //			}
 //			var file = "F:/My Documents/SVN/game3_2/Game3/Assets/Resources/GameAssets/Luas/src/game/data/login/LuaLoginNetController.lua.txt";
-			var file = "d:/My Documents/Downloads/test.lua";
+			var file = "f:/Downloads/test.lua";
 			var scanner = new Scanner(file, File.ReadAllText(file));
 			var parser = new Parser(scanner.Tokens.Select(t => t.ToExpression()).ToList());
 			parser.ToString();

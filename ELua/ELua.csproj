@@ -43,6 +43,40 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\base\Disposable.cs" />
+    <Compile Include="src\base\EasyDefault.cs" />
+    <Compile Include="src\base\ThrowHelper.cs" />
+    <Compile Include="src\compiler\parser\expression\AddExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\BindExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\CallExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\DefineExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\DivisionExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\EOSExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\Expression.cs" />
+    <Compile Include="src\compiler\parser\expression\ModExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\MultiplyExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\NegateExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\PriorExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\PropertyExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\SubtractExpression.cs" />
+    <Compile Include="src\compiler\parser\Parser.cs" />
+    <Compile Include="src\compiler\parser\syntax\AddParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\BaseParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\BindParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\CallParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\DefineParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\DivisionParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\ModParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\MultiplyParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\NegateParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\PriorParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\PropertyParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\SubtractParser.cs" />
+    <Compile Include="src\compiler\scanner\Scanner.cs" />
+    <Compile Include="src\compiler\scanner\Token.cs" />
+    <Compile Include="src\generator\Generator.cs" />
+    <Compile Include="src\Lua.cs" />
+    <Compile Include="src\utils\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

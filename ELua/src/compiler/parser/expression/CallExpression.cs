@@ -37,6 +37,7 @@ namespace ELua {
 
 		public Call1Expression(Expression targetExp, Expression argExp) {
 			IsRightValue = true;
+			IsStatement = true;
 			type = Type.Call;
 			_targetExp = targetExp;
 			_argExp = argExp;
@@ -62,6 +63,7 @@ namespace ELua {
 
 		public Call9Expression(Expression targetExp, List<Expression>  argsExp) {
 			IsRightValue = true;
+			IsStatement = true;
 			type = Type.Call;
 			_targetExp = targetExp;
 			_argsExp = argsExp;
