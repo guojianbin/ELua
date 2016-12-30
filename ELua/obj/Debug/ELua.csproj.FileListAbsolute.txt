@@ -1,0 +1,1 @@
+k:\Doc\Visual Studio\Repo\ELua\ELua\bin\Debug\ELua.exe.config
