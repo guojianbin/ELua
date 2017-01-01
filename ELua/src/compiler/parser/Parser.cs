@@ -9,17 +9,6 @@ namespace ELua {
 	/// </summary>
 	public class Parser {
 
-		/// <summary>
-		/// @author Easily
-		/// </summary>
-		public enum Statement {
-
-			Call, 
-			Define, 
-			Bind,
-
-		}
-
 		public readonly List<List<Func<BaseParser>>> parsers = new List<List<Func<BaseParser>>>();
 		public readonly List<Func<BaseParser>> parsers2 = new List<Func<BaseParser>>();
 		public readonly List<Expression> list;
@@ -78,6 +67,29 @@ namespace ELua {
 				}
 			}
 		}
+
+		private void Parse2() {
+			var position = 0;
+			while (true) {
+                Parse(new Call0Parser(), position);
+                Parse(new Call1Parser(), position);
+                Parse(new Call9Parser(), position);
+                Parse(new BindParser(), position);
+                Parse(new DefineParser(), position);
+				position += 1;
+				if (position >= list.Count) {
+					break;
+				}
+			}
+		}
+
+	    public void Parse(BaseParser parser, int position) {
+	        while (true) {
+	            if (!parser.Parse(this, position)) {
+	                break;
+	            }
+	        }
+	    }
 
 		public void Parse(int begin, int end, int position) {
 			for (var i = begin; i < end; i++) {
