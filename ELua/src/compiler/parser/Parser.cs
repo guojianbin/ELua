@@ -23,7 +23,7 @@ namespace ELua {
 			parsers2.Add(() => new BindParser());
 			parsers2.Add(() => new DefineParser());
 
-			parsers.Add(new List<Func<BaseParser>> { Creator(() => new PriorParser()) });
+			parsers.Add(new List<Func<BaseParser>> { Creator(() => new ParenParser()) });
 			parsers.Add(new List<Func<BaseParser>> { Creator(() => new PropertyParser()) });
 			parsers.Add(new List<Func<BaseParser>> { Creator(() => new Call0Parser()), Creator(() => new Call1Parser()), Creator(() => new Call9Parser()) });
 			parsers.Add(new List<Func<BaseParser>> { Creator(() => new NegateParser()) });

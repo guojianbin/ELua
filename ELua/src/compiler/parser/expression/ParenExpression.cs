@@ -3,13 +3,13 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class PriorExpression : Expression {
+	public class ParenExpression : Expression {
 
 		private Expression _targetExp;
 
-		public PriorExpression(Expression targetExp) {
+		public ParenExpression(Expression targetExp) {
 			IsRightValue = true;
-			type = Type.Prior;
+			type = Type.Paren;
 			_targetExp = targetExp;
 		}
 

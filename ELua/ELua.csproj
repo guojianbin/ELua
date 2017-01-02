@@ -56,7 +56,7 @@
     <Compile Include="src\compiler\parser\expression\ModExpression.cs" />
     <Compile Include="src\compiler\parser\expression\MultiplyExpression.cs" />
     <Compile Include="src\compiler\parser\expression\NegateExpression.cs" />
-    <Compile Include="src\compiler\parser\expression\PriorExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\ParenExpression.cs" />
     <Compile Include="src\compiler\parser\expression\PropertyExpression.cs" />
     <Compile Include="src\compiler\parser\expression\SubtractExpression.cs" />
     <Compile Include="src\compiler\parser\Parser.cs" />
@@ -69,7 +69,7 @@
     <Compile Include="src\compiler\parser\syntax\ModParser.cs" />
     <Compile Include="src\compiler\parser\syntax\MultiplyParser.cs" />
     <Compile Include="src\compiler\parser\syntax\NegateParser.cs" />
-    <Compile Include="src\compiler\parser\syntax\PriorParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\ParenParser.cs" />
     <Compile Include="src\compiler\parser\syntax\PropertyParser.cs" />
     <Compile Include="src\compiler\parser\syntax\SubtractParser.cs" />
     <Compile Include="src\compiler\scanner\Scanner.cs" />

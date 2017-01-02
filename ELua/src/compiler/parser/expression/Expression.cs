@@ -12,12 +12,12 @@
 
 			Word,			// e.g. var
 			Keyword,		// e.g. for,if,else,end...
-			Number,		// e.g. 0.1,11...
+			Number,		    // e.g. 0.1,11...
 			Operator,		// e.g. +,-,*,/...
-			String,		// e.g. "str", 'str', [[str]]
+			String,		    // e.g. "str", 'str', [[str]]
 
-			Negate,		// -x
-			Prior,			// (x)
+			Negate,		    // -x
+			Paren,			// (x)
 			Add,			// x + y
 			Subtract,		// x - y
 			Multiply,		// x * y

@@ -1,0 +1,6 @@
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Generator\bin\Debug\Generator.exe.config
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Generator\bin\Debug\Generator.exe
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Generator\bin\Debug\Generator.pdb
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Generator\obj\Debug\Generator.csprojResolveAssemblyReference.cache
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Generator\obj\Debug\Generator.exe
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Generator\obj\Debug\Generator.pdb
