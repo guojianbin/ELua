@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace ELua {
 
 	/// <summary>
@@ -14,8 +15,7 @@ namespace ELua {
 			Undefine,
 			Push, Pop, Save, Jump,
 			Multiply, Division, Mod, Plus, Subtract,
-			Property, Index, Call,
-			Bind,
+			Property, Index, Call, Table,
 			Ret,
 
 		}
@@ -31,6 +31,7 @@ namespace ELua {
 					stackFrame.Push(opArg);
 					break;
 				case OpCode.Pop:
+			        stackFrame.Pop();
 					break;
 				case OpCode.Save:
 					stackFrame.Save((LuaVar)opArg);
@@ -53,7 +54,10 @@ namespace ELua {
                     stackFrame.Push(stackFrame.Pop().Subtract(stackFrame.Pop()));
                     break;
 				case OpCode.Property:
+                    stackFrame.Push(stackFrame.Find(((LuaVar)stackFrame.Pop()).value).GetProperty((LuaVar)stackFrame.Pop()));
 					break;
+                case OpCode.Table:
+			        break;
 				case OpCode.Index:
 					break;
 				case OpCode.Call:
@@ -62,8 +66,6 @@ namespace ELua {
 			        } else {
 			            opArg.Call(stackFrame, stackFrame.TakeAll());
 			        }
-					break;
-				case OpCode.Bind:
 					break;
 				case OpCode.Ret:
 					break;

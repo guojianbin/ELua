@@ -20,7 +20,11 @@ namespace ELua {
 			_targetExp = Extract(context, _targetExp);
 		}
 
-		public override string GetDebugInfo() {
+	    public override void Generate(ILContext context) {
+            context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = -float.Parse(_targetExp.value) } });
+        }
+
+	    public override string GetDebugInfo() {
 			return DebugInfo.ToString(_targetExp);
 		}
 

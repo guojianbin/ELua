@@ -7,6 +7,10 @@ namespace ELua {
 	/// </summary>
 	public class LuaObject {
 
+	    public virtual LuaObject GetProperty(LuaVar obj) {
+	        throw new NotImplementedException();
+	    }
+
         public virtual void Call(StackFrame stackFrame) {
             throw new NotImplementedException();
         }

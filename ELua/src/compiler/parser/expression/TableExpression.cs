@@ -28,9 +28,14 @@ namespace ELua {
 				var itemValue = Extract(context, item.Value);
 				_itemsList[i] = new KeyValuePair<Expression, Expression>(itemKey, itemValue);
 			}
-		}
+        }
 
-		public override string GetDebugInfo() {
+        public override void Generate(ILContext context) {
+            context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaUserdata { value = _itemsList } });
+            context.Add(new IL { opCode = IL.OpCode.Table });
+        }
+
+        public override string GetDebugInfo() {
 			return DebugInfo.ToString(_itemsList.Select(t => new[] { t.Key, t.Value }).SelectMany(t => t).ToArray());
 		}
 

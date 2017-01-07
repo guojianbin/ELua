@@ -99,6 +99,7 @@
     <Compile Include="src\compiler\type\LuaNumber.cs" />
     <Compile Include="src\compiler\type\LuaObject.cs" />
     <Compile Include="src\compiler\type\LuaString.cs" />
+    <Compile Include="src\compiler\type\LuaTable.cs" />
     <Compile Include="src\compiler\type\LuaUserdata.cs" />
     <Compile Include="src\compiler\type\LuaVar.cs" />
     <Compile Include="src\compiler\vm\Chunk.cs" />
