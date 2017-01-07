@@ -1,0 +1,117 @@
+﻿file == --[[
+namespace ELua {
+
+	/// <summary>
+	/// @author Easily
+	/// auto generated! don't modify !
+	/// </summary>
+	public class $name$Parser : IParser {
+
+		public bool Parse(SyntaxContext context, int position) {
+			var list = context.list;
+			var offset = 0;
+			var index = position;
+			IParser parser;
+
+$body$
+
+			context.Insert(position, new $name$Expression(list, position, offset));
+			context.Remove(position + 1, offset);
+			return true;
+		}
+
+	}
+
+}
+]]
+
+statement == --[[
+namespace ELua {
+
+	/// <summary>
+	/// @author Easily
+	/// auto generated! don't modify !
+	/// </summary>
+	public class StatementParser : IParser {
+
+		public bool Parse(SyntaxContext context, int position) {
+			var list = context.list;
+			while (true) {
+				if (position >= list.Count - 1) {
+					return true;
+				}
+				IParser parser;
+$body$
+				position += 1;
+			}
+		}
+
+	}
+
+}
+]]
+
+stat_exp == --[[
+				parser = new $name$Parser();
+				if (parser.Parse(context, position)) {
+					position += 1;
+					if (position < list.Count) {
+						continue;
+					} else {
+						return true;
+					}
+				}
+]]
+
+move_next == --[[
+			offset += 1;
+			index = position + offset;
+]]
+
+move_pre == --[[
+			offset -= 1;
+			index = position + offset;
+]]
+
+parser == --[[
+			parser = new $name$Parser();
+			while (parser.Parse(context, index));
+]]
+
+is_keyword == --[[
+			if (!list[index].IsKeyword("$keyword$")) {
+				return false;
+			}
+]]
+
+is_op == --[[
+			if (!list[index].IsOperator("$op$")) {
+				return false;
+			}
+]]
+
+is_exp == --[[
+			if (list[index].type != Expression.Type.$exp$) {
+				return false;
+			}
+]]
+
+is_left == --[[
+			if (!list[index].IsLeftValue) {
+				return false;
+			}
+]]
+
+is_right == --[[
+			if (!list[index].IsRightValue) {
+				return false;
+			}
+]]
+
+begin_loop == --[[
+			while (true) {
+]]
+
+end_loop == --[[
+			}
+]]

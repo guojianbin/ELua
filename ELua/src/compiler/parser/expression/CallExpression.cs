@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 
 namespace ELua {
 
@@ -10,75 +9,28 @@ namespace ELua {
 
 		private Expression _targetExp;
 
-		public CallExpression(Expression targetExp) {
+		public CallExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			IsStatement = true;
 			type = Type.Call;
-			_targetExp = targetExp;
+			debugInfo = list[position].debugInfo;
+			_targetExp = list[position];
 		}
 
-		public override string DebugInfo() {
-			return _targetExp.DebugInfo();
+		public override void Extract(SyntaxContext context) {
+			_targetExp = Extract(context, _targetExp);
+		}
+
+		public override void Generate(ILContext context) {
+			context.Add(new IL { opCode = IL.OpCode.Call, arg1 = new LuaFunction { value = _targetExp.value } });
+		}
+
+		public override string GetDebugInfo() {
+			return DebugInfo.ToString(_targetExp);
 		}
 
 		public override string ToString() {
 			return string.Format("{0}()", _targetExp);
-		}
-
-	}
-
-	/// <summary>
-	/// @author Easily
-	/// </summary>
-	public class Call1Expression : Expression {
-
-		private Expression _targetExp;
-		private Expression _argExp;
-
-		public Call1Expression(Expression targetExp, Expression argExp) {
-			IsRightValue = true;
-			IsStatement = true;
-			type = Type.Call;
-			_targetExp = targetExp;
-			_argExp = argExp;
-		}
-
-		public override string DebugInfo() {
-			return _targetExp.DebugInfo();
-		}
-
-		public override string ToString() {
-			return string.Format("{0}({1})", _targetExp, _argExp);
-		}
-
-	}
-
-	/// <summary>
-	/// @author Easily
-	/// </summary>
-	public class Call9Expression : Expression {
-
-		private Expression _targetExp;
-		private List<Expression> _argsExp;
-
-		public Call9Expression(Expression targetExp, List<Expression>  argsExp) {
-			IsRightValue = true;
-			IsStatement = true;
-			type = Type.Call;
-			_targetExp = targetExp;
-			_argsExp = argsExp;
-		}
-
-		public override string DebugInfo() {
-			return _targetExp.DebugInfo();
-		}
-
-		public override string ToString() {
-			var sb = new StringBuilder();
-			foreach (var argExp in _argsExp) {
-				sb.AppendFormat("{0}, ", argExp);
-			}
-			return string.Format("{0}({1})", _targetExp, sb.ToString(0, sb.Length - 2));
 		}
 
 	}

@@ -76,23 +76,23 @@ namespace ELua {
 					_line += _Line.Matches(match.Value).Count;
 					_position += match.Length;
 				} else if (IsMatch(_CData, out match)) {
-					_tokens.Add(new Token { type = Token.Type.String, value = _src.Substring(_position + 2, match.Length - 4), index = _tokens.Count, line = _line, position = _position, file = _file });
+					_tokens.Add(new Token { type = Token.Type.String, value = _src.Substring(_position + 2, match.Length - 4), index = _tokens.Count, debugInfo = new DebugInfo { line = _line, position = _position, file = _file } });
 					_line += _Line.Matches(match.Value).Count;
 					_position += match.Length;
 				} else if (IsMatch(_String, out match)) {
-					_tokens.Add(new Token { type = Token.Type.String, value = _src.Substring(_position + 1, match.Length - 2), index = _tokens.Count, line = _line, position = _position, file = _file });
+					_tokens.Add(new Token { type = Token.Type.String, value = _src.Substring(_position + 1, match.Length - 2), index = _tokens.Count, debugInfo = new DebugInfo { line = _line, position = _position, file = _file } });
 					_position += match.Length;
 				} else if (_Operator.Contains(_src[_position])) {
-					_tokens.Add(new Token { type = Token.Type.Operator, value = _src[_position].ToString(), index = _tokens.Count, line = _line, position = _position, file = _file });
+					_tokens.Add(new Token { type = Token.Type.Operator, value = _src[_position].ToString(), index = _tokens.Count, debugInfo = new DebugInfo { line = _line, position = _position, file = _file } });
 					_position += 1;
 				} else if (IsMatch(_Keyword, out match)) {
-					_tokens.Add(new Token { type = Token.Type.Keyword, value = _src.Substring(_position, match.Length), index = _tokens.Count, line = _line, position = _position, file = _file });
+					_tokens.Add(new Token { type = Token.Type.Keyword, value = _src.Substring(_position, match.Length), index = _tokens.Count, debugInfo = new DebugInfo { line = _line, position = _position, file = _file } });
 					_position += match.Length;
 				} else if (IsMatch(_Word, out match)) {
-					_tokens.Add(new Token { type = Token.Type.Word, value = _src.Substring(_position, match.Length), index = _tokens.Count, line = _line, position = _position, file = _file });
+					_tokens.Add(new Token { type = Token.Type.Word, value = _src.Substring(_position, match.Length), index = _tokens.Count, debugInfo = new DebugInfo { line = _line, position = _position, file = _file } });
 					_position += match.Length;
 				} else if (IsMatch(_Number, out match)) {
-					_tokens.Add(new Token { type = Token.Type.Number, value = _src.Substring(_position, match.Length), index = _tokens.Count, line = _line, position = _position, file = _file });
+					_tokens.Add(new Token { type = Token.Type.Number, value = _src.Substring(_position, match.Length), index = _tokens.Count, debugInfo = new DebugInfo { line = _line, position = _position, file = _file } });
 					_position += match.Length;
 				} else {
 					throw new Exception(string.Format("Parse error, file={0}, line={1}, char={2}, last={3}", _file, _line, _src[_position], _tokens.Last()));

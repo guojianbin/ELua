@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ELua {
 
 	/// <summary>
@@ -8,16 +10,22 @@ namespace ELua {
 		private Expression _item1Exp;
 		private Expression _item2Exp;
 
-		public PropertyExpression(Expression item1Exp, Expression item2Exp) {
+		public PropertyExpression(List<Expression> list, int position, int len) {
 			IsLeftValue = true;
 			IsRightValue = true;
 			type = Type.Property;
-			_item1Exp = item1Exp;
-			_item2Exp = item2Exp;
+			debugInfo = list[position].debugInfo;
+			_item1Exp = list[position];
+			_item2Exp = list[position + 2];
 		}
 
-		public override string DebugInfo() {
-			return string.Format("{0}, {1}", _item1Exp.DebugInfo(), _item2Exp.DebugInfo());
+		public override void Extract(SyntaxContext context) {
+			_item1Exp = Extract(context, _item1Exp);
+			_item2Exp = Extract(context, _item2Exp);
+		}
+
+		public override string GetDebugInfo() {
+			return DebugInfo.ToString(_item1Exp, _item2Exp);
 		}
 
 		public override string ToString() {

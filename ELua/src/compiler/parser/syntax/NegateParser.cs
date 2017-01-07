@@ -1,24 +1,41 @@
-﻿namespace ELua {
+namespace ELua {
 
 	/// <summary>
 	/// @author Easily
+	/// auto generated! don't modify !
 	/// </summary>
-	public class NegateParser : BaseParser {
+	public class NegateParser : IParser {
 
-		public override bool Parse(Parser parser, int position) {
-			this.parser = parser;
-			this.position = position;
-			if (!item1.IsOperator("-")) {
+		public bool Parse(SyntaxContext context, int position) {
+			var list = context.list;
+			var offset = 0;
+			var index = position;
+			IParser parser;
+
+			if (!list[index].IsOperator("-")) {
 				return false;
 			}
-			parser.Parse(0, level + 1, position + 1);
-			if (!item2.IsRightValue) {
+			offset += 1;
+			index = position + offset;
+			parser = new ParenParser();
+			while (parser.Parse(context, index));
+			parser = new PropertyParser();
+			while (parser.Parse(context, index));
+			parser = new IndexParser();
+			while (parser.Parse(context, index));
+			parser = new CallParser();
+			while (parser.Parse(context, index));
+			parser = new CallNParser();
+			while (parser.Parse(context, index));
+			if (!list[index].IsRightValue) {
 				return false;
-			} else {
-				parser.list.Insert(position, new NegateExpression(item2));
-				parser.list.RemoveRange(position + 1, 2);
-				return true;
 			}
+			offset += 1;
+			index = position + offset;
+
+			context.Insert(position, new NegateExpression(list, position, offset));
+			context.Remove(position + 1, offset);
+			return true;
 		}
 
 	}

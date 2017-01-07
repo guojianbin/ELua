@@ -9,7 +9,7 @@ namespace ELua {
 			IsStatement = true;
 		}
 
-		public override string DebugInfo() {
+		public override string GetDebugInfo() {
 			return ToString();
 		}
 

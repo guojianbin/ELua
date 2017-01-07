@@ -3,13 +3,14 @@
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class Token {
+	public struct Token {
 
 		/// <summary>
 		/// @author Easily
 		/// </summary>
 		public enum Type {
 
+			Undefine,
 			Word,			// e.g. var
 			Keyword,		// e.g. for,if,else,end...
 			Number,		// e.g. 0.1,11...
@@ -22,12 +23,10 @@
 		public string value;
 		public int index;
 
-		public int line;
-		public int position;
-		public string file;
+		public DebugInfo debugInfo;
 
 		public override string ToString() {
-			return string.Format("Type: {0}, Value: {1}, Index: {2}, Line: {3}, Position: {4}, File: {5}", type, value, index, line, position, file);
+			return string.Format("Type: {0}, Value: {1}, Index: {2}, DebugInfo: {3}", type, value, index, debugInfo);
 		}
 
 	}

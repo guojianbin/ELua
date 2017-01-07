@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ELua {
 
 	/// <summary>
@@ -7,14 +9,19 @@ namespace ELua {
 
 		private Expression _targetExp;
 
-		public NegateExpression(Expression targetExp) {
+		public NegateExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			type = Type.Negate;
-			_targetExp = targetExp;
+			debugInfo = list[position].debugInfo;
+			_targetExp = list[position + 1];
 		}
 
-		public override string DebugInfo() {
-			return _targetExp.DebugInfo();
+		public override void Extract(SyntaxContext context) {
+			_targetExp = Extract(context, _targetExp);
+		}
+
+		public override string GetDebugInfo() {
+			return DebugInfo.ToString(_targetExp);
 		}
 
 		public override string ToString() {

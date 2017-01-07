@@ -1,26 +1,38 @@
-﻿namespace ELua {
+namespace ELua {
 
 	/// <summary>
 	/// @author Easily
+	/// auto generated! don't modify !
 	/// </summary>
-	public class PropertyParser : BaseParser {
+	public class PropertyParser : IParser {
 
-		public override bool Parse(Parser parser, int position) {
-			this.parser = parser;
-			this.position = position;
-			if (!item1.IsRightValue) {
+		public bool Parse(SyntaxContext context, int position) {
+			var list = context.list;
+			var offset = 0;
+			var index = position;
+			IParser parser;
+
+			parser = new ParenParser();
+			while (parser.Parse(context, index));
+			if (!list[index].IsRightValue) {
 				return false;
 			}
-			if (!item2.IsOperator(".")) {
+			offset += 1;
+			index = position + offset;
+			if (!list[index].IsOperator(".")) {
 				return false;
 			}
-			if (item3.type != Expression.Type.Word) {
+			offset += 1;
+			index = position + offset;
+			if (list[index].type != Expression.Type.Word) {
 				return false;
-			} else {
-				parser.list.Insert(position, new PropertyExpression(item1, item3));
-				parser.list.RemoveRange(position + 1, 3);
-				return true;
 			}
+			offset += 1;
+			index = position + offset;
+
+			context.Insert(position, new PropertyExpression(list, position, offset));
+			context.Remove(position + 1, offset);
+			return true;
 		}
 
 	}
