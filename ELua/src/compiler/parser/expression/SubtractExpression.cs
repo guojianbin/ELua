@@ -21,9 +21,15 @@ namespace ELua {
 		public override void Extract(SyntaxContext context) {
 			_item1Exp = Extract(context, _item1Exp);
 			_item2Exp = Extract(context, _item2Exp);
-		}
+        }
 
-		public override string GetDebugInfo() {
+        public override void Generate(ILContext context) {
+            context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(_item2Exp.value) } });
+            context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(_item1Exp.value) } });
+            context.Add(new IL { opCode = IL.OpCode.Subtract });
+        }
+
+        public override string GetDebugInfo() {
 			return DebugInfo.ToString(_item1Exp, _item2Exp);
 		}
 

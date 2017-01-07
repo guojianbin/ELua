@@ -11,6 +11,10 @@ namespace ELua {
 		public StackContext context;
 		public Stack<LuaObject> stack;
 
+	    public int stackLen {
+	        get { return stack.Count; }
+	    }
+
 		public StackFrame(StackFrame parent) {
 			this.parent = parent;
 			context = new StackContext();

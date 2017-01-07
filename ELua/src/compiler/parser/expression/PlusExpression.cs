@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace ELua {
 
@@ -25,8 +24,8 @@ namespace ELua {
 		}
 
 		public override void Generate(ILContext context) {
-			context.Add(new IL { opCode = IL.OpCode.Push, arg1 = new LuaNumber { value = float.Parse(_item2Exp.value) } });
-			context.Add(new IL { opCode = IL.OpCode.Push, arg1 = new LuaNumber { value = float.Parse(_item1Exp.value) } });
+			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(_item2Exp.value) } });
+			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(_item1Exp.value) } });
 			context.Add(new IL { opCode = IL.OpCode.Plus });
 		}
 

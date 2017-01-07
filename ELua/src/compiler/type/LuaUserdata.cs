@@ -5,7 +5,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class LuaUserdata : LuaObject, ICallable {
+	public class LuaUserdata : LuaObject {
 
 		public object value;
 
@@ -13,12 +13,12 @@ namespace ELua {
 			return string.Format("LuaUserdata Value: {0}", value);
 		}
 
-		public void Call(StackFrame stackFrame) {
+		public override void Call(StackFrame stackFrame) {
 			throw new NotImplementedException();
 		}
 
-		public void Call(StackFrame stackFrame, params LuaObject[] args) {
-			((Delegate)value).DynamicInvoke(stackFrame, args);
+		public override void Call(StackFrame stackFrame, LuaObject[] args) {
+		    ((Action<StackFrame, LuaObject[]>)value)(stackFrame, args);
 		}
 
 	}

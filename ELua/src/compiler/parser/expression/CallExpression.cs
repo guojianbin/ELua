@@ -22,7 +22,7 @@ namespace ELua {
 		}
 
 		public override void Generate(ILContext context) {
-			context.Add(new IL { opCode = IL.OpCode.Call, arg1 = new LuaFunction { value = _targetExp.value } });
+			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaFunction { value = _targetExp.value } });
 		}
 
 		public override string GetDebugInfo() {

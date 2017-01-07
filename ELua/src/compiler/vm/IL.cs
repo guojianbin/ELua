@@ -21,42 +21,47 @@ namespace ELua {
 		}
 
 		public OpCode opCode;
-		public LuaObject arg1;
-		public LuaObject arg2;
+		public LuaObject opArg;
 
 		public void Run(StackFrame stackFrame) {
 			switch (opCode) {
 				case OpCode.Undefine:
 					break;
 				case OpCode.Push:
-					stackFrame.Push(arg1);
+					stackFrame.Push(opArg);
 					break;
 				case OpCode.Pop:
 					break;
 				case OpCode.Save:
-					stackFrame.Save((LuaVar)arg1);
+					stackFrame.Save((LuaVar)opArg);
 					break;
 				case OpCode.Jump:
 					break;
 				case OpCode.Multiply:
-					break;
+                    stackFrame.Push(stackFrame.Pop().Multiply(stackFrame.Pop()));
+                    break;
 				case OpCode.Division:
-					break;
+                    stackFrame.Push(stackFrame.Pop().Division(stackFrame.Pop()));
+                    break;
 				case OpCode.Mod:
-					break;
+                    stackFrame.Push(stackFrame.Pop().Mod(stackFrame.Pop()));
+                    break;
 				case OpCode.Plus:
-					var item1 = stackFrame.Pop();
-					var item2 = stackFrame.Pop();
-					stackFrame.Push(item1.Plus(item2));
+			        stackFrame.Push(stackFrame.Pop().Plus(stackFrame.Pop()));
 					break;
 				case OpCode.Subtract:
-					break;
+                    stackFrame.Push(stackFrame.Pop().Subtract(stackFrame.Pop()));
+                    break;
 				case OpCode.Property:
 					break;
 				case OpCode.Index:
 					break;
 				case OpCode.Call:
-					((LuaVar)arg1).Call(stackFrame, stackFrame.TakeAll());
+			        if (stackFrame.stackLen == 0) {
+			            opArg.Call(stackFrame);
+			        } else {
+			            opArg.Call(stackFrame, stackFrame.TakeAll());
+			        }
 					break;
 				case OpCode.Bind:
 					break;
@@ -68,12 +73,10 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			if (arg1 == null) {
+			if (opArg == null) {
 				return opCode.ToString();
-			} else if (arg2 == null) {
-				return string.Format("{0} {1}", opCode, arg1);
 			} else {
-				return string.Format("{0} {1}, {2}", opCode, arg1, arg2);
+				return string.Format("{0} {1}", opCode, opArg);
 			}
 		}
 

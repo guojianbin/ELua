@@ -95,7 +95,6 @@
     <Compile Include="src\compiler\parser\syntax\TableParser.cs" />
     <Compile Include="src\compiler\scanner\Scanner.cs" />
     <Compile Include="src\compiler\scanner\Token.cs" />
-    <Compile Include="src\compiler\type\ICallable.cs" />
     <Compile Include="src\compiler\type\LuaFunction.cs" />
     <Compile Include="src\compiler\type\LuaNumber.cs" />
     <Compile Include="src\compiler\type\LuaObject.cs" />

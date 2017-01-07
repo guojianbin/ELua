@@ -27,7 +27,7 @@ namespace ELua {
 
 		public override void Generate(ILContext context) {
 			_rightExp.Generate(context);
-			context.Add(new IL { opCode = IL.OpCode.Save, arg1 = new LuaVar { value = _leftExp.value } });
+			context.Add(new IL { opCode = IL.OpCode.Save, opArg = new LuaVar { value = _leftExp.value } });
 		}
 
 		public override void Extract(SyntaxContext context) {

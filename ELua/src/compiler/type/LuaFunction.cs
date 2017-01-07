@@ -5,15 +5,15 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class LuaFunction : LuaObject, ICallable {
+	public class LuaFunction : LuaObject {
 
 		public string value;
 
-		public void Call(StackFrame stackFrame) {
+		public override void Call(StackFrame stackFrame) {
 			
 		}
 
-		public void Call(StackFrame stackFrame, params LuaObject[] args) {
+		public override void Call(StackFrame stackFrame, LuaObject[] args) {
 			throw new NotImplementedException();
 		}
 
