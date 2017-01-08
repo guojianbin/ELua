@@ -24,8 +24,8 @@ namespace ELua {
 		public override void Extract(SyntaxContext context) {
 			for (var i = 0; i < _itemsList.Count; i++) {
 				var item = _itemsList[i];
-				var itemKey = Extract(context, item.Key);
-				var itemValue = Extract(context, item.Value);
+				var itemKey = ParserHelper.Extract(context, item.Key);
+				var itemValue = ParserHelper.Extract(context, item.Value);
 				_itemsList[i] = new KeyValuePair<Expression, Expression>(itemKey, itemValue);
 			}
         }

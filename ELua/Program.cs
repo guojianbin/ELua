@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ELua {
 
-	internal class Program {
+	internal static class Program {
 
 		private static void Main() {
 			var file = "test.lua";

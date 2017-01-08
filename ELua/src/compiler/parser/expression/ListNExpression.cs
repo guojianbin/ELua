@@ -23,7 +23,7 @@ namespace ELua {
 
 		public override void Extract(SyntaxContext context) {
 			for (var i = 0; i < _itemsList.Count; i++) {
-				_itemsList[i] = Extract(context, _itemsList[i]);
+				_itemsList[i] = ParserHelper.Extract(context, _itemsList[i]);
 			}
         }
 

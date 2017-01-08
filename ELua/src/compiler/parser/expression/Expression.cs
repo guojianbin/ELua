@@ -52,28 +52,11 @@ namespace ELua {
 	        throw new InvalidOperationException(GetExceptionMessage());
 	    }
 
-		public virtual Expression Clone() {
-			throw new InvalidOperationException(GetExceptionMessage());
-		}
-
 		public virtual void Extract(SyntaxContext context) {
 			throw new InvalidOperationException(GetExceptionMessage());
 		}
 
-		public static Expression Extract(SyntaxContext context, Expression expression) {
-			if (expression.IsFinally) {
-				return expression;
-			}
-			expression.Extract(context);
-			if (expression.IsLeftValue) {
-				return expression;
-			}
-			var temp = new TempExpression(context.NewUID(), expression);
-			context.Add(new DefineExpression(temp, expression));
-			return temp;
-		}
-
-		public virtual void Generate(ILContext context) {
+	    public virtual void Generate(ILContext context) {
 			throw new InvalidOperationException(GetExceptionMessage());
 		}
 

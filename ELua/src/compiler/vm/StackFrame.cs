@@ -7,6 +7,7 @@ namespace ELua {
 	/// </summary>
 	public class StackFrame {
 
+	    public LVM vm;
 		public StackFrame parent;
 		public StackContext context;
 		public Stack<LuaObject> stack;
@@ -15,9 +16,16 @@ namespace ELua {
 	        get { return stack.Count; }
 	    }
 
-		public StackFrame(StackFrame parent) {
+	    public StackFrame(LVM vm) {
+	        this.vm = vm;
+            context = new StackContext();
+            stack = new Stack<LuaObject>();
+        }
+
+	    public StackFrame(StackFrame parent) {
 			this.parent = parent;
-			context = new StackContext();
+	        vm = parent.vm;
+            context = new StackContext();
 			stack = new Stack<LuaObject>();
 		}
 

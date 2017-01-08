@@ -20,13 +20,13 @@ namespace ELua {
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_item1Exp = Extract(context, _item1Exp);
-			_item2Exp = Extract(context, _item2Exp);
+			_item1Exp = ParserHelper.Extract(context, _item1Exp);
+			_item2Exp = ParserHelper.Extract(context, _item2Exp);
         }
 
         public override void Generate(ILContext context) {
-            context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(((NumberExpression)_item2Exp).value) } });
-            context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(((NumberExpression)_item1Exp).value) } });
+            _item2Exp.Generate(context);
+            _item1Exp.Generate(context);
             context.Add(new IL { opCode = IL.OpCode.Property });
         }
 

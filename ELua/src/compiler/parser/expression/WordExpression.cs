@@ -8,8 +8,8 @@ namespace ELua {
         public string value;
 
         public WordExpression(string value, DebugInfo debugInfo) {
-			IsFinally = true;
-			type = Type.Word;
+            type = Type.Word;
+            IsFinally = true;
 			IsLeftValue = true;
 			IsRightValue = true;
 			this.value = value;

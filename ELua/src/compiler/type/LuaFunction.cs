@@ -7,7 +7,7 @@ namespace ELua {
 	/// </summary>
 	public class LuaFunction : LuaObject {
 
-		public string value;
+		public string name;
 
 		public override void Call(StackFrame stackFrame) {
 			
@@ -18,7 +18,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("LuaFunction Value: {0}", value);
+			return string.Format("function {0}", name);
 		}
 
 	}

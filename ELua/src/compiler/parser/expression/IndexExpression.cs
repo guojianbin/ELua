@@ -7,8 +7,8 @@ namespace ELua {
 	/// </summary>
 	public class IndexExpression : Expression {
 
-		private Expression _targetExp;
-		private Expression _argExp;
+		private Expression _item1Exp;
+		private Expression _item2Exp;
 
 		public IndexExpression(List<Expression> list, int position, int len) {
 			IsStatement = true;
@@ -16,21 +16,21 @@ namespace ELua {
 			IsRightValue = true;
 			type = Type.Index;
 			debugInfo = list[position].debugInfo;
-			_targetExp = list[position];
-			_argExp = list[position + 2];
+			_item1Exp = list[position];
+			_item2Exp = list[position + 2];
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_targetExp = Extract(context, _targetExp);
-			_argExp = Extract(context, _argExp);
+            _item2Exp = ParserHelper.Extract(context, _item2Exp);
+            _item1Exp = ParserHelper.Extract(context, _item1Exp);
 		}
 
 		public override string GetDebugInfo() {
-			return DebugInfo.ToString(_targetExp, _argExp);
+			return DebugInfo.ToString(_item1Exp, _item2Exp);
 		}
 
 		public override string ToString() {
-			return string.Format("{0}[{1}]", _targetExp, _argExp);
+			return string.Format("{0}[{1}]", _item1Exp, _item2Exp);
 		}
 
 	}

@@ -37,6 +37,19 @@ namespace ELua {
             return expression.type == Expression.Type.Keyword && ((KeywordExpression)expression).value == value;
         }
 
+        public static Expression Extract(SyntaxContext context, Expression expression) {
+            if (expression.IsFinally) {
+                return expression;
+            }
+            expression.Extract(context);
+            if (expression.IsLeftValue) {
+                return expression;
+            }
+            var temp = new TempExpression(context.NewUID(), expression);
+            context.Add(new DefineExpression(temp, expression));
+            return temp;
+        }
+
     }
 
 }

@@ -18,11 +18,11 @@ namespace ELua {
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_targetExp = Extract(context, _targetExp);
+			_targetExp = ParserHelper.Extract(context, _targetExp);
 		}
 
 		public override void Generate(ILContext context) {
-			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaFunction { value = _targetExp.GetName() } });
+			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaVar { value = _targetExp.GetName() } });
 		}
 
 		public override string GetDebugInfo() {

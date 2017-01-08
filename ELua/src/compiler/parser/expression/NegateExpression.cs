@@ -17,7 +17,7 @@ namespace ELua {
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_targetExp = Extract(context, _targetExp);
+			_targetExp = ParserHelper.Extract(context, _targetExp);
 		}
 
 	    public override void Generate(ILContext context) {

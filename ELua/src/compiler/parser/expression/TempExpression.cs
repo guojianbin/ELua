@@ -9,9 +9,11 @@ namespace ELua {
         public Expression _refExp;
 
 		public TempExpression(string value, Expression refExp) {
-			IsFinally = true;
-			type = Type.Word;
-			this.value = value;
+            type = Type.Word;
+            IsFinally = true;
+            IsLeftValue = true;
+            IsRightValue = true;
+            this.value = value;
 			_refExp = refExp;
 			debugInfo = _refExp.debugInfo;
 		}
