@@ -7,7 +7,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class LVM : Disposable {
+	public class LVM {
 
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
 		public StackFrame stackFrame;

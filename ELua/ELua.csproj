@@ -44,9 +44,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\base\Disposable.cs" />
-    <Compile Include="src\base\EasyDefault.cs" />
-    <Compile Include="src\base\ThrowHelper.cs" />
     <Compile Include="src\compiler\parser\expression\BooleanExpression.cs" />
     <Compile Include="src\compiler\parser\expression\KeywordExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ListExpression.cs" />
