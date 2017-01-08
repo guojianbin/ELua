@@ -12,6 +12,10 @@ namespace ELua {
 	    public virtual LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             throw new InvalidOperationException(GetType().Name);
         }
+	    
+	    public virtual LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+            throw new InvalidOperationException(GetType().Name);
+        }
 
         public virtual LuaObject Call(StackFrame stackFrame) {
             throw new InvalidOperationException(GetType().Name);

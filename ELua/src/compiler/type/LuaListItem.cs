@@ -3,15 +3,15 @@
     /// <summary>
     /// @author Easily
     /// </summary>
-    public class LuaDictItem : LuaObject {
+    public class LuaListItem : LuaObject {
 
         public LuaTable table;
-        public LuaDict dict;
-        public LuaObject key;
+        public LuaList list;
+        public int index;
         public LuaObject value;
 
         public override void Bind(StackFrame stackFrame, LuaObject obj) {
-            dict[key] = obj;
+            list[index] = obj;
         }
 
         public override LuaObject Negate(StackFrame stackFrame) {

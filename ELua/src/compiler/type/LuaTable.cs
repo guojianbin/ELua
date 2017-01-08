@@ -24,6 +24,18 @@ namespace ELua {
             }
         }
 
+        public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+            if (IsNil) {
+                throw new NullReferenceException();
+            } else if (!IsInit) {
+                return stackFrame.vm.nil;
+            } else if (IsList) {
+                return list.GetIndex(stackFrame, obj);
+            } else {
+                return dict.GetIndex(stackFrame, obj);
+            }
+        }
+
         public override string ToString(StackFrame stackFrame) {
             if (!IsInit) {
                 return "{ }";

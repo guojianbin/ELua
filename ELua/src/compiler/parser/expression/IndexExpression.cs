@@ -23,9 +23,15 @@ namespace ELua {
 		public override void Extract(SyntaxContext context) {
             _item2Exp = ParserHelper.Extract(context, _item2Exp);
             _item1Exp = ParserHelper.Extract(context, _item1Exp);
-		}
+        }
 
-		public override string GetDebugInfo() {
+        public override void Generate(ILContext context) {
+            _item2Exp.Generate(context);
+            _item1Exp.Generate(context);
+            context.Add(new IL { opCode = IL.OpCode.Index });
+        }
+
+        public override string GetDebugInfo() {
 			return DebugInfo.ToString(_item1Exp, _item2Exp);
 		}
 

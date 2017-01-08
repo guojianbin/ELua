@@ -25,6 +25,10 @@ namespace ELua {
             }
         }
 
+        public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+            return GetProperty(stackFrame, obj);
+        }
+
         public override string ToString(StackFrame stackFrame) {
             var sb = new StringBuilder();
             sb.Append('{');

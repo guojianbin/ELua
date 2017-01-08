@@ -101,8 +101,8 @@
     <Compile Include="src\compiler\type\LuaBoolean.cs" />
     <Compile Include="src\compiler\type\LuaDict.cs" />
     <Compile Include="src\compiler\type\LuaFunction.cs" />
-    <Compile Include="src\compiler\type\LuaInteger.cs" />
     <Compile Include="src\compiler\type\LuaList.cs" />
+    <Compile Include="src\compiler\type\LuaListItem.cs" />
     <Compile Include="src\compiler\type\TableHelper.cs" />
     <Compile Include="src\compiler\type\LuaNumber.cs" />
     <Compile Include="src\compiler\type\LuaObject.cs" />

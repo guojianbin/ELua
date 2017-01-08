@@ -17,6 +17,10 @@ namespace ELua {
 	        return stackFrame.Find(name).GetProperty(stackFrame, obj);
 	    }
 
+	    public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+            return stackFrame.Find(name).GetIndex(stackFrame, obj);
+        }
+
 	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
             stackFrame.Bind(name, obj);
 	    }

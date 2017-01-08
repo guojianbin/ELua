@@ -13,8 +13,9 @@ namespace ELua {
 		public enum OpCode {
 
 			Undefine,
-			Push, Pop, Jump, Bind, Clear,
-			Negate, Multiply, Division, Mod, Plus, Subtract,
+			Push, Pop, Bind, Clear,
+            Jump, JumpIf,
+            Negate, Multiply, Division, Mod, Plus, Subtract,
 			Property, Index, Call,
             Table, List, List0,
 			Ret,
@@ -61,6 +62,9 @@ namespace ELua {
 				case OpCode.Property:
                     stackFrame.Push(stackFrame.Pop().GetProperty(stackFrame, stackFrame.Pop()));
 					break;
+                case OpCode.Index:
+                    stackFrame.Push(stackFrame.Pop().GetIndex(stackFrame, stackFrame.Pop()));
+                    break;
                 case OpCode.List0:
                     stackFrame.Push(TableHelper.CreateEmpty());
                     break;
@@ -70,8 +74,6 @@ namespace ELua {
                 case OpCode.Table:
                     stackFrame.Push(TableHelper.CreateTable(stackFrame.TakeAll()));
 			        break;
-				case OpCode.Index:
-					break;
 				case OpCode.Call:
 			        stackFrame.Push(stackFrame.stackLen == 0 ? opArg.Call(stackFrame) : opArg.Call(stackFrame, stackFrame.TakeAll()));
 			        break;
