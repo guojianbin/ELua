@@ -58,16 +58,16 @@ namespace ELua {
                     stackFrame.Push(stackFrame.Pop().Subtract(stackFrame, stackFrame.Pop()));
                     break;
 				case OpCode.Property:
-                    stackFrame.Push(stackFrame.Find(((LuaVar)stackFrame.Pop()).value).GetProperty((LuaVar)stackFrame.Pop()));
+                    stackFrame.Push(stackFrame.Find(((LuaVar)stackFrame.Pop()).name).GetProperty((LuaVar)stackFrame.Pop()));
 					break;
                 case OpCode.List0:
-                    stackFrame.Push(new LuaTable { IsArray = true, IsInit = false });
+                    stackFrame.Push(TableHelper.CreateEmpty());
                     break;
                 case OpCode.List:
-                    stackFrame.Push(LuaTable.CreateList(stackFrame.TakeAll()));
+                    stackFrame.Push(TableHelper.CreateList(stackFrame.TakeAll()));
 			        break;
                 case OpCode.Table:
-                    stackFrame.Push(LuaTable.CreateTable(stackFrame.TakeAll()));
+                    stackFrame.Push(TableHelper.CreateTable(stackFrame.TakeAll()));
 			        break;
 				case OpCode.Index:
 					break;

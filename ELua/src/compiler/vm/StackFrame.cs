@@ -38,7 +38,7 @@ namespace ELua {
 		}
 
 		public void Save(LuaVar obj) {
-			context.Save(obj.value, stack.Pop());
+			context.Save(obj.name, stack.Pop());
 		}
 
 		public LuaObject[] TakeAll() {

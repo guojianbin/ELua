@@ -21,7 +21,7 @@ namespace ELua {
         }
 
         public override void Generate(ILContext context) {
-			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaVar { value = value } });
+			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaVar { name = value } });
 		}
 
 		public override string ToString() {

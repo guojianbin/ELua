@@ -9,16 +9,16 @@ namespace ELua {
 
 	    public bool IsNil;
 	    
-	    public virtual LuaObject GetProperty(LuaVar obj) {
-	        throw new NotImplementedException();
-	    }
+	    public virtual LuaObject GetProperty(LuaObject obj) {
+            throw new InvalidOperationException(GetType().Name);
+        }
 
         public virtual void Call(StackFrame stackFrame) {
-            throw new NotImplementedException();
+            throw new InvalidOperationException(GetType().Name);
         }
 
         public virtual void Call(StackFrame stackFrame, LuaObject[] args) {
-            throw new NotImplementedException();
+            throw new InvalidOperationException(GetType().Name);
         }
 
 	    public virtual LuaObject Negate(StackFrame stackFrame) {
