@@ -38,6 +38,10 @@
             return value.Subtract(stackFrame, obj);
         }
 
+        public override LuaNumber ToNumber(StackFrame stackFrame) {
+            return value.ToNumber(stackFrame);
+        }
+
         public override string ToString(StackFrame stackFrame) {
             return value.ToString(stackFrame);
         }

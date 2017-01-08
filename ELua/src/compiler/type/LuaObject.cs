@@ -13,11 +13,11 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
-        public virtual void Call(StackFrame stackFrame) {
+        public virtual LuaObject Call(StackFrame stackFrame) {
             throw new InvalidOperationException(GetType().Name);
         }
 
-        public virtual void Call(StackFrame stackFrame, LuaObject[] args) {
+        public virtual LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
             throw new InvalidOperationException(GetType().Name);
         }
 

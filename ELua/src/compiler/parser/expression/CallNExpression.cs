@@ -32,7 +32,7 @@ namespace ELua {
 		}
 
 		public override void Generate(ILContext context) {
-		    for (int i = _itemsList.Count - 1; i >= 0; i--) {
+		    for (var i = _itemsList.Count - 1; i >= 0; i--) {
 		        _itemsList[i].Generate(context);
 		    }
 			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaVar { name = _targetExp.GetName() } });

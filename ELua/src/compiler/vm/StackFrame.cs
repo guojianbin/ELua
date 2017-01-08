@@ -37,6 +37,10 @@ namespace ELua {
 			return stack.Pop();
 		}
 
+	    public void Clear() {
+	        stack.Clear();
+	    }
+
 		public void Bind(string name, LuaObject obj) {
 			context.Bind(name, obj);
 		}

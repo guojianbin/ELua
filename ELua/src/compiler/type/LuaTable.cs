@@ -16,7 +16,7 @@ namespace ELua {
             if (IsNil) {
                 throw new NullReferenceException();
             } else if (!IsInit) {
-                return new LuaObject { IsNil = true };
+                return stackFrame.vm.nil;
             } else if (IsList) {
                 return list.GetProperty(stackFrame, obj);
             } else {

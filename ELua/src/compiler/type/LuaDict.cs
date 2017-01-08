@@ -21,7 +21,7 @@ namespace ELua {
             if (items.TryGetValue(obj, out value)) {
                 return new LuaDictItem { table = table, dict = this, key = obj, value = value };
             } else {
-                return new LuaObject { IsNil = true };
+                return stackFrame.vm.nil;
             }
         }
 

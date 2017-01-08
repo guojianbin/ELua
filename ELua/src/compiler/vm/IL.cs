@@ -5,7 +5,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class IL {
+	public struct IL {
 
 		/// <summary>
 		/// @author Easily
@@ -13,7 +13,7 @@ namespace ELua {
 		public enum OpCode {
 
 			Undefine,
-			Push, Pop, Jump, Bind,
+			Push, Pop, Jump, Bind, Clear,
 			Negate, Multiply, Division, Mod, Plus, Subtract,
 			Property, Index, Call,
             Table, List, List0,
@@ -26,14 +26,15 @@ namespace ELua {
 
 		public void Run(StackFrame stackFrame) {
 			switch (opCode) {
-				case OpCode.Undefine:
-					break;
 				case OpCode.Push:
 					stackFrame.Push(opArg);
 					break;
 				case OpCode.Pop:
 			        stackFrame.Pop();
 					break;
+                case OpCode.Clear:
+                    stackFrame.Clear();
+                    break;
                 case OpCode.Bind:
                     stackFrame.Pop().Bind(stackFrame, stackFrame.Pop());
                     break;
@@ -72,16 +73,12 @@ namespace ELua {
 				case OpCode.Index:
 					break;
 				case OpCode.Call:
-			        if (stackFrame.stackLen == 0) {
-			            opArg.Call(stackFrame);
-			        } else {
-			            opArg.Call(stackFrame, stackFrame.TakeAll());
-			        }
-					break;
+			        stackFrame.Push(stackFrame.stackLen == 0 ? opArg.Call(stackFrame) : opArg.Call(stackFrame, stackFrame.TakeAll()));
+			        break;
 				case OpCode.Ret:
 					break;
 				default:
-					throw new ArgumentOutOfRangeException();
+					throw new ArgumentOutOfRangeException(opCode.ToString());
 			}
 		}
 

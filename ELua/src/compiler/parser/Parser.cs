@@ -60,7 +60,8 @@ namespace ELua {
 			var context = new ILContext();
 			foreach (var item in list) {
 				item.Generate(context);
-			}
+                context.Add(new IL { opCode = IL.OpCode.Clear });
+            }
 
 			Console.WriteLine();
 		    Console.WriteLine("il:");

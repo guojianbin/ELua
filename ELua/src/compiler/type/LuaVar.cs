@@ -21,12 +21,12 @@ namespace ELua {
             stackFrame.Bind(name, obj);
 	    }
 
-	    public override void Call(StackFrame stackFrame) {
-	        throw new NotImplementedException();
-	    }
+	    public override LuaObject Call(StackFrame stackFrame) {
+            return stackFrame.Find(name).Call(stackFrame);
+        }
 
-	    public override void Call(StackFrame stackFrame, LuaObject[] args) {
-			stackFrame.Find(name).Call(stackFrame, args);
+	    public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
+			return stackFrame.Find(name).Call(stackFrame, args);
 		}
 
 	    public override LuaObject Negate(StackFrame stackFrame) {
@@ -54,7 +54,7 @@ namespace ELua {
         }
 
 	    public override LuaNumber ToNumber(StackFrame stackFrame) {
-	        return (LuaNumber)stackFrame.Find(name);
+	        return stackFrame.Find(name).ToNumber(stackFrame);
 	    }
 
 	    public override string ToString() {

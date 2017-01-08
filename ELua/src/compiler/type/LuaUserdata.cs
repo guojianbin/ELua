@@ -13,12 +13,12 @@ namespace ELua {
 			return string.Format("LuaUserdata Value: {0}", value);
 		}
 
-		public override void Call(StackFrame stackFrame) {
+		public override LuaObject Call(StackFrame stackFrame) {
 			throw new NotImplementedException();
 		}
 
-		public override void Call(StackFrame stackFrame, LuaObject[] args) {
-		    ((Action<StackFrame, LuaObject[]>)value)(stackFrame, args);
+		public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
+		    return ((Func<StackFrame, LuaObject[], LuaObject>)value)(stackFrame, args);
 		}
 
 	}

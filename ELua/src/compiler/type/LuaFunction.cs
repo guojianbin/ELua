@@ -9,11 +9,11 @@ namespace ELua {
 
 		public string name;
 
-		public override void Call(StackFrame stackFrame) {
-			
+		public override LuaObject Call(StackFrame stackFrame) {
+		    throw new NotImplementedException();	
 		}
 
-		public override void Call(StackFrame stackFrame, LuaObject[] args) {
+		public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
 			throw new NotImplementedException();
 		}
 
