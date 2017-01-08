@@ -20,7 +20,11 @@ namespace ELua {
 			_targetExp = ParserHelper.Extract(context, _targetExp);
 		}
 
-		public override string GetDebugInfo() {
+	    public override void Generate(ILContext context) {
+            _targetExp.Generate(context);
+	    }
+
+	    public override string GetDebugInfo() {
 			return DebugInfo.ToString(_targetExp);
 		}
 
