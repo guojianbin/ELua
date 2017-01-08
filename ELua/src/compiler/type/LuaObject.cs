@@ -53,6 +53,30 @@ namespace ELua {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
+	    public virtual LuaObject Less(StackFrame stackFrame, LuaObject obj) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
+	    public virtual LuaObject Greater(StackFrame stackFrame, LuaObject obj) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
+	    public virtual LuaObject LessEq(StackFrame stackFrame, LuaObject obj) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
+	    public virtual LuaObject GreaterEq(StackFrame stackFrame, LuaObject obj) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
+	    public virtual LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
+	    public virtual LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
 	    public virtual LuaNumber ToNumber(StackFrame stackFrame) {
             throw new InvalidOperationException(GetType().Name);
         }

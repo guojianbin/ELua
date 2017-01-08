@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ELua {
+﻿namespace ELua {
 
 	/// <summary>
 	/// @author Easily
@@ -8,10 +6,6 @@ namespace ELua {
 	public class LuaVar : LuaObject {
 
 		public string name;
-
-		public override string ToString(StackFrame stackFrame) {
-			return stackFrame.Find(name).ToString(stackFrame);
-		}
 
 	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
 	        return stackFrame.Find(name).GetProperty(stackFrame, obj);
@@ -59,9 +53,13 @@ namespace ELua {
 
 	    public override LuaNumber ToNumber(StackFrame stackFrame) {
 	        return stackFrame.Find(name).ToNumber(stackFrame);
-	    }
+        }
 
-	    public override string ToString() {
+        public override string ToString(StackFrame stackFrame) {
+            return stackFrame.Find(name).ToString(stackFrame);
+        }
+
+        public override string ToString() {
 			return name;
 		}
 

@@ -48,6 +48,7 @@
     <Compile Include="src\compiler\parser\expression\EqualExpression.cs" />
     <Compile Include="src\compiler\parser\expression\GreaterEqExpression.cs" />
     <Compile Include="src\compiler\parser\expression\GreaterExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\IfCondExpression.cs" />
     <Compile Include="src\compiler\parser\expression\KeywordExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LessEqExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LessExpression.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="src\compiler\parser\syntax\EqualParser.cs" />
     <Compile Include="src\compiler\parser\syntax\GreaterEqParser.cs" />
     <Compile Include="src\compiler\parser\syntax\GreaterParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\IfCondParser.cs" />
     <Compile Include="src\compiler\parser\syntax\IndexParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessEqParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessParser.cs" />

@@ -47,7 +47,7 @@ namespace ELua {
                 return expression;
             }
             expression.Extract(context);
-            if (expression.IsLeftValue) {
+            if (expression.IsLeftValue || expression.IsStatement) {
                 return expression;
             }
             var temp = new VarExpression(context.NewUID(), expression);

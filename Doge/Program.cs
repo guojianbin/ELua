@@ -244,6 +244,12 @@ namespace Doge {
 					sb.Append(rightStr);
 					sb.Append('\n');
 				}
+				if (values.ContainsKey("is_stat")) {
+					var rightTemp = tempDict["is_stat"];
+					var rightStr = rightTemp.Replace("$index$", index.ToString());
+					sb.Append(rightStr);
+					sb.Append('\n');
+				}
 				if (values.ContainsKey(">")) {
 					sb.Replace("return false", "break");
 				}

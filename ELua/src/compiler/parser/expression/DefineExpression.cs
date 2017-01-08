@@ -19,10 +19,11 @@ namespace ELua {
 		}
 
 		public DefineExpression(Expression item1Exp, Expression item2Exp) {
-			_item1Exp = item1Exp;
+            type = Type.Define;
+            IsStatement = true;
+		    debugInfo = item1Exp.debugInfo;
+            _item1Exp = item1Exp;
 			_item2Exp = item2Exp;
-			type = Type.Define;
-			IsStatement = true;
 		}
 
 		public override void Generate(ILContext context) {

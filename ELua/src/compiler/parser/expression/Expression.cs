@@ -40,6 +40,7 @@ namespace ELua {
 			List, // {x,y,z}
 			Table, // {x=y,z=y}
 
+            If, // if end
 			Define, // local x = y
 			Bind, // x = y
 			Return // return x

@@ -13,6 +13,24 @@ namespace ELua {
 					return true;
 				}
 				IParser parser;
+				parser = new ReturnParser();
+				if (parser.Parse(context, position)) {
+					position += 1;
+					if (position < list.Count) {
+						continue;
+					} else {
+						return true;
+					}
+				}
+				parser = new IfCondParser();
+				if (parser.Parse(context, position)) {
+					position += 1;
+					if (position < list.Count) {
+						continue;
+					} else {
+						return true;
+					}
+				}
 				parser = new DefineParser();
 				if (parser.Parse(context, position)) {
 					position += 1;
@@ -41,15 +59,6 @@ namespace ELua {
 					}
 				}
 				parser = new CallNParser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-				parser = new ReturnParser();
 				if (parser.Parse(context, position)) {
 					position += 1;
 					if (position < list.Count) {

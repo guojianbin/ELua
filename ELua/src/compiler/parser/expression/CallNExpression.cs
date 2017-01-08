@@ -18,8 +18,8 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			_targetExp = list[position];
 			_itemsList = new List<Expression>();
-			var argLen = len - 2;
-			for (var i = 0; i < argLen; i += 2) {
+			var itemLen = len - 2;
+			for (var i = 0; i < itemLen; i += 2) {
 				_itemsList.Add(list[position + i + 2]);
 			}
 		}

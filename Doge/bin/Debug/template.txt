@@ -96,6 +96,12 @@ is_exp == --[[
 			}
 ]]
 
+is_stat == --[[
+			if (!list[index].IsStatement) {
+				return false;
+			}
+]]
+
 is_left == --[[
 			if (!list[index].IsLeftValue) {
 				return false;

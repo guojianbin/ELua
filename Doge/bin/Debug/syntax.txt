@@ -1,13 +1,13 @@
 ﻿#begin statement
-Define,Bind,Call,CallN,Return
+Return,IfCond,Define,Bind,Call,CallN
 #end statement
 
 #begin exprexsion
-Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,Less,Greater,LessEq,GreaterEq,Equal,NotEqual,List,ListN,Table,TableN,Return
+Return,Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,Less,Greater,LessEq,GreaterEq,Equal,NotEqual,List,ListN,Table,TableN
 #end exprexsion
 
 #begin define
-statements := Define,Bind,Call,CallN,Return
+statements := Return,IfCond,Define,Bind,Call,CallN
 lvalue 	   := Property,Index
 rvalue 	   := Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,Less,Greater,LessEq,GreaterEq,Equal,NotEqual,List,ListN,Table,TableN
 #end define
@@ -15,6 +15,8 @@ rvalue 	   := Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,
 #begin syntax
 Define	   := keyword=local .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$
 Bind 	   := is_left;parser=$lvalue$ .. op=<eq> .. is_right;parser=$rvalue$
+Return 	   := keyword=return .. is_right;parser=$rvalue$
+IfCond	   := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. <;is_stat;parser=$statements$;> .. keyword=end
 Paren	   := op=( .. is_right;parser=$rvalue$ .. op=)
 Property   := is_right;parser=Paren .. op=. .. exp=Word
 Index 	   := is_right;parser=Paren .. op=[ .. is_right;parser=$rvalue$ .. op=]
@@ -36,5 +38,4 @@ List 	   := op={ .. op=}
 ListN 	   := op={ .. <;is_right;parser=$rvalue$ .. op=,;> .. op=}
 Table 	   := op={ .. <;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
 TableN 	   := op={ .. <;op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
-Return 	   := keyword=return .. is_right;parser=$rvalue$
 #end syntax

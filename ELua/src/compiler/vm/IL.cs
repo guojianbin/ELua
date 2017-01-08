@@ -60,6 +60,24 @@ namespace ELua {
 				case OpCode.Subtract:
                     stackFrame.Push(stackFrame.Pop().Subtract(stackFrame, stackFrame.Pop()));
                     break;
+				case OpCode.Less:
+                    stackFrame.Push(stackFrame.Pop().Less(stackFrame, stackFrame.Pop()));
+                    break;
+				case OpCode.Greater:
+                    stackFrame.Push(stackFrame.Pop().Greater(stackFrame, stackFrame.Pop()));
+                    break;
+				case OpCode.LessEq:
+                    stackFrame.Push(stackFrame.Pop().LessEq(stackFrame, stackFrame.Pop()));
+                    break;
+				case OpCode.GreaterEq:
+                    stackFrame.Push(stackFrame.Pop().GreaterEq(stackFrame, stackFrame.Pop()));
+                    break;
+				case OpCode.Equal:
+                    stackFrame.Push(stackFrame.Pop().Equal(stackFrame, stackFrame.Pop()));
+                    break;
+				case OpCode.NotEqual:
+                    stackFrame.Push(stackFrame.Pop().NotEqual(stackFrame, stackFrame.Pop()));
+                    break;
 				case OpCode.Property:
                     stackFrame.Push(stackFrame.Pop().GetProperty(stackFrame, stackFrame.Pop()));
 					break;

@@ -15,7 +15,7 @@ namespace ELua {
 			vm.Add(module);
 
 			Console.WriteLine();
-			vm.Run("main");
+//			vm.Run("main");
 		}
 
 	}
