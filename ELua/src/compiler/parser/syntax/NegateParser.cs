@@ -12,7 +12,7 @@ namespace ELua {
 			var index = position;
 			IParser parser;
 
-			if (!list[index].IsOperator("-")) {
+			if (!ParserHelper.IsOperator(list[index], "-")) {
 				return false;
 			}
 			offset += 1;

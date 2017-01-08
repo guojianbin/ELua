@@ -7,6 +7,8 @@ namespace ELua {
 	/// </summary>
 	public class LuaObject {
 
+	    public bool IsNil;
+	    
 	    public virtual LuaObject GetProperty(LuaVar obj) {
 	        throw new NotImplementedException();
 	    }
@@ -19,28 +21,40 @@ namespace ELua {
             throw new NotImplementedException();
         }
 
-        public virtual LuaObject Multiply(LuaObject obj) {
+	    public virtual LuaObject Negate(StackFrame stackFrame) {
+            throw new InvalidOperationException(GetType().Name);
+        }
+
+        public virtual LuaObject Multiply(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-        public virtual LuaObject Division(LuaObject obj) {
+        public virtual LuaObject Division(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-        public virtual LuaObject Mod(LuaObject obj) {
+	    public virtual LuaObject Mod(StackFrame stackFrame, LuaObject obj) {
+	        throw new InvalidOperationException(GetType().Name);
+	    }
+
+	    public virtual LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-        public virtual LuaObject Plus(LuaObject obj) {
+	    public virtual LuaObject Subtract(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-        public virtual LuaObject Subtract(LuaObject obj) {
-			throw new InvalidOperationException(GetType().Name);
-		}
+	    public virtual LuaNumber ToNumber(StackFrame stackFrame) {
+            throw new InvalidOperationException(GetType().Name);
+        }
 
 		public virtual string ToString(StackFrame stackFrame) {
-			throw new InvalidOperationException(GetType().Name);
+		    if (IsNil) {
+		        return "nil";
+		    } else {
+                throw new InvalidOperationException(GetType().Name);
+            }
 		}
 
 	}

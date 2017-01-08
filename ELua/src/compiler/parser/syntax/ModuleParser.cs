@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class StatementParser : IParser {
+	public class ModuleParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;

@@ -9,7 +9,7 @@ namespace ELua {
 	/// </summary>
 	public class LVM : Disposable {
 
-		public Dictionary<string, Chunk> chunksDict = new Dictionary<string, Chunk>();
+		public Dictionary<string, Module> chunksDict = new Dictionary<string, Module>();
 		public StackFrame stackFrame = new StackFrame(null);
 
 		public LVM() {
@@ -20,8 +20,8 @@ namespace ELua {
 			Console.WriteLine(string.Join(", ", args.Select(t => t.ToString(stackFrame))));
 		}
 
-	    public void Add(Chunk chunk) {
-	        chunksDict.Add(chunk.name, chunk);
+	    public void Add(Module module) {
+	        chunksDict.Add(module.name, module);
 	    }
 
 	    public void Run(string name) {

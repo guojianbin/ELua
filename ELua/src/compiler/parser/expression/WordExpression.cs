@@ -5,16 +5,22 @@ namespace ELua {
 	/// </summary>
 	public class WordExpression : Expression {
 
-		public WordExpression(string value, DebugInfo debugInfo) {
+        public string value;
+
+        public WordExpression(string value, DebugInfo debugInfo) {
 			IsFinally = true;
 			type = Type.Word;
 			IsLeftValue = true;
 			IsRightValue = true;
 			this.value = value;
 			this.debugInfo = debugInfo;
-		}
+        }
 
-		public override void Generate(ILContext context) {
+        public override string GetName() {
+            return value;
+        }
+
+        public override void Generate(ILContext context) {
 			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaVar { value = value } });
 		}
 

@@ -5,7 +5,9 @@ namespace ELua {
 	/// </summary>
 	public class StringExpression : Expression {
 
-		public StringExpression(string value, DebugInfo debugInfo) {
+        public string value;
+
+        public StringExpression(string value, DebugInfo debugInfo) {
 			IsFinally = true;
 			type = Type.String;
 			IsRightValue = true;
@@ -18,8 +20,8 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return value;
-		}
+            return string.Format("\"{0}\"", value);
+        }
 
 	}
 

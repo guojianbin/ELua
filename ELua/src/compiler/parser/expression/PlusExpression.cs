@@ -24,9 +24,9 @@ namespace ELua {
 		}
 
 		public override void Generate(ILContext context) {
-			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(_item2Exp.value) } });
-			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaNumber { value = float.Parse(_item1Exp.value) } });
-			context.Add(new IL { opCode = IL.OpCode.Plus });
+            _item2Exp.Generate(context);
+            _item1Exp.Generate(context);
+            context.Add(new IL { opCode = IL.OpCode.Plus });
 		}
 
 		public override string GetDebugInfo() {

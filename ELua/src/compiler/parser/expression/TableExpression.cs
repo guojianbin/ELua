@@ -16,8 +16,11 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			_itemsList = new List<KeyValuePair<Expression, Expression>>();
 			var argLen = len - 2;
-			for (var i = 0; i < argLen; i += 6) {
-				_itemsList.Add(new KeyValuePair<Expression, Expression>(list[position + i + 2], list[position + i + 5]));
+			for (var i = 0; i < argLen; i += 4) {
+			    var keyExp = (WordExpression)list[position + i + 1];
+			    var itemKey = new StringExpression(keyExp.value, keyExp.debugInfo);
+			    var itemValue = list[position + i + 3];
+			    _itemsList.Add(new KeyValuePair<Expression, Expression>(itemKey, itemValue));
 			}
 		}
 
@@ -31,7 +34,11 @@ namespace ELua {
         }
 
         public override void Generate(ILContext context) {
-            context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaUserdata { value = _itemsList } });
+            for (var i = _itemsList.Count - 1; i >= 0; i--) {
+                var item = _itemsList[i];
+                item.Value.Generate(context);
+                item.Key.Generate(context);
+            }
             context.Add(new IL { opCode = IL.OpCode.Table });
         }
 
@@ -40,7 +47,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("{{ {0} }}", string.Join(", ", _itemsList.Select(t => string.Format("[{0}] = {1}", t.Key, t.Value))));
+			return string.Format("{{ {0} }}", string.Join(", ", _itemsList.Select(t => string.Format("{0} = {1}", t.Key, t.Value))));
 		}
 
 	}

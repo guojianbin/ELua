@@ -5,7 +5,8 @@ namespace ELua {
 	/// </summary>
 	public class TempExpression : Expression {
 
-		public Expression _refExp;
+        public string value;
+        public Expression _refExp;
 
 		public TempExpression(string value, Expression refExp) {
 			IsFinally = true;
@@ -15,7 +16,11 @@ namespace ELua {
 			debugInfo = _refExp.debugInfo;
 		}
 
-		public override void Generate(ILContext context) {
+	    public override string GetName() {
+	        return value;
+	    }
+
+	    public override void Generate(ILContext context) {
 			context.Add(new IL { opCode = IL.OpCode.Push, opArg = new LuaVar { value = value } });
 		}
 

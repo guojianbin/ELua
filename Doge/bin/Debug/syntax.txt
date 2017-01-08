@@ -3,12 +3,12 @@ Define,Bind,Call,CallN,Return
 #end statement
 
 #begin exprexsion
-Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,Array,ArrayN,Table,TableN,Return
+Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,List,ListN,Table,TableN,Return
 #end exprexsion
 
 #begin define
 lvalue 	 := Property,Index
-rvalue 	 := Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,Array,ArrayN,Table,TableN
+rvalue 	 := Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,List,ListN,Table,TableN
 #end define
 
 #begin syntax
@@ -25,9 +25,9 @@ Division := is_right;parser=[Paren,Negate] .. op=/ .. is_right;parser=[Paren,Neg
 Mod		 := is_right;parser=[Paren,Negate] .. op=% .. is_right;parser=[Paren,Negate]
 Plus 	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
 Subtract := is_right;parser=[Paren,Mod] .. op=- .. is_right;parser=[Paren,Mod]
-Array 	 := op={ .. op=}
-ArrayN 	 := op={ .. <;is_right;parser=$rvalue$ .. op=,;> .. op=}
-Table 	 := op={ .. <;op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
-TableN 	 := op={ .. <;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
+List 	 := op={ .. op=}
+ListN 	 := op={ .. <;is_right;parser=$rvalue$ .. op=,;> .. op=}
+Table 	 := op={ .. <;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
+TableN 	 := op={ .. <;op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
 Return 	 := keyword=return .. is_right;parser=$rvalue$
 #end syntax

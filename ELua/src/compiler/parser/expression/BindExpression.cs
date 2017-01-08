@@ -25,7 +25,7 @@ namespace ELua {
 
         public override void Generate(ILContext context) {
             _item2Exp.Generate(context);
-            context.Add(new IL { opCode = IL.OpCode.Save, opArg = new LuaVar { value = _item1Exp.value } });
+            context.Add(new IL { opCode = IL.OpCode.Save, opArg = new LuaVar { value = _item1Exp.GetName() } });
         }
 
         public override string GetDebugInfo() {

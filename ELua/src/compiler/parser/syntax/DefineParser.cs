@@ -12,7 +12,7 @@ namespace ELua {
 			var index = position;
 			IParser parser;
 
-			if (!list[index].IsKeyword("local")) {
+			if (!ParserHelper.IsKeyword(list[index], "local")) {
 				return false;
 			}
 			offset += 1;
@@ -25,7 +25,7 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			if (!list[index].IsOperator("=")) {
+			if (!ParserHelper.IsOperator(list[index], "=")) {
 				return false;
 			}
 			offset += 1;
@@ -52,9 +52,9 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new SubtractParser();
 			while (parser.Parse(context, index));
-			parser = new ArrayParser();
+			parser = new ListParser();
 			while (parser.Parse(context, index));
-			parser = new ArrayNParser();
+			parser = new ListNParser();
 			while (parser.Parse(context, index));
 			parser = new TableParser();
 			while (parser.Parse(context, index));

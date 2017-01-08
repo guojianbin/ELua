@@ -14,8 +14,9 @@ namespace ELua {
 
 			Undefine,
 			Push, Pop, Save, Jump,
-			Multiply, Division, Mod, Plus, Subtract,
-			Property, Index, Call, Table,
+			Negate, Multiply, Division, Mod, Plus, Subtract,
+			Property, Index, Call,
+            Table, List, List0,
 			Ret,
 
 		}
@@ -38,25 +39,35 @@ namespace ELua {
 					break;
 				case OpCode.Jump:
 					break;
-				case OpCode.Multiply:
-                    stackFrame.Push(stackFrame.Pop().Multiply(stackFrame.Pop()));
+                case OpCode.Negate:
+                    stackFrame.Push(stackFrame.Pop().Negate(stackFrame));
+                    break;
+                case OpCode.Multiply:
+                    stackFrame.Push(stackFrame.Pop().Multiply(stackFrame, stackFrame.Pop()));
                     break;
 				case OpCode.Division:
-                    stackFrame.Push(stackFrame.Pop().Division(stackFrame.Pop()));
+                    stackFrame.Push(stackFrame.Pop().Division(stackFrame, stackFrame.Pop()));
                     break;
 				case OpCode.Mod:
-                    stackFrame.Push(stackFrame.Pop().Mod(stackFrame.Pop()));
+                    stackFrame.Push(stackFrame.Pop().Mod(stackFrame, stackFrame.Pop()));
                     break;
 				case OpCode.Plus:
-			        stackFrame.Push(stackFrame.Pop().Plus(stackFrame.Pop()));
+			        stackFrame.Push(stackFrame.Pop().Plus(stackFrame, stackFrame.Pop()));
 					break;
 				case OpCode.Subtract:
-                    stackFrame.Push(stackFrame.Pop().Subtract(stackFrame.Pop()));
+                    stackFrame.Push(stackFrame.Pop().Subtract(stackFrame, stackFrame.Pop()));
                     break;
 				case OpCode.Property:
                     stackFrame.Push(stackFrame.Find(((LuaVar)stackFrame.Pop()).value).GetProperty((LuaVar)stackFrame.Pop()));
 					break;
+                case OpCode.List0:
+                    stackFrame.Push(new LuaTable { IsArray = true, IsInit = false });
+                    break;
+                case OpCode.List:
+                    stackFrame.Push(LuaTable.CreateList(stackFrame.TakeAll()));
+			        break;
                 case OpCode.Table:
+                    stackFrame.Push(LuaTable.CreateTable(stackFrame.TakeAll()));
 			        break;
 				case OpCode.Index:
 					break;

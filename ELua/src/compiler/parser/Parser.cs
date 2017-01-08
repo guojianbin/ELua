@@ -21,7 +21,7 @@ namespace ELua {
 
 		private void Parse() {
 			var context = new SyntaxContext { list = list };
-			var parser = new StatementParser();
+			var parser = new ModuleParser();
 			parser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
 
@@ -35,7 +35,7 @@ namespace ELua {
 					errorList.Add(item);
 				}
 			}
-
+		    Console.WriteLine("source:");
 			Console.WriteLine(string.Join("\n", list.Select(t => t.ToString())));
 			if (errorList.Count > 0) {
 				Console.WriteLine();
@@ -52,6 +52,7 @@ namespace ELua {
 
 			list = context.list;
 			Console.WriteLine();
+		    Console.WriteLine("extract:");
 			Console.WriteLine(string.Join("\n", context.list.Select(t => t.ToString())));
 		}
 
@@ -62,6 +63,7 @@ namespace ELua {
 			}
 
 			Console.WriteLine();
+		    Console.WriteLine("il:");
 			Console.WriteLine(string.Join("\n", context.list.Select(t => t.ToString())));
 			return context.list;
 		}

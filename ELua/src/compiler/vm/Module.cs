@@ -5,7 +5,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class Chunk {
+	public class Module {
 
 		public string name = "main";
 		public List<IL> ils;

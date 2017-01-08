@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class ArrayNParser : IParser {
+	public class ListNParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -12,7 +12,7 @@ namespace ELua {
 			var index = position;
 			IParser parser;
 
-			if (!list[index].IsOperator("{")) {
+			if (!ParserHelper.IsOperator(list[index], "{")) {
 				return false;
 			}
 			offset += 1;
@@ -40,9 +40,9 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new SubtractParser();
 			while (parser.Parse(context, index));
-			parser = new ArrayParser();
+			parser = new ListParser();
 			while (parser.Parse(context, index));
-			parser = new ArrayNParser();
+			parser = new ListNParser();
 			while (parser.Parse(context, index));
 			parser = new TableParser();
 			while (parser.Parse(context, index));
@@ -53,19 +53,19 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			if (!list[index].IsOperator(",")) {
+			if (!ParserHelper.IsOperator(list[index], ",")) {
 				break;
 			}
 			offset += 1;
 			index = position + offset;
 			}
-			if (!list[index].IsOperator("}")) {
+			if (!ParserHelper.IsOperator(list[index], "}")) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new ArrayNExpression(list, position, offset));
+			context.Insert(position, new ListNExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

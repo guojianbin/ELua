@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class ArrayParser : IParser {
+	public class ListParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -12,18 +12,18 @@ namespace ELua {
 			var index = position;
 			IParser parser;
 
-			if (!list[index].IsOperator("{")) {
+			if (!ParserHelper.IsOperator(list[index], "{")) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
-			if (!list[index].IsOperator("}")) {
+			if (!ParserHelper.IsOperator(list[index], "}")) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new ArrayExpression(list, position, offset));
+			context.Insert(position, new ListExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

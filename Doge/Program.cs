@@ -24,7 +24,7 @@ namespace Doge {
 			var tempDict = ParseTemp(tempStr);
 
 			WriteParser(syntaxDict, defDict, expDict, tempDict);
-			WriteStatement(statDict, tempDict);
+			WriteModule(statDict, tempDict);
 		}
 
 		private static void WriteParser(Dictionary<string, string> syntaxDict, Dictionary<string, string> defDict, Dictionary<string, int> expDict, Dictionary<string, string> tempDict) {
@@ -42,7 +42,7 @@ namespace Doge {
 			}
 		}
 
-		private static void WriteStatement(Dictionary<string, int> statDict, Dictionary<string, string> tempDict) {
+		private static void WriteModule(Dictionary<string, int> statDict, Dictionary<string, string> tempDict) {
 			var sb = new StringBuilder();
 			foreach (var statStr in statDict.Keys) {
 				var statTemp = tempDict["stat_exp"];
@@ -50,9 +50,9 @@ namespace Doge {
 				sb.Append('\n');
 			}
 			sb.Remove(sb.Length - 1, 1);
-			var statFile = tempDict["statement"];
+			var statFile = tempDict["module"];
 			statFile = statFile.Replace("$body$", sb.ToString());
-			var filePath = string.Format("{0}/StatementParser.cs", syntaxRoot);
+			var filePath = string.Format("{0}/ModuleParser.cs", syntaxRoot);
 			File.WriteAllText(filePath, statFile);
 		}
 

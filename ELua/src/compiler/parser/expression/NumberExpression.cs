@@ -5,7 +5,9 @@ namespace ELua {
 	/// </summary>
 	public class NumberExpression : Expression {
 
-		public NumberExpression(string value, DebugInfo debugInfo) {
+        public string value;
+
+        public NumberExpression(string value, DebugInfo debugInfo) {
 			IsFinally = true;
 			type = Type.Number;
 			IsRightValue = true;

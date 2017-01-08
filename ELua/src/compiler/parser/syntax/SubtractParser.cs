@@ -35,7 +35,7 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			if (!list[index].IsOperator("-")) {
+			if (!ParserHelper.IsOperator(list[index], "-")) {
 				return false;
 			}
 			offset += 1;

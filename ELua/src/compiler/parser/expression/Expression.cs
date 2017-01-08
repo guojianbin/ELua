@@ -18,6 +18,8 @@ namespace ELua {
 			Number, // 0.1,11...
 			Operator, // +,-,*,/...
 			String, // "str", 'str', [[str]]
+			Nil, // nil
+			Boolean, // true, false
 
 			Paren, // (x)
 			Negate, // -x
@@ -29,7 +31,7 @@ namespace ELua {
 			Property, // a.x
 			Index, // a["x"]
 			Call, // a(),b(1)
-			Array, // {x,y,z}
+			List, // {x,y,z}
 			Table, // {x=y,z=y}
 
 			Define, // local x = y
@@ -44,16 +46,11 @@ namespace ELua {
 		public bool IsFinally { get; set; }
 
 		public Type type;
-		public string value;
 		public DebugInfo debugInfo;
 
-		public bool IsOperator(string value) {
-			return type == Type.Operator && this.value == value;
-		}
-
-		public bool IsKeyword(string value) {
-			return type == Type.Keyword && this.value == value;
-		}
+	    public virtual string GetName() {
+	        throw new InvalidOperationException(GetExceptionMessage());
+	    }
 
 		public virtual Expression Clone() {
 			throw new InvalidOperationException(GetExceptionMessage());
@@ -86,14 +83,6 @@ namespace ELua {
 
 		public virtual string GetDebugInfo() {
 			return DebugInfo.ToString(debugInfo);
-		}
-
-		public override string ToString() {
-			if (type == Type.String) {
-				return String.Format("\"{0}\"", value);
-			} else {
-				return value;
-			}
 		}
 
 	}

@@ -35,7 +35,7 @@ namespace ELua {
 			foreach (var item in _argsExp) {
 				item.Generate(context);
 			}
-			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaVar { value = _targetExp.value } });
+			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaVar { value = _targetExp.GetName() } });
 		}
 
 		public override string GetDebugInfo() {
