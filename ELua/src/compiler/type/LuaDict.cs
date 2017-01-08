@@ -19,7 +19,7 @@ namespace ELua {
         public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             LuaObject value;
             if (items.TryGetValue(obj, out value)) {
-                return new LuaDictItem { table = table, key = obj, value = value };
+                return new LuaDictItem { table = table, dict = this, key = obj, value = value };
             } else {
                 return new LuaObject { IsNil = true };
             }
