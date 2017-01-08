@@ -13,7 +13,7 @@ namespace ELua {
 			dict = new Dictionary<string, LuaObject>();
 		}
 
-		public void Save(string name, LuaObject obj) {
+		public void Bind(string name, LuaObject obj) {
 			dict[name] = obj;
 		}
 

@@ -10,19 +10,21 @@
         }
 
         public static LuaTable CreateList(LuaObject[] args) {
-            var luaTable = new LuaTable { IsList = true, IsInit = true, list = new LuaList() };
+            var table = new LuaTable { IsList = true, IsInit = true, list = new LuaList() };
+            table.list.table = table;
             for (var i = 0; i < args.Length; i ++) {
-                luaTable.list.Add(args[i]);
+                table.list.Add(args[i]);
             }
-            return luaTable;
+            return table;
         }
 
         public static LuaTable CreateTable(LuaObject[] args) {
-            var luaTable = new LuaTable { IsList = false, IsInit = true, dict = new LuaDictionary() };
+            var table = new LuaTable { IsList = false, IsInit = true, dict = new LuaDict() };
+            table.dict.table = table;
             for (var i = 0; i < args.Length; i += 2) {
-                luaTable.dict[args[i]] = args[i + 1];
+                table.dict[args[i]] = args[i + 1];
             }
-            return luaTable;
+            return table;
         }
 
     }

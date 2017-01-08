@@ -3,12 +3,12 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class TempExpression : Expression {
+	public class VarExpression : Expression {
 
         public string value;
         public Expression _refExp;
 
-		public TempExpression(string value, Expression refExp) {
+		public VarExpression(string value, Expression refExp) {
             type = Type.Word;
             IsFinally = true;
             IsLeftValue = true;

@@ -14,7 +14,7 @@ namespace ELua {
 
 		public LVM() {
             stackFrame = new StackFrame(this);
-			stackFrame.context.Save("print", new LuaUserdata { value = new Action<StackFrame, LuaObject[]>(Print) });
+			stackFrame.context.Bind("print", new LuaUserdata { value = new Action<StackFrame, LuaObject[]>(Print) });
 		}
 
 		public void Print(StackFrame stackFrame, LuaObject[] args) {

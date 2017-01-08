@@ -17,8 +17,7 @@ namespace ELua {
 			_itemsList = new List<KeyValuePair<Expression, Expression>>();
 			var argLen = len - 2;
 			for (var i = 0; i < argLen; i += 4) {
-			    var keyExp = (WordExpression)list[position + i + 1];
-			    var itemKey = new StringExpression(keyExp.value, keyExp.debugInfo);
+			    var itemKey = ParserHelper.Word2String(list[position + i + 1]);
 			    var itemValue = list[position + i + 3];
 			    _itemsList.Add(new KeyValuePair<Expression, Expression>(itemKey, itemValue));
 			}

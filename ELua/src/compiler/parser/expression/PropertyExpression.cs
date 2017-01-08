@@ -16,7 +16,7 @@ namespace ELua {
 			type = Type.Property;
 			debugInfo = list[position].debugInfo;
 			_item1Exp = list[position];
-			_item2Exp = list[position + 2];
+			_item2Exp = ParserHelper.Word2String(list[position + 2]);
 		}
 
 		public override void Extract(SyntaxContext context) {

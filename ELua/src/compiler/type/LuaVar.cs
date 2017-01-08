@@ -13,6 +13,14 @@ namespace ELua {
 			return stackFrame.Find(name).ToString(stackFrame);
 		}
 
+	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
+	        return stackFrame.Find(name).GetProperty(stackFrame, obj);
+	    }
+
+	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
+            stackFrame.Bind(name, obj);
+	    }
+
 	    public override void Call(StackFrame stackFrame) {
 	        throw new NotImplementedException();
 	    }

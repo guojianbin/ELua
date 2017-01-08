@@ -8,6 +8,7 @@ namespace ELua {
     /// </summary>
     public class LuaList : LuaObject {
 
+        public LuaTable table;
         public List<LuaObject> list = new List<LuaObject>();
 
         public void Add(LuaObject item) {

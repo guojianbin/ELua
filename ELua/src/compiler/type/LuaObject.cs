@@ -9,7 +9,7 @@ namespace ELua {
 
 	    public bool IsNil;
 	    
-	    public virtual LuaObject GetProperty(LuaObject obj) {
+	    public virtual LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             throw new InvalidOperationException(GetType().Name);
         }
 
@@ -21,7 +21,11 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
-	    public virtual LuaObject Negate(StackFrame stackFrame) {
+        public virtual void Bind(StackFrame stackFrame, LuaObject obj) {
+            throw new InvalidOperationException(GetType().Name);
+        }
+
+        public virtual LuaObject Negate(StackFrame stackFrame) {
             throw new InvalidOperationException(GetType().Name);
         }
 

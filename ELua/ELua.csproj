@@ -73,7 +73,7 @@
     <Compile Include="src\compiler\parser\expression\SubtractExpression.cs" />
     <Compile Include="src\compiler\parser\expression\TableNExpression.cs" />
     <Compile Include="src\compiler\parser\expression\TableExpression.cs" />
-    <Compile Include="src\compiler\parser\expression\TempExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\VarExpression.cs" />
     <Compile Include="src\compiler\parser\expression\WordExpression.cs" />
     <Compile Include="src\compiler\parser\ILContext.cs" />
     <Compile Include="src\compiler\parser\IParser.cs" />
@@ -102,7 +102,7 @@
     <Compile Include="src\compiler\scanner\Scanner.cs" />
     <Compile Include="src\compiler\scanner\Token.cs" />
     <Compile Include="src\compiler\type\LuaBoolean.cs" />
-    <Compile Include="src\compiler\type\LuaDictionary.cs" />
+    <Compile Include="src\compiler\type\LuaDict.cs" />
     <Compile Include="src\compiler\type\LuaFunction.cs" />
     <Compile Include="src\compiler\type\LuaList.cs" />
     <Compile Include="src\compiler\type\TableHelper.cs" />
@@ -110,7 +110,7 @@
     <Compile Include="src\compiler\type\LuaObject.cs" />
     <Compile Include="src\compiler\type\LuaString.cs" />
     <Compile Include="src\compiler\type\LuaTable.cs" />
-    <Compile Include="src\compiler\type\LuaKeyValue.cs" />
+    <Compile Include="src\compiler\type\LuaDictItem.cs" />
     <Compile Include="src\compiler\type\LuaUserdata.cs" />
     <Compile Include="src\compiler\type\LuaVar.cs" />
     <Compile Include="src\compiler\vm\Module.cs" />

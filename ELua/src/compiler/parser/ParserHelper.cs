@@ -37,6 +37,11 @@ namespace ELua {
             return expression.type == Expression.Type.Keyword && ((KeywordExpression)expression).value == value;
         }
 
+        public static StringExpression Word2String(Expression expression) {
+            var temp = (WordExpression)expression;
+            return new StringExpression(temp.value, temp.debugInfo);
+        }
+
         public static Expression Extract(SyntaxContext context, Expression expression) {
             if (expression.IsFinally) {
                 return expression;
@@ -45,7 +50,7 @@ namespace ELua {
             if (expression.IsLeftValue) {
                 return expression;
             }
-            var temp = new TempExpression(context.NewUID(), expression);
+            var temp = new VarExpression(context.NewUID(), expression);
             context.Add(new DefineExpression(temp, expression));
             return temp;
         }
