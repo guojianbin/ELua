@@ -16,6 +16,7 @@ namespace ELua {
 			Push, Pop, Bind, Clear,
             Jump, JumpIf,
             Negate, Multiply, Division, Mod, Plus, Subtract,
+            Less, Greater, LessEq, GreaterEq, Equal, NotEqual,
 			Property, Index, Call,
             Table, List, List0,
 			Ret,

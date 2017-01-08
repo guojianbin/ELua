@@ -49,6 +49,18 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new SubtractParser();
 			while (parser.Parse(context, index));
+			parser = new LessParser();
+			while (parser.Parse(context, index));
+			parser = new GreaterParser();
+			while (parser.Parse(context, index));
+			parser = new LessEqParser();
+			while (parser.Parse(context, index));
+			parser = new GreaterEqParser();
+			while (parser.Parse(context, index));
+			parser = new EqualParser();
+			while (parser.Parse(context, index));
+			parser = new NotEqualParser();
+			while (parser.Parse(context, index));
 			parser = new ListParser();
 			while (parser.Parse(context, index));
 			parser = new ListNParser();

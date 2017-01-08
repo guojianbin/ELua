@@ -3,31 +3,38 @@ Define,Bind,Call,CallN,Return
 #end statement
 
 #begin exprexsion
-Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,List,ListN,Table,TableN,Return
+Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,Less,Greater,LessEq,GreaterEq,Equal,NotEqual,List,ListN,Table,TableN,Return
 #end exprexsion
 
 #begin define
-lvalue 	 := Property,Index
-rvalue 	 := Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,List,ListN,Table,TableN
+statements := Define,Bind,Call,CallN,Return
+lvalue 	   := Property,Index
+rvalue 	   := Paren,Property,Index,Call,CallN,Negate,Multiply,Division,Mod,Plus,Subtract,Less,Greater,LessEq,GreaterEq,Equal,NotEqual,List,ListN,Table,TableN
 #end define
 
 #begin syntax
-Define	 := keyword=local .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$
-Bind 	 := is_left;parser=$lvalue$ .. op=<eq> .. is_right;parser=$rvalue$
-Paren	 := op=( .. is_right;parser=$rvalue$ .. op=)
-Property := is_right;parser=Paren .. op=. .. exp=Word
-Index 	 := is_right;parser=Paren .. op=[ .. is_right;parser=$rvalue$ .. op=]
-Call 	 := is_right;parser=[Paren,Property] .. op=( .. op=)
-CallN 	 := is_right;parser=[Paren,Property] .. op=( .. <;is_right;parser=$rvalue$ .. op=,;> .. op=)
-Negate 	 := op=- .. is_right;parser=[Paren,CallN]
-Multiply := is_right;parser=[Paren,Negate] .. op=* .. is_right;parser=[Paren,Negate]
-Division := is_right;parser=[Paren,Negate] .. op=/ .. is_right;parser=[Paren,Negate]
-Mod		 := is_right;parser=[Paren,Negate] .. op=% .. is_right;parser=[Paren,Negate]
-Plus 	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
-Subtract := is_right;parser=[Paren,Mod] .. op=- .. is_right;parser=[Paren,Mod]
-List 	 := op={ .. op=}
-ListN 	 := op={ .. <;is_right;parser=$rvalue$ .. op=,;> .. op=}
-Table 	 := op={ .. <;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
-TableN 	 := op={ .. <;op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
-Return 	 := keyword=return .. is_right;parser=$rvalue$
+Define	   := keyword=local .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$
+Bind 	   := is_left;parser=$lvalue$ .. op=<eq> .. is_right;parser=$rvalue$
+Paren	   := op=( .. is_right;parser=$rvalue$ .. op=)
+Property   := is_right;parser=Paren .. op=. .. exp=Word
+Index 	   := is_right;parser=Paren .. op=[ .. is_right;parser=$rvalue$ .. op=]
+Call 	   := is_right;parser=[Paren,Property] .. op=( .. op=)
+CallN 	   := is_right;parser=[Paren,Property] .. op=( .. <;is_right;parser=$rvalue$ .. op=,;> .. op=)
+Negate 	   := op=- .. is_right;parser=[Paren,CallN]
+Multiply   := is_right;parser=[Paren,Negate] .. op=* .. is_right;parser=[Paren,Negate]
+Division   := is_right;parser=[Paren,Negate] .. op=/ .. is_right;parser=[Paren,Negate]
+Mod		   := is_right;parser=[Paren,Negate] .. op=% .. is_right;parser=[Paren,Negate]
+Plus 	   := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
+Subtract   := is_right;parser=[Paren,Mod] .. op=- .. is_right;parser=[Paren,Mod]
+Less 	   := is_right;parser=[Paren,Subtract] .. op=< .. is_right;parser=[Paren,Subtract]
+Greater    := is_right;parser=[Paren,Subtract] .. op=> .. is_right;parser=[Paren,Subtract]
+LessEq	   := is_right;parser=[Paren,Subtract] .. op=< .. op=<eq> .. is_right;parser=[Paren,Subtract]
+GreaterEq  := is_right;parser=[Paren,Subtract] .. op=> .. op=<eq> .. is_right;parser=[Paren,Subtract]
+Equal	   := is_right;parser=[Paren,Subtract] .. op=<eq> .. op=<eq> .. is_right;parser=[Paren,Subtract]
+NotEqual   := is_right;parser=[Paren,Subtract] .. op=~ .. op=<eq> .. is_right;parser=[Paren,Subtract]
+List 	   := op={ .. op=}
+ListN 	   := op={ .. <;is_right;parser=$rvalue$ .. op=,;> .. op=}
+Table 	   := op={ .. <;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
+TableN 	   := op={ .. <;op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
+Return 	   := keyword=return .. is_right;parser=$rvalue$
 #end syntax

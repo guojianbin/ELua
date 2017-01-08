@@ -28,6 +28,12 @@ namespace ELua {
 			Plus, // x + y
 			Subtract, // x - y
 			Mod, // x % y
+            Less, // x < y
+            Greater, // x > y
+            LessEq, // x <= y
+            GreaterEq, // x >= y
+            Equal, // x == y
+            NotEqual, // x ~= y
 			Property, // a.x
 			Index, // a["x"]
 			Call, // a(),b(1)
