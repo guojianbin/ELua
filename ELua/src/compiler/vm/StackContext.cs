@@ -7,17 +7,17 @@ namespace ELua {
 	/// </summary>
 	public class StackContext {
 
-		public Dictionary<string, LuaObject> dict;
+		public Dictionary<string, LuaBinder> dict;
 
 		public StackContext() {
-			dict = new Dictionary<string, LuaObject>();
+			dict = new Dictionary<string, LuaBinder>();
 		}
 
-		public void Bind(string name, LuaObject obj) {
-			dict[name] = obj;
+		public void Bind(LuaBinder obj) {
+			dict[obj.name] = obj;
 		}
 
-		public bool TryGetValue(string key, out LuaObject value) {
+		public bool TryGetValue(string key, out LuaBinder value) {
 			return dict.TryGetValue(key, out value);
 		}
 

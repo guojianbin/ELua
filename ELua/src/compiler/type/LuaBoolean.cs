@@ -7,6 +7,10 @@
 
         public bool value;
 
+        public override bool ToBoolean(StackFrame stackFrame) {
+            return value;
+        }
+
         public override string ToString(StackFrame stackFrame) {
             return value.ToString();
         }

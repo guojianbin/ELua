@@ -8,38 +8,38 @@ namespace ELua {
 	/// </summary>
 	public class ListNExpression : Expression {
 
-		private readonly List<Expression> _itemsList;
+		public List<Expression> itemsList;
 
 		public ListNExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			type = Type.List;
 			debugInfo = list[position].debugInfo;
-			_itemsList = new List<Expression>();
+			itemsList = new List<Expression>();
 			var argLen = len - 2;
 			for (var i = 0; i < argLen; i += 2) {
-				_itemsList.Add(list[position + i + 1]);
+				itemsList.Add(list[position + i + 1]);
 			}
 		}
 
 		public override void Extract(SyntaxContext context) {
-			for (var i = 0; i < _itemsList.Count; i++) {
-				_itemsList[i] = ParserHelper.Extract(context, _itemsList[i]);
+			for (var i = 0; i < itemsList.Count; i++) {
+				itemsList[i] = ParserHelper.Extract(context, itemsList[i]);
 			}
         }
 
-        public override void Generate(ILContext context) {
-            for (var i = _itemsList.Count - 1; i >= 0; i--) {
-                _itemsList[i].Generate(context);
+        public override void Generate(ByteCodeContext context) {
+            for (var i = itemsList.Count - 1; i >= 0; i--) {
+                itemsList[i].Generate(context);
             }
-            context.Add(new IL { opCode = IL.OpCode.List });
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.List });
         }
 
         public override string GetDebugInfo() {
-			return DebugInfo.ToString(_itemsList.ToArray());
+			return DebugInfo.ToString(itemsList.ToArray());
 		}
 
 		public override string ToString() {
-			return string.Format("{{ {0} }}", string.Join(", ", _itemsList.Select(t => t.ToString())));
+			return string.Format("{{ {0} }}", string.Join(", ", itemsList.Select(t => t.ToString())));
 		}
 
 	}

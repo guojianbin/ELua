@@ -8,42 +8,42 @@ namespace ELua {
 	/// </summary>
 	public class CallNExpression : Expression {
 
-		private Expression _targetExp;
-		private readonly List<Expression> _itemsList;
+		public Expression targetExp;
+		public readonly List<Expression> itemsList;
 
 		public CallNExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			IsStatement = true;
 			type = Type.Call;
 			debugInfo = list[position].debugInfo;
-			_targetExp = list[position];
-			_itemsList = new List<Expression>();
+			targetExp = list[position];
+			itemsList = new List<Expression>();
 			var itemLen = len - 2;
 			for (var i = 0; i < itemLen; i += 2) {
-				_itemsList.Add(list[position + i + 2]);
+				itemsList.Add(list[position + i + 2]);
 			}
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_targetExp = ParserHelper.Extract(context, _targetExp);
-			for (var i = 0; i < _itemsList.Count; i++) {
-				_itemsList[i] = ParserHelper.Extract(context, _itemsList[i]);
+			targetExp = ParserHelper.Extract(context, targetExp);
+			for (var i = 0; i < itemsList.Count; i++) {
+				itemsList[i] = ParserHelper.Extract(context, itemsList[i]);
 			}
 		}
 
-		public override void Generate(ILContext context) {
-		    for (var i = _itemsList.Count - 1; i >= 0; i--) {
-		        _itemsList[i].Generate(context);
+		public override void Generate(ByteCodeContext context) {
+		    for (var i = itemsList.Count - 1; i >= 0; i--) {
+		        itemsList[i].Generate(context);
 		    }
-			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaVar { name = _targetExp.GetName() } });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaVar { name = targetExp.GetName() } });
 		}
 
 		public override string GetDebugInfo() {
-			return DebugInfo.ToString(new[] { _targetExp }.Concat(_itemsList).ToArray());
+			return DebugInfo.ToString(new[] { targetExp }.Concat(itemsList).ToArray());
 		}
 
 		public override string ToString() {
-			return string.Format("{0}({1})", _targetExp, string.Join(", ", _itemsList.Select(t => t.ToString())));
+			return string.Format("{0}({1})", targetExp, string.Join(", ", itemsList.Select(t => t.ToString())));
 		}
 
 	}

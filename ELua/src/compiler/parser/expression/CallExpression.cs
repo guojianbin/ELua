@@ -7,30 +7,30 @@ namespace ELua {
 	/// </summary>
 	public class CallExpression : Expression {
 
-		private Expression _targetExp;
+		public Expression targetExp;
 
 		public CallExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			IsStatement = true;
 			type = Type.Call;
 			debugInfo = list[position].debugInfo;
-			_targetExp = list[position];
+			targetExp = list[position];
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_targetExp = ParserHelper.Extract(context, _targetExp);
+			targetExp = ParserHelper.Extract(context, targetExp);
 		}
 
-		public override void Generate(ILContext context) {
-			context.Add(new IL { opCode = IL.OpCode.Call, opArg = new LuaVar { name = _targetExp.GetName() } });
+		public override void Generate(ByteCodeContext context) {
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaVar { name = targetExp.GetName() } });
 		}
 
 		public override string GetDebugInfo() {
-			return DebugInfo.ToString(_targetExp);
+			return DebugInfo.ToString(targetExp);
 		}
 
 		public override string ToString() {
-			return string.Format("{0}()", _targetExp);
+			return string.Format("{0}()", targetExp);
 		}
 
 	}

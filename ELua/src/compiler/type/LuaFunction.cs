@@ -9,10 +9,6 @@ namespace ELua {
 
 		public string name;
 
-		public override LuaObject Call(StackFrame stackFrame) {
-		    throw new NotImplementedException();	
-		}
-
 		public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
 			throw new NotImplementedException();
 		}

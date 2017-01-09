@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace ELua {
@@ -9,10 +8,11 @@ namespace ELua {
 	public class SyntaxContext {
 
 		public ulong uid;
+	    public int level;
 		public List<Expression> list;
 
 		public string NewUID() {
-			return String.Format("__<{0}>", (++uid).ToString("D3"));
+			return string.Format("_var_<{0}>", (++uid).ToString());
 		}
 
 		public void Add(Expression expression) {

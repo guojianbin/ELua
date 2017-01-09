@@ -7,15 +7,25 @@ namespace ELua {
 	/// </summary>
 	public class Module {
 
-		public string name = "main";
-		public List<IL> ils;
+        public List<ByteCode> byteCodes;
+	    public int position;
+        public string name;
 
-		public void Run(StackFrame stackFrame) {
-			stackFrame = new StackFrame(stackFrame);
-			for (var i = 0; i < ils.Count; i++) {
-				ils[i].Run(stackFrame);
+        public void Run(StackFrame stackFrame) {
+            stackFrame = new StackFrame(stackFrame) { module = this };
+            for (position = 0; position < byteCodes.Count; position++) {
+				byteCodes[position].Run(stackFrame);
 			}
 		}
+
+	    public void Jump(LuaObject label) {
+	        for (position += 1; position < byteCodes.Count; position++) {
+	            var il = byteCodes[position];
+	            if (il.opCode == ByteCode.OpCode.Label && il.opArg.Equals(label) ) {
+	                break;
+	            }
+	        }
+	    }
 
 	}
 

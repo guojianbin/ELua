@@ -9,34 +9,34 @@ namespace ELua {
 	/// </summary>
 	public class Parser {
 
-		public List<Expression> list;
+		public ModuleExpression module;
 
 		public Parser(List<Expression> list) {
-			this.list = list;
-			list.Add(new EOSExpression());
-
-			Parse();
+			Parse(list);
 			Extract();
 		}
 
-		private void Parse() {
+		private void Parse(List<Expression> list) {
+			list.Add(new EOSExpression());
 			var context = new SyntaxContext { list = list };
 			var parser = new ModuleParser();
 			parser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
 
-			var expList = list.ToArray();
-			list.Clear();
+			module = (ModuleExpression)list[0];
+			var itemsList = module.itemsList.ToArray();
 			var errorList = new List<Expression>();
-			foreach (var item in expList) {
+			module.itemsList.Clear();
+
+			foreach (var item in itemsList) {
 				if (item.IsStatement) {
-					list.Add(item);
+					module.itemsList.Add(item);
 				} else {
 					errorList.Add(item);
 				}
 			}
 		    Console.WriteLine("source:");
-			Console.WriteLine(string.Join("\n", list.Select(t => t.ToString())));
+			Console.WriteLine(string.Join("\n", module.itemsList.Select(t => t.ToString())));
 			if (errorList.Count > 0) {
 				Console.WriteLine();
 				Console.WriteLine(string.Join("\n", errorList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t))));
@@ -44,24 +44,15 @@ namespace ELua {
 		}
 
 		private void Extract() {
-			var context = new SyntaxContext { list = new List<Expression>() };
-			foreach (var item in list) {
-				item.Extract(context);
-				context.Add(item);
-			}
-
-			list = context.list;
+            module.Extract(null);
 			Console.WriteLine();
 		    Console.WriteLine("extract:");
-			Console.WriteLine(string.Join("\n", context.list.Select(t => t.ToString())));
+			Console.WriteLine(string.Join("\n", module.itemsList.Select(t => t.ToString())));
 		}
 
-		public List<IL> Generate() {
-			var context = new ILContext();
-			foreach (var item in list) {
-				item.Generate(context);
-                context.Add(new IL { opCode = IL.OpCode.Clear });
-            }
+		public List<ByteCode> Generate() {
+			var context = new ByteCodeContext();
+            module.Generate(context);
 
 			Console.WriteLine();
 		    Console.WriteLine("il:");

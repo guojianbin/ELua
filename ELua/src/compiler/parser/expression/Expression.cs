@@ -20,6 +20,7 @@ namespace ELua {
 			String, // "str", 'str', [[str]]
 			Nil, // nil
 			Boolean, // true, false
+			Label, // xx:
 
 			Paren, // (x)
 			Negate, // -x
@@ -40,7 +41,13 @@ namespace ELua {
 			List, // {x,y,z}
 			Table, // {x=y,z=y}
 
+            Not, // not
+            And, // and
+            Or, // or
+
+			Module, // stats list
             If, // if end
+            IfElse, // if else end
 			Define, // local x = y
 			Bind, // x = y
 			Return // return x
@@ -51,6 +58,7 @@ namespace ELua {
 		public bool IsLeftValue { get; set; }
 		public bool IsRightValue { get; set; }
 		public bool IsFinally { get; set; }
+		public bool IsChunked { get; set; }
 
 		public Type type;
 		public DebugInfo debugInfo;
@@ -63,7 +71,7 @@ namespace ELua {
 			throw new InvalidOperationException(GetExceptionMessage());
 		}
 
-	    public virtual void Generate(ILContext context) {
+	    public virtual void Generate(ByteCodeContext context) {
 			throw new InvalidOperationException(GetExceptionMessage());
 		}
 

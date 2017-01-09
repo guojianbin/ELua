@@ -24,6 +24,8 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new NegateParser();
 			while (parser.Parse(context, index));
+			parser = new NotParser();
+			while (parser.Parse(context, index));
 			parser = new MultiplyParser();
 			while (parser.Parse(context, index));
 			parser = new DivisionParser();
@@ -51,6 +53,8 @@ namespace ELua {
 			parser = new CallNParser();
 			while (parser.Parse(context, index));
 			parser = new NegateParser();
+			while (parser.Parse(context, index));
+			parser = new NotParser();
 			while (parser.Parse(context, index));
 			parser = new MultiplyParser();
 			while (parser.Parse(context, index));

@@ -7,29 +7,29 @@ namespace ELua {
 	/// </summary>
 	public class ParenExpression : Expression {
 
-		private Expression _targetExp;
+		public Expression targetExp;
 
 		public ParenExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			type = Type.Paren;
 			debugInfo = list[position].debugInfo;
-			_targetExp = list[position + 1];
+			targetExp = list[position + 1];
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_targetExp = ParserHelper.Extract(context, _targetExp);
+			targetExp = ParserHelper.Extract(context, targetExp);
 		}
 
-	    public override void Generate(ILContext context) {
-            _targetExp.Generate(context);
+	    public override void Generate(ByteCodeContext context) {
+            targetExp.Generate(context);
 	    }
 
 	    public override string GetDebugInfo() {
-			return DebugInfo.ToString(_targetExp);
+			return DebugInfo.ToString(targetExp);
 		}
 
 		public override string ToString() {
-			return string.Format("({0})", _targetExp);
+			return string.Format("({0})", targetExp);
 		}
 
 	}

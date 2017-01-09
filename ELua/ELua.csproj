@@ -44,12 +44,15 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\compiler\parser\expression\AndExpression.cs" />
     <Compile Include="src\compiler\parser\expression\BooleanExpression.cs" />
     <Compile Include="src\compiler\parser\expression\EqualExpression.cs" />
     <Compile Include="src\compiler\parser\expression\GreaterEqExpression.cs" />
     <Compile Include="src\compiler\parser\expression\GreaterExpression.cs" />
-    <Compile Include="src\compiler\parser\expression\IfCondExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\IfExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\IfElseExpression.cs" />
     <Compile Include="src\compiler\parser\expression\KeywordExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\LabelExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LessEqExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LessExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ListExpression.cs" />
@@ -63,12 +66,15 @@
     <Compile Include="src\compiler\parser\expression\Expression.cs" />
     <Compile Include="src\compiler\parser\expression\IndexExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ModExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\ModuleExpression.cs" />
     <Compile Include="src\compiler\parser\expression\MultiplyExpression.cs" />
     <Compile Include="src\compiler\parser\expression\NegateExpression.cs" />
     <Compile Include="src\compiler\parser\expression\NilExpression.cs" />
     <Compile Include="src\compiler\parser\expression\NotEqualExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\NotExpression.cs" />
     <Compile Include="src\compiler\parser\expression\NumberExpression.cs" />
     <Compile Include="src\compiler\parser\expression\OperatorExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\OrExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ParenExpression.cs" />
     <Compile Include="src\compiler\parser\expression\PlusExpression.cs" />
     <Compile Include="src\compiler\parser\expression\PropertyExpression.cs" />
@@ -79,11 +85,12 @@
     <Compile Include="src\compiler\parser\expression\TableExpression.cs" />
     <Compile Include="src\compiler\parser\expression\VarExpression.cs" />
     <Compile Include="src\compiler\parser\expression\WordExpression.cs" />
-    <Compile Include="src\compiler\parser\ILContext.cs" />
+    <Compile Include="src\compiler\parser\ByteCodeContext.cs" />
     <Compile Include="src\compiler\parser\IParser.cs" />
     <Compile Include="src\compiler\parser\Parser.cs" />
     <Compile Include="src\compiler\parser\ParserHelper.cs" />
     <Compile Include="src\compiler\parser\SyntaxContext.cs" />
+    <Compile Include="src\compiler\parser\syntax\AndParser.cs" />
     <Compile Include="src\compiler\parser\syntax\BindParser.cs" />
     <Compile Include="src\compiler\parser\syntax\CallNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\CallParser.cs" />
@@ -92,7 +99,8 @@
     <Compile Include="src\compiler\parser\syntax\EqualParser.cs" />
     <Compile Include="src\compiler\parser\syntax\GreaterEqParser.cs" />
     <Compile Include="src\compiler\parser\syntax\GreaterParser.cs" />
-    <Compile Include="src\compiler\parser\syntax\IfCondParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\IfParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\IfElseParser.cs" />
     <Compile Include="src\compiler\parser\syntax\IndexParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessEqParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessParser.cs" />
@@ -103,6 +111,8 @@
     <Compile Include="src\compiler\parser\syntax\MultiplyParser.cs" />
     <Compile Include="src\compiler\parser\syntax\NegateParser.cs" />
     <Compile Include="src\compiler\parser\syntax\NotEqualParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\NotParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\OrParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ParenParser.cs" />
     <Compile Include="src\compiler\parser\syntax\PlusParser.cs" />
     <Compile Include="src\compiler\parser\syntax\PropertyParser.cs" />
@@ -115,6 +125,7 @@
     <Compile Include="src\compiler\type\LuaBoolean.cs" />
     <Compile Include="src\compiler\type\LuaDict.cs" />
     <Compile Include="src\compiler\type\LuaFunction.cs" />
+    <Compile Include="src\compiler\type\LuaLabel.cs" />
     <Compile Include="src\compiler\type\LuaList.cs" />
     <Compile Include="src\compiler\type\LuaListItem.cs" />
     <Compile Include="src\compiler\type\TableHelper.cs" />
@@ -125,9 +136,10 @@
     <Compile Include="src\compiler\type\LuaDictItem.cs" />
     <Compile Include="src\compiler\type\LuaUserdata.cs" />
     <Compile Include="src\compiler\type\LuaVar.cs" />
+    <Compile Include="src\compiler\vm\LuaBinder.cs" />
     <Compile Include="src\compiler\vm\Module.cs" />
     <Compile Include="src\compiler\vm\DebugInfo.cs" />
-    <Compile Include="src\compiler\vm\IL.cs" />
+    <Compile Include="src\compiler\vm\ByteCode.cs" />
     <Compile Include="src\compiler\vm\LVM.cs" />
     <Compile Include="src\compiler\vm\StackContext.cs" />
     <Compile Include="src\compiler\vm\StackFrame.cs" />

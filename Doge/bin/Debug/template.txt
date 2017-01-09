@@ -25,44 +25,6 @@ $body$
 }
 ]]
 
-module == --[[
-namespace ELua {
-
-	/// <summary>
-	/// @author Easily
-	/// auto generated! don't modify !
-	/// </summary>
-	public class ModuleParser : IParser {
-
-		public bool Parse(SyntaxContext context, int position) {
-			var list = context.list;
-			while (true) {
-				if (position >= list.Count - 1) {
-					return true;
-				}
-				IParser parser;
-$body$
-				position += 1;
-			}
-		}
-
-	}
-
-}
-]]
-
-stat_exp == --[[
-				parser = new $name$Parser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-]]
-
 move_next == --[[
 			offset += 1;
 			index = position + offset;

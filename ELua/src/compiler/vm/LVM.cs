@@ -10,12 +10,12 @@ namespace ELua {
 	public class LVM {
 
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
+		public LuaObject nil = new LuaObject { IsNil = true };
 		public StackFrame stackFrame;
-        public LuaObject nil = new LuaObject { IsNil = true };
 
         public LVM() {
             stackFrame = new StackFrame(this);
-			stackFrame.context.Bind("print", new LuaUserdata { value = new Func<StackFrame, LuaObject[], LuaObject>(Print) });
+			stackFrame.Bind("print", new LuaUserdata { value = new Func<StackFrame, LuaObject[], LuaObject>(Print) });
 		}
 
 		public LuaObject Print(StackFrame stackFrame, LuaObject[] args) {

@@ -8,67 +8,35 @@ namespace ELua {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
+			var offset = 0;
+			var index = position;
+			IParser parser;
+
 			while (true) {
-				if (position >= list.Count - 1) {
-					return true;
-				}
-				IParser parser;
-				parser = new ReturnParser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-				parser = new IfCondParser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-				parser = new DefineParser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-				parser = new BindParser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-				parser = new CallParser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-				parser = new CallNParser();
-				if (parser.Parse(context, position)) {
-					position += 1;
-					if (position < list.Count) {
-						continue;
-					} else {
-						return true;
-					}
-				}
-				position += 1;
+			parser = new ReturnParser();
+			while (parser.Parse(context, index));
+			parser = new IfParser();
+			while (parser.Parse(context, index));
+			parser = new IfElseParser();
+			while (parser.Parse(context, index));
+			parser = new DefineParser();
+			while (parser.Parse(context, index));
+			parser = new BindParser();
+			while (parser.Parse(context, index));
+			parser = new CallParser();
+			while (parser.Parse(context, index));
+			parser = new CallNParser();
+			while (parser.Parse(context, index));
+			if (!list[index].IsStatement) {
+				break;
 			}
+			offset += 1;
+			index = position + offset;
+			}
+
+			context.Insert(position, new ModuleExpression(list, position, offset));
+			context.Remove(position + 1, offset);
+			return true;
 		}
 
 	}

@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class IfCondParser : IParser {
+	public class IfParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -29,6 +29,8 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new NegateParser();
 			while (parser.Parse(context, index));
+			parser = new NotParser();
+			while (parser.Parse(context, index));
 			parser = new MultiplyParser();
 			while (parser.Parse(context, index));
 			parser = new DivisionParser();
@@ -51,6 +53,10 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new NotEqualParser();
 			while (parser.Parse(context, index));
+			parser = new AndParser();
+			while (parser.Parse(context, index));
+			parser = new OrParser();
+			while (parser.Parse(context, index));
 			parser = new ListParser();
 			while (parser.Parse(context, index));
 			parser = new ListNParser();
@@ -72,7 +78,9 @@ namespace ELua {
 			while (true) {
 			parser = new ReturnParser();
 			while (parser.Parse(context, index));
-			parser = new IfCondParser();
+			parser = new IfParser();
+			while (parser.Parse(context, index));
+			parser = new IfElseParser();
 			while (parser.Parse(context, index));
 			parser = new DefineParser();
 			while (parser.Parse(context, index));
@@ -94,7 +102,7 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new IfCondExpression(list, position, offset));
+			context.Insert(position, new IfExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

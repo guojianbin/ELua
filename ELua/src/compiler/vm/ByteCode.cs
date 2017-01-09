@@ -5,7 +5,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public struct IL {
+	public struct ByteCode {
 
 		/// <summary>
 		/// @author Easily
@@ -14,8 +14,9 @@ namespace ELua {
 
 			Undefine,
 			Push, Pop, Bind, Clear,
-            Jump, JumpIf,
+            Jump, JumpIf, JumpNot, Label, 
             Negate, Multiply, Division, Mod, Plus, Subtract,
+            Not, And, Or,
             Less, Greater, LessEq, GreaterEq, Equal, NotEqual,
 			Property, Index, Call,
             Table, List, List0,
@@ -23,6 +24,7 @@ namespace ELua {
 
 		}
 
+	    public int index;
 		public OpCode opCode;
 		public LuaObject opArg;
 
@@ -40,8 +42,31 @@ namespace ELua {
                 case OpCode.Bind:
                     stackFrame.Pop().Bind(stackFrame, stackFrame.Pop());
                     break;
+                case OpCode.Label:
+                    // ignored
+                    break;
                 case OpCode.Jump:
+                    stackFrame.module.Jump(opArg);
+                    break;
+                case OpCode.JumpIf:
+			        if (stackFrame.Pop().ToBoolean(stackFrame)) {
+                        stackFrame.module.Jump(opArg);
+                    }
 					break;
+                case OpCode.JumpNot:
+			        if (!stackFrame.Pop().ToBoolean(stackFrame)) {
+                        stackFrame.module.Jump(opArg);
+                    }
+					break;
+                case OpCode.Not:
+                    stackFrame.Push(stackFrame.Pop().Not(stackFrame));
+                    break;
+                case OpCode.And:
+                    stackFrame.Push(stackFrame.Pop().And(stackFrame, stackFrame.Pop()));
+                    break;
+                case OpCode.Or:
+                    stackFrame.Push(stackFrame.Pop().Or(stackFrame, stackFrame.Pop()));
+                    break;
                 case OpCode.Negate:
                     stackFrame.Push(stackFrame.Pop().Negate(stackFrame));
                     break;
@@ -94,7 +119,7 @@ namespace ELua {
                     stackFrame.Push(TableHelper.CreateTable(stackFrame.TakeAll()));
 			        break;
 				case OpCode.Call:
-			        stackFrame.Push(stackFrame.stackLen == 0 ? opArg.Call(stackFrame) : opArg.Call(stackFrame, stackFrame.TakeAll()));
+					stackFrame.Push(opArg.Call(stackFrame, stackFrame.TakeAll()));
 			        break;
 				case OpCode.Ret:
 					break;

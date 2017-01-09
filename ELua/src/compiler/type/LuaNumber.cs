@@ -59,6 +59,10 @@
             return this;
         }
 
+        public override bool ToBoolean(StackFrame stackFrame) {
+            return true;
+        }
+
         public override string ToString(StackFrame stackFrame) {
             return value.ToString();
         }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ELua {
+﻿namespace ELua {
 
     /// <summary>
     /// @author Easily
@@ -14,9 +12,9 @@ namespace ELua {
 
         public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             if (IsNil) {
-                throw new NullReferenceException();
+				return stackFrame.nil;
             } else if (!IsInit) {
-                return stackFrame.vm.nil;
+                return stackFrame.nil;
             } else if (IsList) {
                 return list.GetProperty(stackFrame, obj);
             } else {
@@ -26,9 +24,9 @@ namespace ELua {
 
         public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
             if (IsNil) {
-                throw new NullReferenceException();
+				return stackFrame.nil;
             } else if (!IsInit) {
-                return stackFrame.vm.nil;
+                return stackFrame.nil;
             } else if (IsList) {
                 return list.GetIndex(stackFrame, obj);
             } else {

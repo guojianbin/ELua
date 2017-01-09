@@ -5,10 +5,6 @@ namespace ELua {
 	/// </summary>
 	public class EOSExpression : Expression {
 
-		public EOSExpression() {
-			IsStatement = true;
-		}
-
 		public override string GetDebugInfo() {
 			return ToString();
 		}

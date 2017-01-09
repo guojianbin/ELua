@@ -19,10 +19,6 @@
             stackFrame.Bind(name, obj);
 	    }
 
-	    public override LuaObject Call(StackFrame stackFrame) {
-            return stackFrame.Find(name).Call(stackFrame);
-        }
-
 	    public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
 			return stackFrame.Find(name).Call(stackFrame, args);
 		}
@@ -55,7 +51,11 @@
 	        return stackFrame.Find(name).ToNumber(stackFrame);
         }
 
-        public override string ToString(StackFrame stackFrame) {
+	    public override bool ToBoolean(StackFrame stackFrame) {
+            return stackFrame.Find(name).ToBoolean(stackFrame);
+        }
+
+	    public override string ToString(StackFrame stackFrame) {
             return stackFrame.Find(name).ToString(stackFrame);
         }
 

@@ -7,30 +7,30 @@ namespace ELua {
 	/// </summary>
 	public class ReturnExpression : Expression {
 
-		private Expression _targetExp;
+		public Expression targetExp;
 
 		public ReturnExpression(List<Expression> list, int position, int len) {
 			IsStatement = true;
 			type = Type.Return;
 			debugInfo = list[position].debugInfo;
-			_targetExp = list[position + 1];
+			targetExp = list[position + 1];
 		}
 
 		public override void Extract(SyntaxContext context) {
-			_targetExp = ParserHelper.Extract(context, _targetExp);
+			targetExp = ParserHelper.Extract(context, targetExp);
         }
 
-        public override void Generate(ILContext context) {
-            _targetExp.Generate(context);
-            context.Add(new IL { opCode = IL.OpCode.Ret });
+        public override void Generate(ByteCodeContext context) {
+            targetExp.Generate(context);
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Ret });
         }
 
         public override string GetDebugInfo() {
-			return DebugInfo.ToString(_targetExp);
+			return DebugInfo.ToString(targetExp);
 		}
 
 		public override string ToString() {
-			return string.Format("return {0}", _targetExp);
+			return string.Format("return {0}", targetExp);
 		}
 
 	}

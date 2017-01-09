@@ -9,19 +9,19 @@ namespace ELua {
     public class LuaDict : LuaObject {
 
         public LuaTable table;
-        public Dictionary<LuaObject, LuaObject> items = new Dictionary<LuaObject, LuaObject>();
+        public Dictionary<LuaObject, LuaObject> itemsDict = new Dictionary<LuaObject, LuaObject>();
 
         public LuaObject this[LuaObject key] {
-            set { items[key] = value; }
-            get { return items[key]; }
+            set { itemsDict[key] = value; }
+            get { return itemsDict[key]; }
         }
 
         public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             LuaObject value;
-            if (items.TryGetValue(obj, out value)) {
+            if (itemsDict.TryGetValue(obj, out value)) {
                 return new LuaDictItem { table = table, dict = this, key = obj, value = value };
             } else {
-                return stackFrame.vm.nil;
+                return stackFrame.nil;
             }
         }
 
@@ -32,7 +32,7 @@ namespace ELua {
         public override string ToString(StackFrame stackFrame) {
             var sb = new StringBuilder();
             sb.Append('{');
-            foreach (var item in items) {
+            foreach (var item in itemsDict) {
                 sb.Append(item.Key.ToString(stackFrame));
                 sb.Append(':');
                 sb.Append(item.Value.ToString(stackFrame));

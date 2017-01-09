@@ -8,43 +8,43 @@ namespace ELua {
 	/// </summary>
 	public class TableNExpression : Expression {
 
-		private readonly List<KeyValuePair<Expression, Expression>> _itemsList;
+		public List<KeyValuePair<Expression, Expression>> itemsList;
 
 		public TableNExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			type = Type.Table;
 			debugInfo = list[position].debugInfo;
-			_itemsList = new List<KeyValuePair<Expression, Expression>>();
+			itemsList = new List<KeyValuePair<Expression, Expression>>();
 			var argLen = len - 2;
 			for (var i = 0; i < argLen; i += 6) {
-				_itemsList.Add(new KeyValuePair<Expression, Expression>(list[position + i + 2], list[position + i + 5]));
+				itemsList.Add(new KeyValuePair<Expression, Expression>(list[position + i + 2], list[position + i + 5]));
 			}
 		}
 
 		public override void Extract(SyntaxContext context) {
-			for (var i = 0; i < _itemsList.Count; i++) {
-				var item = _itemsList[i];
+			for (var i = 0; i < itemsList.Count; i++) {
+				var item = itemsList[i];
 				var itemKey = ParserHelper.Extract(context, item.Key);
 				var itemValue = ParserHelper.Extract(context, item.Value);
-				_itemsList[i] = new KeyValuePair<Expression, Expression>(itemKey, itemValue);
+				itemsList[i] = new KeyValuePair<Expression, Expression>(itemKey, itemValue);
 			}
         }
 
-        public override void Generate(ILContext context) {
-            for (var i = _itemsList.Count - 1; i >= 0; i--) {
-                var item = _itemsList[i];
+        public override void Generate(ByteCodeContext context) {
+            for (var i = itemsList.Count - 1; i >= 0; i--) {
+                var item = itemsList[i];
                 item.Value.Generate(context);
                 item.Key.Generate(context);
             }
-            context.Add(new IL { opCode = IL.OpCode.Table });
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Table });
         }
 
         public override string GetDebugInfo() {
-			return DebugInfo.ToString(_itemsList.Select(t => new[] { t.Key, t.Value }).SelectMany(t => t).ToArray());
+			return DebugInfo.ToString(itemsList.Select(t => new[] { t.Key, t.Value }).SelectMany(t => t).ToArray());
 		}
 
 		public override string ToString() {
-			return string.Format("{{ {0} }}", string.Join(", ", _itemsList.Select(t => string.Format("[{0}] = {1}", t.Key, t.Value))));
+			return string.Format("{{ {0} }}", string.Join(", ", itemsList.Select(t => string.Format("[{0}] = {1}", t.Key, t.Value))));
 		}
 
 	}

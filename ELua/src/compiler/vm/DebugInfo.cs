@@ -6,7 +6,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class DebugInfo {
+	public struct DebugInfo {
 
 		public string file;
 		public int line;

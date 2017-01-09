@@ -17,16 +17,24 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
-        public virtual LuaObject Call(StackFrame stackFrame) {
-            throw new InvalidOperationException(GetType().Name);
-        }
-
         public virtual LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
             throw new InvalidOperationException(GetType().Name);
         }
 
         public virtual void Bind(StackFrame stackFrame, LuaObject obj) {
             throw new InvalidOperationException(GetType().Name);
+        }
+
+        public LuaObject Not(StackFrame stackFrame) {
+            return new LuaBoolean { value = !ToBoolean(stackFrame) };
+        }
+
+        public LuaObject And(StackFrame stackFrame, LuaObject obj) {
+            return new LuaBoolean { value = ToBoolean(stackFrame) && obj.ToBoolean(stackFrame) };
+        }
+
+        public LuaObject Or(StackFrame stackFrame, LuaObject obj) {
+            return new LuaBoolean { value = ToBoolean(stackFrame) || obj.ToBoolean(stackFrame) };
         }
 
         public virtual LuaObject Negate(StackFrame stackFrame) {
@@ -79,6 +87,14 @@ namespace ELua {
 
 	    public virtual LuaNumber ToNumber(StackFrame stackFrame) {
             throw new InvalidOperationException(GetType().Name);
+        }
+
+	    public virtual bool ToBoolean(StackFrame stackFrame) {
+	        if (IsNil) {
+	            return false;
+	        } else {
+	            throw new InvalidOperationException(GetType().Name);
+	        }
         }
 
 		public virtual string ToString(StackFrame stackFrame) {

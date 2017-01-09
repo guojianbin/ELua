@@ -7,8 +7,13 @@ namespace ELua {
 	/// </summary>
 	public class StackFrame {
 
-	    public LVM vm;
+		public static LuaObject[] emptyList = new LuaObject[0];
+
+	    public Module module;
 		public StackFrame parent;
+		public LuaObject nil;
+		public LVM vm;
+
 		public StackContext context;
 		public Stack<LuaObject> stack;
 
@@ -18,6 +23,7 @@ namespace ELua {
 
 	    public StackFrame(LVM vm) {
 	        this.vm = vm;
+		    nil = vm.nil;
             context = new StackContext();
             stack = new Stack<LuaObject>();
         }
@@ -25,6 +31,7 @@ namespace ELua {
 	    public StackFrame(StackFrame parent) {
 			this.parent = parent;
 	        vm = parent.vm;
+			nil = vm.nil;
             context = new StackContext();
 			stack = new Stack<LuaObject>();
 		}
@@ -41,26 +48,41 @@ namespace ELua {
 	        stack.Clear();
 	    }
 
-		public void Bind(string name, LuaObject obj) {
-			context.Bind(name, obj);
+		public LuaObject[] TakeAll() {
+			if (stackLen == 0) {
+				return emptyList;
+			} else {
+				var arr = stack.ToArray();
+				stack.Clear();
+				return arr;
+			}
 		}
 
-		public LuaObject[] TakeAll() {
-			var arr = stack.ToArray();
-			stack.Clear();
-			return arr;
+		public void Bind(string name, LuaObject obj) {
+			var binder = new LuaBinder { stackFrame = this, name = name, vm = vm, obj = obj };
+			context.Bind(binder);
+		}
+
+		public void Bind(LuaBinder binder) {
+			context.Bind(binder);
 		}
 
 		public LuaObject Find(string name) {
-			LuaObject value;
+			LuaBinder value;
 			if (context.TryGetValue(name, out value)) {
-				return value;
+				return value.obj;
 			} else {
-				if (parent != null) {
-					return parent.Find(name);
-				} else {
-					return null;
-				}
+				var obj = FindParent(name);
+				Bind(name, obj);
+				return obj;
+			}
+		}
+
+		public LuaObject FindParent(string name) {
+			if (parent != null) {
+				return parent.Find(name);
+			} else {
+				return nil;
 			}
 		}
 

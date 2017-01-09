@@ -18,13 +18,11 @@ namespace Doge {
 			Console.WriteLine(syntaxStr);
 			var defDict = ParseDef(syntaxStr);
 			var syntaxDict = ParseSyntax(syntaxStr);
-			var statDict = ParseStats(syntaxStr);
 			var expDict = ParseExps(syntaxStr);
 			var tempStr = File.ReadAllText("template.txt");
 			var tempDict = ParseTemp(tempStr);
 
 			WriteParser(syntaxDict, defDict, expDict, tempDict);
-			WriteModule(statDict, tempDict);
 		}
 
 		private static void WriteParser(Dictionary<string, string> syntaxDict, Dictionary<string, string> defDict, Dictionary<string, int> expDict, Dictionary<string, string> tempDict) {
@@ -40,32 +38,6 @@ namespace Doge {
 				var filePath = string.Format("{0}/{1}Parser.cs", syntaxRoot, syntaxInfo.name);
 				File.WriteAllText(filePath, fileStr);
 			}
-		}
-
-		private static void WriteModule(Dictionary<string, int> statDict, Dictionary<string, string> tempDict) {
-			var sb = new StringBuilder();
-			foreach (var statStr in statDict.Keys) {
-				var statTemp = tempDict["stat_exp"];
-				sb.Append(statTemp.Replace("$name$", statStr));
-				sb.Append('\n');
-			}
-			sb.Remove(sb.Length - 1, 1);
-			var statFile = tempDict["module"];
-			statFile = statFile.Replace("$body$", sb.ToString());
-			var filePath = string.Format("{0}/ModuleParser.cs", syntaxRoot);
-			File.WriteAllText(filePath, statFile);
-		}
-
-		private static Dictionary<string, int> ParseStats(string content) {
-			var statReg = new Regex(@"#begin statement((.|\n)*?)#end statement");
-			var match = statReg.Match(content);
-			var statStr = match.Groups[1].Value.Trim();
-			var statList = statStr.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-			var statDict = new Dictionary<string, int>();
-			for (var i = 0; i < statList.Length; i++) {
-				statDict.Add(statList[i], i);
-			}
-			return statDict;
 		}
 
 		private static Dictionary<string, int> ParseExps(string content) {
