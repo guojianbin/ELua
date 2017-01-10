@@ -31,8 +31,8 @@ namespace ELua {
 			Mod, // x % y
             Less, // x < y
             Greater, // x > y
-            LessEq, // x <= y
-            GreaterEq, // x >= y
+            LessEqual, // x <= y
+            GreaterEqual, // x >= y
             Equal, // x == y
             NotEqual, // x ~= y
 			Property, // a.x
@@ -45,12 +45,15 @@ namespace ELua {
             And, // and
             Or, // or
 
+			Chunk, // stats list
 			Module, // stats list
+			For, // for do end
             If, // if end
             IfElse, // if else end
 			Define, // local x = y
 			Bind, // x = y
-			Return // return x
+			Return, // return x
+			Function, // function x() end
 
 		}
 
@@ -58,20 +61,17 @@ namespace ELua {
 		public bool IsLeftValue { get; set; }
 		public bool IsRightValue { get; set; }
 		public bool IsFinally { get; set; }
+		public bool IsSimplify { get; set; }
 		public bool IsChunked { get; set; }
 
 		public Type type;
 		public DebugInfo debugInfo;
 
-	    public virtual string GetName() {
-	        throw new InvalidOperationException(GetExceptionMessage());
-	    }
-
 		public virtual void Extract(SyntaxContext context) {
 			throw new InvalidOperationException(GetExceptionMessage());
 		}
 
-	    public virtual void Generate(ByteCodeContext context) {
+	    public virtual void Generate(ModuleContext context) {
 			throw new InvalidOperationException(GetExceptionMessage());
 		}
 

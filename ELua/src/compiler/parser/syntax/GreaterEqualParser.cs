@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class LessEqParser : IParser {
+	public class GreaterEqualParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -13,6 +13,14 @@ namespace ELua {
 			IParser parser;
 
 			parser = new ParenParser();
+			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionParser();
+			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionNParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionNParser();
 			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
@@ -41,7 +49,7 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], "<")) {
+			if (!ParserHelper.IsOperator(list[index], ">")) {
 				return false;
 			}
 			offset += 1;
@@ -53,6 +61,14 @@ namespace ELua {
 			index = position + offset;
 			parser = new ParenParser();
 			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionParser();
+			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionNParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionNParser();
+			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
 			parser = new IndexParser();
@@ -81,7 +97,7 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new LessEqExpression(list, position, offset));
+			context.Insert(position, new GreaterEqualExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

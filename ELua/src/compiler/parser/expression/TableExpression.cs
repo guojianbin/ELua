@@ -32,7 +32,7 @@ namespace ELua {
 			}
         }
 
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
             for (var i = itemsList.Count - 1; i >= 0; i--) {
                 var item = itemsList[i];
                 item.Value.Generate(context);

@@ -17,10 +17,10 @@ namespace ELua {
             Jump, JumpIf, JumpNot, Label, 
             Negate, Multiply, Division, Mod, Plus, Subtract,
             Not, And, Or,
-            Less, Greater, LessEq, GreaterEq, Equal, NotEqual,
-			Property, Index, Call,
+            Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual,
+			Property, Index, Call, 
             Table, List, List0,
-			Ret,
+			Return,
 
 		}
 
@@ -28,7 +28,7 @@ namespace ELua {
 		public OpCode opCode;
 		public LuaObject opArg;
 
-		public void Run(StackFrame stackFrame) {
+		public void Execute(StackFrame stackFrame) {
 			switch (opCode) {
 				case OpCode.Push:
 					stackFrame.Push(opArg);
@@ -40,22 +40,22 @@ namespace ELua {
                     stackFrame.Clear();
                     break;
                 case OpCode.Bind:
-                    stackFrame.Pop().Bind(stackFrame, stackFrame.Pop());
+                    stackFrame.Push(stackFrame.Pop().Bind(stackFrame, stackFrame.Pop()));
                     break;
                 case OpCode.Label:
                     // ignored
                     break;
                 case OpCode.Jump:
-                    stackFrame.module.Jump(opArg);
+                    stackFrame.module.Jump((LuaLabel)opArg);
                     break;
                 case OpCode.JumpIf:
 			        if (stackFrame.Pop().ToBoolean(stackFrame)) {
-                        stackFrame.module.Jump(opArg);
+                        stackFrame.module.Jump((LuaLabel)opArg);
                     }
 					break;
                 case OpCode.JumpNot:
 			        if (!stackFrame.Pop().ToBoolean(stackFrame)) {
-                        stackFrame.module.Jump(opArg);
+                        stackFrame.module.Jump((LuaLabel)opArg);
                     }
 					break;
                 case OpCode.Not:
@@ -91,11 +91,11 @@ namespace ELua {
 				case OpCode.Greater:
                     stackFrame.Push(stackFrame.Pop().Greater(stackFrame, stackFrame.Pop()));
                     break;
-				case OpCode.LessEq:
-                    stackFrame.Push(stackFrame.Pop().LessEq(stackFrame, stackFrame.Pop()));
+				case OpCode.LessEqual:
+                    stackFrame.Push(stackFrame.Pop().LessEqual(stackFrame, stackFrame.Pop()));
                     break;
-				case OpCode.GreaterEq:
-                    stackFrame.Push(stackFrame.Pop().GreaterEq(stackFrame, stackFrame.Pop()));
+				case OpCode.GreaterEqual:
+                    stackFrame.Push(stackFrame.Pop().GreaterEqual(stackFrame, stackFrame.Pop()));
                     break;
 				case OpCode.Equal:
                     stackFrame.Push(stackFrame.Pop().Equal(stackFrame, stackFrame.Pop()));
@@ -120,8 +120,9 @@ namespace ELua {
 			        break;
 				case OpCode.Call:
 					stackFrame.Push(opArg.Call(stackFrame, stackFrame.TakeAll()));
-			        break;
-				case OpCode.Ret:
+					break;
+				case OpCode.Return:
+					stackFrame.module.Return();
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(opCode.ToString());
@@ -132,7 +133,7 @@ namespace ELua {
 			if (opArg == null) {
 				return opCode.ToString();
 			} else {
-				return string.Format("{0} {1}", opCode, opArg);
+				return string.Format("{0,-10} {1}", opCode, opArg);
 			}
 		}
 

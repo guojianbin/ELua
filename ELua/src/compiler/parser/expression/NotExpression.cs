@@ -20,7 +20,7 @@ namespace ELua {
             targetExp = ParserHelper.Extract(context, targetExp);
         }
 
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
             targetExp.Generate(context);
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Not });
         }

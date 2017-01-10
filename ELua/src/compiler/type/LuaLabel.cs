@@ -1,40 +1,45 @@
 ﻿namespace ELua {
 
-    /// <summary>
-    /// @author Easily
-    /// </summary>
-    public class LuaLabel : LuaObject {
+	/// <summary>
+	/// @author Easily
+	/// </summary>
+	public class LuaLabel : LuaObject {
 
-        public string value;
+		public string value;
+		public int index;
 
-        public override string ToString(StackFrame stackFrame) {
-            return ToString();
-        }
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
+		}
 
-        public override string ToString() {
-            return string.Format("{0}:", value);
-        }
+		public override string ToString(StackFrame stackFrame) {
+			return ToString();
+		}
 
-        protected bool Equals(LuaLabel other) {
-            return string.Equals(value, other.value);
-        }
+		public override string ToString() {
+			return value;
+		}
 
-        public override bool Equals(object obj) {
-            if (ReferenceEquals(null, obj)) {
-                return false;
-            } else if (ReferenceEquals(this, obj)) {
-                return true;
-            } else if (obj.GetType() != GetType()) {
-                return false;
-            } else {
-                return Equals((LuaLabel)obj);
-            }
-        }
+		protected bool Equals(LuaLabel other) {
+			return string.Equals(value, other.value) && index == other.index;
+		}
 
-        public override int GetHashCode() {
-            return (value != null ? value.GetHashCode() : 0);
-        }
+		public override bool Equals(object obj) {
+			if (ReferenceEquals(null, obj)) {
+				return false;
+			} else if (ReferenceEquals(this, obj)) {
+				return true;
+			} else if (obj.GetType() != GetType()) {
+				return false;
+			} else {
+				return Equals((LuaLabel)obj);
+			}
+		}
 
-    }
+		public override int GetHashCode() {
+			unchecked { return ((value != null ? value.GetHashCode() : 0) * 397) ^ index; }
+		}
+
+	}
 
 }

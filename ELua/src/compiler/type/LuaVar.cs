@@ -15,13 +15,38 @@
             return stackFrame.Find(name).GetIndex(stackFrame, obj);
         }
 
-	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
-            stackFrame.Bind(name, obj);
+	    public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
+            stackFrame.Bind(name, obj.ToObject(stackFrame));
+	        return this;
 	    }
 
 	    public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
 			return stackFrame.Find(name).Call(stackFrame, args);
 		}
+
+	    public override LuaObject Less(StackFrame stackFrame, LuaObject obj) {
+            return stackFrame.Find(name).Less(stackFrame, obj);
+        }
+
+	    public override LuaObject Greater(StackFrame stackFrame, LuaObject obj) {
+            return stackFrame.Find(name).Greater(stackFrame, obj);
+        }
+
+	    public override LuaObject LessEqual(StackFrame stackFrame, LuaObject obj) {
+            return stackFrame.Find(name).LessEqual(stackFrame, obj);
+        }
+
+	    public override LuaObject GreaterEqual(StackFrame stackFrame, LuaObject obj) {
+            return stackFrame.Find(name).GreaterEqual(stackFrame, obj);
+        }
+
+	    public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+            return stackFrame.Find(name).Equal(stackFrame, obj);
+        }
+
+	    public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+            return stackFrame.Find(name).NotEqual(stackFrame, obj);
+        }
 
 	    public override LuaObject Negate(StackFrame stackFrame) {
             return stackFrame.Find(name).Negate(stackFrame);
@@ -51,7 +76,11 @@
 	        return stackFrame.Find(name).ToNumber(stackFrame);
         }
 
-	    public override bool ToBoolean(StackFrame stackFrame) {
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return stackFrame.Find(name).ToObject(stackFrame);
+		}
+
+		public override bool ToBoolean(StackFrame stackFrame) {
             return stackFrame.Find(name).ToBoolean(stackFrame);
         }
 

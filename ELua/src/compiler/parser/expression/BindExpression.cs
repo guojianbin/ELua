@@ -18,12 +18,20 @@ namespace ELua {
 			item2Exp = list[position + 2];
 		}
 
-		public override void Extract(SyntaxContext context) {
+	    public BindExpression(Expression item1Exp, Expression item2Exp) {
+            type = Type.Bind;
+            IsStatement = true;
+            this.item1Exp = item1Exp;
+	        this.item2Exp = item2Exp;
+            debugInfo = item1Exp.debugInfo;
+        }
+
+	    public override void Extract(SyntaxContext context) {
 			item1Exp = ParserHelper.Extract(context, item1Exp);
 			item2Exp = ParserHelper.Extract(context, item2Exp);
         }
 
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
             item2Exp.Generate(context);
             item1Exp.Generate(context);
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Bind });

@@ -14,13 +14,14 @@ namespace ELua {
 			type = Type.Negate;
 			debugInfo = list[position].debugInfo;
 			targetExp = list[position + 1];
+			IsSimplify = targetExp.IsFinally;
 		}
 
 		public override void Extract(SyntaxContext context) {
 			targetExp = ParserHelper.Extract(context, targetExp);
 		}
 
-	    public override void Generate(ByteCodeContext context) {
+	    public override void Generate(ModuleContext context) {
             targetExp.Generate(context);
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Negate });
         }

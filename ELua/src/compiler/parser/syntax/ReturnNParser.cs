@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class GreaterEqParser : IParser {
+	public class ReturnNParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -12,7 +12,16 @@ namespace ELua {
 			var index = position;
 			IParser parser;
 
+			if (!ParserHelper.IsKeyword(list[index], "return")) {
+				return false;
+			}
+			offset += 1;
+			index = position + offset;
 			parser = new ParenParser();
+			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionParser();
+			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionNParser();
 			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
@@ -36,44 +45,29 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new SubtractParser();
 			while (parser.Parse(context, index));
-			if (!list[index].IsRightValue) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], ">")) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], "=")) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
-			parser = new ParenParser();
+			parser = new LessParser();
 			while (parser.Parse(context, index));
-			parser = new PropertyParser();
+			parser = new GreaterParser();
 			while (parser.Parse(context, index));
-			parser = new IndexParser();
+			parser = new LessEqualParser();
 			while (parser.Parse(context, index));
-			parser = new CallParser();
+			parser = new GreaterEqualParser();
 			while (parser.Parse(context, index));
-			parser = new CallNParser();
+			parser = new EqualParser();
 			while (parser.Parse(context, index));
-			parser = new NegateParser();
+			parser = new NotEqualParser();
 			while (parser.Parse(context, index));
-			parser = new NotParser();
+			parser = new AndParser();
 			while (parser.Parse(context, index));
-			parser = new MultiplyParser();
+			parser = new OrParser();
 			while (parser.Parse(context, index));
-			parser = new DivisionParser();
+			parser = new ListParser();
 			while (parser.Parse(context, index));
-			parser = new ModParser();
+			parser = new ListNParser();
 			while (parser.Parse(context, index));
-			parser = new PlusParser();
+			parser = new TableParser();
 			while (parser.Parse(context, index));
-			parser = new SubtractParser();
+			parser = new TableNParser();
 			while (parser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;
@@ -81,7 +75,7 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new GreaterEqExpression(list, position, offset));
+			context.Insert(position, new ReturnNExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

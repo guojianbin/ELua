@@ -13,7 +13,17 @@ namespace ELua {
 			IParser parser;
 
 			while (true) {
+			parser = new ReturnNParser();
+			while (parser.Parse(context, index));
 			parser = new ReturnParser();
+			while (parser.Parse(context, index));
+			parser = new ForNParser();
+			while (parser.Parse(context, index));
+			parser = new ForParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionNParser();
 			while (parser.Parse(context, index));
 			parser = new IfParser();
 			while (parser.Parse(context, index));

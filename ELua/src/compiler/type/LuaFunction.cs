@@ -1,5 +1,3 @@
-using System;
-
 namespace ELua {
 
 	/// <summary>
@@ -8,9 +6,14 @@ namespace ELua {
 	public class LuaFunction : LuaObject {
 
 		public string name;
+		public string[] argsList;
 
 		public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
-			throw new NotImplementedException();
+			return stackFrame.module.Call(stackFrame, name, argsList, args);
+		}
+
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
 		}
 
 		public override string ToString() {

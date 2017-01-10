@@ -7,12 +7,15 @@ namespace ELua {
 	/// </summary>
 	public class SyntaxContext {
 
+		public Parser parser;
 		public ulong uid;
 	    public int level;
 		public List<Expression> list;
+		public bool IsCutting;
+		public Expression cuttingExp;
 
 		public string NewUID() {
-			return string.Format("_var_<{0}>", (++uid).ToString());
+			return string.Format("_i{0}_<{1}>", level.ToString(), (++uid).ToString());
 		}
 
 		public void Add(Expression expression) {

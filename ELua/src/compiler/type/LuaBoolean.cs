@@ -7,7 +7,11 @@
 
         public bool value;
 
-        public override bool ToBoolean(StackFrame stackFrame) {
+	    public override LuaObject ToObject(StackFrame stackFrame) {
+		    return this;
+	    }
+
+	    public override bool ToBoolean(StackFrame stackFrame) {
             return value;
         }
 

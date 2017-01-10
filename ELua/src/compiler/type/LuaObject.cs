@@ -21,7 +21,7 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
-        public virtual void Bind(StackFrame stackFrame, LuaObject obj) {
+        public virtual LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
             throw new InvalidOperationException(GetType().Name);
         }
 
@@ -30,11 +30,11 @@ namespace ELua {
         }
 
         public LuaObject And(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = ToBoolean(stackFrame) && obj.ToBoolean(stackFrame) };
+	        return ToBoolean(stackFrame) ? obj : this;
         }
 
-        public LuaObject Or(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = ToBoolean(stackFrame) || obj.ToBoolean(stackFrame) };
+		public LuaObject Or(StackFrame stackFrame, LuaObject obj) {
+			return ToBoolean(stackFrame) ? this : obj;
         }
 
         public virtual LuaObject Negate(StackFrame stackFrame) {
@@ -69,11 +69,11 @@ namespace ELua {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-	    public virtual LuaObject LessEq(StackFrame stackFrame, LuaObject obj) {
+	    public virtual LuaObject LessEqual(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-	    public virtual LuaObject GreaterEq(StackFrame stackFrame, LuaObject obj) {
+	    public virtual LuaObject GreaterEqual(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
@@ -89,6 +89,10 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
+		public virtual LuaObject ToObject(StackFrame stackFrame) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
 	    public virtual bool ToBoolean(StackFrame stackFrame) {
 	        if (IsNil) {
 	            return false;
@@ -103,6 +107,14 @@ namespace ELua {
 		    } else {
                 throw new InvalidOperationException(GetType().Name);
             }
+		}
+
+		public override string ToString() {
+			if (IsNil) {
+				return "nil";
+			} else {
+				throw new InvalidOperationException(GetType().Name);
+			}
 		}
 
 	}

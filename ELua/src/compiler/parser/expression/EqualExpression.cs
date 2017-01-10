@@ -15,7 +15,8 @@ namespace ELua {
             type = Type.Equal;
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];
-            item2Exp = list[position + 3];
+			item2Exp = list[position + 3];
+			IsSimplify = item1Exp.IsFinally && item2Exp.IsFinally;
         }
 
         public override void Extract(SyntaxContext context) {
@@ -23,7 +24,7 @@ namespace ELua {
             item2Exp = ParserHelper.Extract(context, item2Exp);
         }
 
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
             item2Exp.Generate(context);
             item1Exp.Generate(context);
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Equal });

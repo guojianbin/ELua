@@ -5,22 +5,33 @@ namespace ELua {
 	/// </summary>
 	public class NumberExpression : Expression {
 
-        public string value;
+        public float value;
+	    public LuaNumber numberVar;
 
         public NumberExpression(string value, DebugInfo debugInfo) {
 			IsFinally = true;
 			type = Type.Number;
 			IsRightValue = true;
-			this.value = value;
+			this.value = float.Parse(value);
 			this.debugInfo = debugInfo;
-		}
+            numberVar = new LuaNumber { value = this.value };
+        }
 
-		public override void Generate(ByteCodeContext context) {
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = new LuaNumber { value = float.Parse(value) } });
+	    public NumberExpression(float value, DebugInfo debugInfo) {
+            IsFinally = true;
+            type = Type.Number;
+            IsRightValue = true;
+	        this.value = value;
+            this.debugInfo = debugInfo;
+            numberVar = new LuaNumber { value = this.value };
+        }
+
+	    public override void Generate(ModuleContext context) {
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = numberVar });
 		}
 
 		public override string ToString() {
-			return value;
+			return value.ToString();
 		}
 
 	}

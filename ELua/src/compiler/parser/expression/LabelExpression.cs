@@ -6,6 +6,7 @@ namespace ELua {
     public class LabelExpression : Expression {
 
         public string value;
+	    public int index;
 
         public LabelExpression(string value, DebugInfo debugInfo) {
             IsStatement = true;
@@ -14,8 +15,9 @@ namespace ELua {
             this.debugInfo = debugInfo;
         }
 
-        public override void Generate(ByteCodeContext context) {
-            context.Add(new ByteCode { opCode = ByteCode.OpCode.Label, opArg = new LuaLabel { value = value } });
+        public override void Generate(ModuleContext context) {
+	        index = context.Count;
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Label, opArg = new LuaLabel { value = value, index = index} });
         }
 
         public override string ToString() {

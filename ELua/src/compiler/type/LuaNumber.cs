@@ -39,11 +39,11 @@
             return new LuaBoolean { value = value > obj.ToNumber(stackFrame).value };
         }
 
-        public override LuaObject LessEq(StackFrame stackFrame, LuaObject obj) {
+        public override LuaObject LessEqual(StackFrame stackFrame, LuaObject obj) {
             return new LuaBoolean { value = value <= obj.ToNumber(stackFrame).value };
         }
 
-        public override LuaObject GreaterEq(StackFrame stackFrame, LuaObject obj) {
+        public override LuaObject GreaterEqual(StackFrame stackFrame, LuaObject obj) {
             return new LuaBoolean { value = value >= obj.ToNumber(stackFrame).value };
         }
 
@@ -58,6 +58,10 @@
         public override LuaNumber ToNumber(StackFrame stackFrame) {
             return this;
         }
+
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
+		}
 
         public override bool ToBoolean(StackFrame stackFrame) {
             return true;

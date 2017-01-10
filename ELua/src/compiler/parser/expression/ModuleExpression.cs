@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -8,40 +7,37 @@ namespace ELua {
 	/// </summary>
 	public class ModuleExpression : Expression {
 
-		public List<Expression> itemsList;
+		public ChunkExpression chunkExp;
 
 		public ModuleExpression(List<Expression> list, int position, int len) {
 			IsChunked = true;
 			type = Type.Module;
 			debugInfo = list[position].debugInfo;
-			itemsList = new List<Expression>();
+			var itemsList = new List<Expression>();
 			for (var i = 0; i < len; i++) {
 				itemsList.Add(list[position + i]);
 			}
+		    if (itemsList.Count > 0) {
+                chunkExp = new ChunkExpression(itemsList);
+            } else {
+		        chunkExp = new ChunkExpression(new List<Expression>());
+		    }
 		}
 
 		public override void Extract(SyntaxContext context) {
-            context = new SyntaxContext { list = new List<Expression>() };
-            foreach (var item in itemsList) {
-                item.Extract(context);
-                context.Add(item);
-            }
-            itemsList = context.list;
+			chunkExp.Extract(context);
 		}
 
-		public override void Generate(ByteCodeContext context) {
-            foreach (var item in itemsList) {
-                item.Generate(context);
-                context.Add(new ByteCode { opCode = ByteCode.OpCode.Clear });
-            }
+		public override void Generate(ModuleContext context) {
+			chunkExp.Generate(context);
 		}
 
 		public override string GetDebugInfo() {
-			return DebugInfo.ToString(itemsList.ToArray());
+			return chunkExp.GetDebugInfo();
 		}
 
 		public override string ToString() {
-			return string.Join("\n", itemsList.Select(t => t.ToString()));
+			return chunkExp.ToString();
 		}
 
 	}

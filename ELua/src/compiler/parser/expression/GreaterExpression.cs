@@ -15,7 +15,17 @@ namespace ELua {
             type = Type.Greater;
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];
-            item2Exp = list[position + 2];
+			item2Exp = list[position + 2];
+			IsSimplify = item1Exp.IsFinally && item2Exp.IsFinally;
+        }
+
+        public GreaterExpression(Expression item1Exp, Expression item2Exp) {
+            IsRightValue = true;
+            type = Type.Greater;
+            debugInfo = item1Exp.debugInfo;
+            this.item1Exp = item1Exp;
+            this.item2Exp = item2Exp;
+            IsSimplify = item1Exp.IsFinally && item2Exp.IsFinally;
         }
 
         public override void Extract(SyntaxContext context) {
@@ -23,7 +33,7 @@ namespace ELua {
             item2Exp = ParserHelper.Extract(context, item2Exp);
         }
 
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
             item2Exp.Generate(context);
             item1Exp.Generate(context);
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Greater });

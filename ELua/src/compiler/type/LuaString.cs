@@ -5,7 +5,11 @@
     /// </summary>
     public class LuaString : LuaObject {
 
-        public string value;
+		public string value;
+
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
+		}
 
         public override string ToString(StackFrame stackFrame) {
             return ToString();

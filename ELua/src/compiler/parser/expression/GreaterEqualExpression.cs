@@ -5,17 +5,18 @@ namespace ELua {
     /// <summary>
     /// @author Easily
     /// </summary>
-    public class LessEqExpression : Expression {
+    public class GreaterEqualExpression : Expression {
 
 	    public Expression item1Exp;
 	    public Expression item2Exp;
 
-        public LessEqExpression(List<Expression> list, int position, int len) {
+        public GreaterEqualExpression(List<Expression> list, int position, int len) {
             IsRightValue = true;
-            type = Type.LessEq;
+            type = Type.GreaterEqual;
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];
-            item2Exp = list[position + 3];
+			item2Exp = list[position + 3];
+			IsSimplify = item1Exp.IsFinally && item2Exp.IsFinally;
         }
 
         public override void Extract(SyntaxContext context) {
@@ -23,10 +24,10 @@ namespace ELua {
             item2Exp = ParserHelper.Extract(context, item2Exp);
         }
 
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
             item2Exp.Generate(context);
             item1Exp.Generate(context);
-            context.Add(new ByteCode { opCode = ByteCode.OpCode.LessEq });
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.GreaterEqual });
         }
 
         public override string GetDebugInfo() {
@@ -34,7 +35,7 @@ namespace ELua {
         }
 
         public override string ToString() {
-            return string.Format("{0} <= {1}", item1Exp, item2Exp);
+            return string.Format("{0} >= {1}", item1Exp, item2Exp);
         }
 
     }

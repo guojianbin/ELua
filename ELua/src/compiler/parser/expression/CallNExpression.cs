@@ -31,11 +31,11 @@ namespace ELua {
 			}
 		}
 
-		public override void Generate(ByteCodeContext context) {
+		public override void Generate(ModuleContext context) {
 		    for (var i = itemsList.Count - 1; i >= 0; i--) {
 		        itemsList[i].Generate(context);
 		    }
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaVar { name = targetExp.GetName() } });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaVar { name = ((WordExpression)targetExp).value } });
 		}
 
 		public override string GetDebugInfo() {

@@ -21,8 +21,8 @@ namespace ELua {
 			targetExp = ParserHelper.Extract(context, targetExp);
 		}
 
-		public override void Generate(ByteCodeContext context) {
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaVar { name = targetExp.GetName() } });
+		public override void Generate(ModuleContext context) {
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaVar { name = ((WordExpression)targetExp).value } });
 		}
 
 		public override string GetDebugInfo() {

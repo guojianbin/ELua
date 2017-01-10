@@ -19,6 +19,10 @@ namespace ELua {
 			index = position + offset;
 			parser = new ParenParser();
 			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionParser();
+			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionNParser();
+			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
 			parser = new IndexParser();
@@ -45,9 +49,9 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new GreaterParser();
 			while (parser.Parse(context, index));
-			parser = new LessEqParser();
+			parser = new LessEqualParser();
 			while (parser.Parse(context, index));
-			parser = new GreaterEqParser();
+			parser = new GreaterEqualParser();
 			while (parser.Parse(context, index));
 			parser = new EqualParser();
 			while (parser.Parse(context, index));
@@ -76,7 +80,17 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 			while (true) {
+			parser = new ReturnNParser();
+			while (parser.Parse(context, index));
 			parser = new ReturnParser();
+			while (parser.Parse(context, index));
+			parser = new ForNParser();
+			while (parser.Parse(context, index));
+			parser = new ForParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionNParser();
 			while (parser.Parse(context, index));
 			parser = new IfParser();
 			while (parser.Parse(context, index));

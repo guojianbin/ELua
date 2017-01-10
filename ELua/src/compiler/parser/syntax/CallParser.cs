@@ -14,6 +14,14 @@ namespace ELua {
 
 			parser = new ParenParser();
 			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionParser();
+			while (parser.Parse(context, index));
+			parser = new AnonymousFunctionNParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionParser();
+			while (parser.Parse(context, index));
+			parser = new FunctionNParser();
+			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
 			if (!list[index].IsRightValue) {

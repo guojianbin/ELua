@@ -10,8 +10,9 @@
         public int index;
         public LuaObject value;
 
-        public override void Bind(StackFrame stackFrame, LuaObject obj) {
+        public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
             list[index] = obj;
+            return this;
         }
 
         public override LuaObject Negate(StackFrame stackFrame) {

@@ -19,11 +19,17 @@ namespace ELua {
         }
 
         public override void Extract(SyntaxContext context) {
-            item1Exp = ParserHelper.Extract(context, item1Exp);
-            item2Exp = ParserHelper.Extract(context, item2Exp);
+	        item1Exp = ParserHelper.Extract(context, item1Exp);
+	        var itemKey = context.NewUID();
+			var step1Item = ParserHelper.Wrapper(item1Exp, itemKey);
+			var step2Item = ParserHelper.Wrapper(item2Exp, itemKey);
+	        var condExp = new IfElseExpression(item1Exp, step2Item.Value, step1Item.Value);
+	        context.Add(condExp);
+			context.IsCutting = true;
+	        context.cuttingExp = step1Item.Key;
         }
 
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
             item2Exp.Generate(context);
             item1Exp.Generate(context);
             context.Add(new ByteCode { opCode = ByteCode.OpCode.And });

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ELua {
 
@@ -43,17 +44,28 @@ namespace ELua {
         }
 
         public static Expression Extract(SyntaxContext context, Expression expression) {
-            if (expression.IsFinally) {
+			if (expression.IsFinally || expression.IsSimplify) {
                 return expression;
             }
             expression.Extract(context);
+	        if (context.IsCutting) {
+		        context.IsCutting = false;
+		        return context.cuttingExp;
+	        }
             if (expression.IsLeftValue || expression.IsStatement) {
                 return expression;
+            } else {
+				var itemObj = Wrapper(expression, context.NewUID());
+				context.Add(itemObj.Value);
+	            return itemObj.Key;
             }
-            var temp = new VarExpression(context.NewUID(), expression);
-            context.Add(new DefineExpression(temp, expression));
-            return temp;
         }
+
+		public static KeyValuePair<Expression, Expression> Wrapper(Expression expression, string name) {
+			var itemKey = new WordExpression(name, expression.debugInfo);
+			var itemValue = new DefineExpression(itemKey, expression);
+			return new KeyValuePair<Expression, Expression>(itemKey, itemValue);
+		}
 
     }
 

@@ -9,6 +9,10 @@ namespace ELua {
 
 		public object value;
 
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
+		}
+
 		public override string ToString() {
 			return string.Format("LuaUserdata Value: {0}", value);
 		}

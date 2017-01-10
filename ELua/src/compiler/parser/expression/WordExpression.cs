@@ -16,11 +16,7 @@ namespace ELua {
 			this.debugInfo = debugInfo;
         }
 
-        public override string GetName() {
-            return value;
-        }
-
-        public override void Generate(ByteCodeContext context) {
+        public override void Generate(ModuleContext context) {
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = new LuaVar { name = value } });
 		}
 
