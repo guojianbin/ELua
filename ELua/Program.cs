@@ -11,7 +11,7 @@ namespace ELua {
 			var scanner = new Scanner(file, File.ReadAllText(file));
 			var parser = new Parser(logger, file, scanner.Tokens.Select(t => ParserHelper.ToExpression(t)).ToList());
 			var module = new Module(logger, parser.Generate());
-			var vm = new LVM();
+			var vm = new LVM(logger);
 			vm.Add(module);
 
 			logger.WriteLine(string.Empty);

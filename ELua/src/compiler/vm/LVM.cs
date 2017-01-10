@@ -13,15 +13,17 @@ namespace ELua {
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
 		public LuaObject nil = new LuaObject { IsNil = true };
 		public StackFrame stackFrame;
+	    public Logger logger;
 
-        public LVM() {
+        public LVM(Logger logger) {
+            this.logger = logger;
             stackFrame = new StackFrame(this);
 			stackFrame.Bind("print", new LuaUserdata { value = new Func<StackFrame, LuaObject[], LuaObject>(Print) });
 			stackFrame.Bind("stacktrace", new LuaUserdata { value = new Func<StackFrame, LuaObject[], LuaObject>(StackTrace) });
 		}
 
 		public LuaObject Print(StackFrame stackFrame, LuaObject[] args) {
-			Console.WriteLine(string.Join(", ", args.Select(t => t.ToString(stackFrame))));
+			logger.WriteLine(string.Join(", ", args.Select(t => t.ToString(stackFrame))));
             return nil;
 		}
 

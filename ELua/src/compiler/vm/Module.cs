@@ -9,6 +9,7 @@ namespace ELua {
 	public class Module {
 
 		public Logger logger;
+	    public Module parent;
 		public ModuleContext context;
 		public Dictionary<string, Module> modulesDict;
         public List<ByteCode> codesList;
@@ -22,15 +23,34 @@ namespace ELua {
 			codesList = context.list;
 			modulesDict = new Dictionary<string, Module>();
 			foreach (var item in context.funcsDict) {
-				modulesDict.Add(item.Key, new Module(logger, item.Value));
-			}
+                modulesDict.Add(item.Key, new Module(logger, item.Value) { parent = this });
+            }
 
 			logger.WriteLine(string.Empty, Logger.Type.File);
 			logger.WriteLine(string.Format("<{0}>", name), Logger.Type.File);
 			logger.WriteLine(string.Join("\n", codesList.Select(t => t.ToString())), Logger.Type.File);
 		}
 
-		public void Jump(LuaLabel label) {
+	    public Module Find(string name) {
+	        Module value;
+	        if (modulesDict.TryGetValue(name, out value)) {
+	            return value;
+	        } else {
+	            value = FindParent(name);
+                modulesDict.Add(name, value);
+	            return value;
+	        }
+	    }
+
+	    private Module FindParent(string name) {
+	        if (parent == null) {
+	            return null;
+	        } else {
+	            return parent.Find(name);
+	        }
+	    }
+
+	    public void Jump(LuaLabel label) {
 			position = label.index;
 		}
 
@@ -39,7 +59,12 @@ namespace ELua {
 		}
 
 		public LuaObject Call(StackFrame stackFrame, string name, string[] argsNames, LuaObject[] argsList) {
-			return modulesDict[name].Call(stackFrame, argsNames, argsList);
+		    var module = Find(name);
+		    if (module == null) {
+		        return stackFrame.nil;
+		    } else {
+                return module.Call(stackFrame, argsNames, argsList);
+            }
 		}
 
 		public LuaObject Call(StackFrame stackFrame, string[] argsNames, LuaObject[] argsList) {
@@ -62,7 +87,12 @@ namespace ELua {
 			if (stackFrame.stackLen == 0) {
 				return stackFrame.nil;
 			} else {
-				return stackFrame.Pop().ToObject(stackFrame);
+			    var topObj = stackFrame.Pop();
+			    if (topObj.IsNil) {
+                    return stackFrame.nil;
+                } else {
+                    return topObj.ToObject(stackFrame);
+                }
 			}
 		}
 
