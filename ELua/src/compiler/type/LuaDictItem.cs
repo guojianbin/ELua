@@ -11,11 +11,46 @@
         public LuaObject value;
 
         public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
-            dict[key] = obj;
-            return this;
+	        return dict.Bind(key, obj);
         }
 
-        public override LuaObject Negate(StackFrame stackFrame) {
+	    public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			return value.Equal(stackFrame, obj);
+	    }
+
+	    public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+			return value.GetIndex(stackFrame, obj);
+	    }
+
+	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
+			return value.GetProperty(stackFrame, obj);
+	    }
+
+	    public override LuaObject Greater(StackFrame stackFrame, LuaObject obj) {
+			return value.Greater(stackFrame, obj);
+	    }
+
+	    public override LuaObject GreaterEqual(StackFrame stackFrame, LuaObject obj) {
+			return value.GreaterEqual(stackFrame, obj);
+	    }
+
+	    public override LuaObject Less(StackFrame stackFrame, LuaObject obj) {
+			return value.Less(stackFrame, obj);
+	    }
+
+	    public override LuaObject LessEqual(StackFrame stackFrame, LuaObject obj) {
+			return value.LessEqual(stackFrame, obj);
+	    }
+
+	    public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			return value.NotEqual(stackFrame, obj);
+	    }
+
+	    public override bool ToBoolean(StackFrame stackFrame) {
+			return value.ToBoolean(stackFrame);
+	    }
+
+	    public override LuaObject Negate(StackFrame stackFrame) {
             return value.Negate(stackFrame);
         }
 
@@ -39,13 +74,21 @@
             return value.Subtract(stackFrame, obj);
         }
 
-        public override LuaNumber ToNumber(StackFrame stackFrame) {
+	    public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
+		    return value.Call(stackFrame, args);
+	    }
+
+	    public override LuaNumber ToNumber(StackFrame stackFrame) {
             return value.ToNumber(stackFrame);
         }
 
-        public override string ToString(StackFrame stackFrame) {
-            return value.ToString(stackFrame);
-        }
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return value;
+		}
+
+		public override string ToString() {
+			return value.ToString();
+		}
 
     }
 

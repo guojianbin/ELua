@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ELua {
 
@@ -7,6 +8,12 @@ namespace ELua {
     /// @author Easily
     /// </summary>
     public static class ParserHelper {
+
+	    public static List<Expression> ToExpressionList(IList<Token> tokens) {
+		    var list = new List<Expression>(tokens.Count);
+			list.AddRange(tokens.Select(t => ToExpression(t)));
+		    return list;
+	    }
 
         public static Expression ToExpression(Token token) {
             if (token.type == Token.Type.Word) {
@@ -44,11 +51,11 @@ namespace ELua {
         }
 
         public static Expression Extract(SyntaxContext context, Expression expression) {
-			if (expression.IsFinally || expression.IsSimplify) {
+			if (expression.IsFinally) {
                 return expression;
             }
             expression.Extract(context);
-	        if (context.IsCutting) {
+	        if (context.IsCutting) { // ¶ÌÂ·ÇóÖµ
 		        context.IsCutting = false;
 		        return context.cuttingExp;
 	        }

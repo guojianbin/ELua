@@ -16,7 +16,7 @@
         }
 
 	    public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
-            stackFrame.Bind(name, obj.ToObject(stackFrame));
+            stackFrame.Bind(name, obj);
 	        return this;
 	    }
 
@@ -77,15 +77,11 @@
         }
 
 		public override LuaObject ToObject(StackFrame stackFrame) {
-			return stackFrame.Find(name).ToObject(stackFrame);
+			return stackFrame.Find(name);
 		}
 
 		public override bool ToBoolean(StackFrame stackFrame) {
             return stackFrame.Find(name).ToBoolean(stackFrame);
-        }
-
-	    public override string ToString(StackFrame stackFrame) {
-            return stackFrame.Find(name).ToString(stackFrame);
         }
 
         public override string ToString() {

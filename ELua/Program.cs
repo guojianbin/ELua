@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 
 namespace ELua {
 
@@ -9,14 +8,13 @@ namespace ELua {
 			var file = "test.lua";
 			var logger = new Logger("log.txt");
 			var scanner = new Scanner(file, File.ReadAllText(file));
-			var parser = new Parser(logger, file, scanner.Tokens.Select(t => ParserHelper.ToExpression(t)).ToList());
-			var module = new Module(logger, parser.Generate());
+			var parser = new Parser(logger, file, ParserHelper.ToExpressionList(scanner.Tokens));
 			var vm = new LVM(logger);
-			vm.Add(module);
+			vm.Generate(parser.Generate());
 
 			logger.WriteLine(string.Empty);
 			logger.WriteLine("<run>");
-			logger.WriteLine(vm.Call(file).ToString());
+			vm.Call(file);
 		}
 
 	}

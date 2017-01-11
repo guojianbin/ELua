@@ -7,7 +7,7 @@ namespace ELua {
     /// <summary>
     /// @author Easily
     /// </summary>
-    public class LuaList : LuaObject {
+    public class LuaList {
 
         public LuaTable table;
         public List<LuaObject> itemsList = new List<LuaObject>();
@@ -21,7 +21,7 @@ namespace ELua {
             itemsList.Add(item);
         }
 
-        public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+        public LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
             var index = (int)obj.ToNumber(stackFrame).value - 1;
             var value = itemsList.ElementAtOrDefault(index);
             if (value == null) {
@@ -31,20 +31,16 @@ namespace ELua {
             }
         }
 
-        public override string ToString(StackFrame stackFrame) {
-            var sb = new StringBuilder();
-            sb.Append('{');
-            foreach (var item in itemsList) {
-                sb.Append(item.ToString(stackFrame));
-                sb.Append(',');
-            }
-            sb.Remove(sb.Length - 1, 1);
-            sb.Append('}');
-            return sb.ToString();
-        }
-
-        public override string ToString() {
-            return "list";
+		public override string ToString() {
+			var sb = new StringBuilder();
+			sb.Append('{');
+			foreach (var item in itemsList) {
+				sb.Append(item);
+				sb.Append(',');
+			}
+			sb.Remove(sb.Length - 1, 1);
+			sb.Append('}');
+			return sb.ToString();
         }
 
     }

@@ -16,7 +16,7 @@ namespace ELua {
 		}
 
 		public override void Generate(ModuleContext context) {
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = new LuaString { value = value } });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaString { value = value } });
 		}
 
 		public override string ToString() {

@@ -35,7 +35,8 @@ namespace ELua {
 		    for (var i = itemsList.Count - 1; i >= 0; i--) {
 		        itemsList[i].Generate(context);
 		    }
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaVar { name = ((WordExpression)targetExp).value } });
+			targetExp.Generate(context);
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg1 = new LuaInteger { value = itemsList.Count } });
 		}
 
 		public override string GetDebugInfo() {

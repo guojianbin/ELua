@@ -7,6 +7,7 @@ namespace ELua {
 	/// </summary>
 	public class LuaObject {
 
+		public string uid;
 	    public bool IsNil;
 	    
 	    public virtual LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
@@ -90,7 +91,11 @@ namespace ELua {
         }
 
 		public virtual LuaObject ToObject(StackFrame stackFrame) {
-			throw new InvalidOperationException(GetType().Name);
+			if (IsNil) {
+				return stackFrame.nil;
+			} else {
+				throw new InvalidOperationException(GetType().Name);
+			}
 		}
 
 	    public virtual bool ToBoolean(StackFrame stackFrame) {
@@ -100,14 +105,6 @@ namespace ELua {
 	            throw new InvalidOperationException(GetType().Name);
 	        }
         }
-
-		public virtual string ToString(StackFrame stackFrame) {
-		    if (IsNil) {
-		        return "nil";
-		    } else {
-                throw new InvalidOperationException(GetType().Name);
-            }
-		}
 
 		public override string ToString() {
 			if (IsNil) {

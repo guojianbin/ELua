@@ -1,0 +1,6 @@
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua\bin\Debug\ELua.exe.config
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua\bin\Debug\ELua.exe
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua\bin\Debug\ELua.pdb
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua\obj\Debug\ELua.csprojResolveAssemblyReference.cache
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua\obj\Debug\ELua.exe
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua\obj\Debug\ELua.pdb

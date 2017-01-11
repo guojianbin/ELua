@@ -8,15 +8,14 @@ namespace ELua {
 	/// </summary>
 	public class FunctionExpression : Expression {
 
-		public string name;
+		public WordExpression nameExp;
 		public ChunkExpression chunkExp;
 
 		public FunctionExpression(List<Expression> list, int position, int len) {
 			IsStatement = true;
-			IsSimplify = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
-			name = ((WordExpression)list[position + 1]).value;
+			nameExp = (WordExpression)list[position + 1];
 			var itemsList = list.Skip(position + 4).Take(len - 5).ToList();
 			chunkExp = new ChunkExpression(itemsList);
 		}
@@ -26,11 +25,9 @@ namespace ELua {
 		}
 
 		public override void Generate(ModuleContext context) {
-			var funcContext = new ModuleContext { name = name };
-			context.funcsDict.Add(funcContext.name, funcContext);
-			chunkExp.Generate(funcContext);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = new LuaFunction { name = name } });
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = new LuaVar { name = name } });
+			chunkExp.Generate(context.Bind(nameExp.value, new ModuleContext { name = nameExp.value, level = context.level + 1 }));
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg1 = new LuaString { value = nameExp.value }, opArg2 = new LuaArgs() });
+			nameExp.Generate(context);
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Bind });
 		}
 
@@ -39,7 +36,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("function {0}()\n{1}\nend", name, chunkExp);
+			return string.Format("function {0}()\n{1}\nend", nameExp, chunkExp);
 		}
 
 	}

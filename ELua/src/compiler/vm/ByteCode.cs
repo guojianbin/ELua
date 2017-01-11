@@ -19,19 +19,20 @@ namespace ELua {
             Not, And, Or,
             Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual,
 			Property, Index, Call, 
-            Table, List, List0,
+            Table, List, Function,
 			Return,
 
 		}
 
 	    public int index;
 		public OpCode opCode;
-		public LuaObject opArg;
+		public LuaObject opArg1;
+		public LuaObject opArg2;
 
 		public void Execute(StackFrame stackFrame) {
 			switch (opCode) {
 				case OpCode.Push:
-					stackFrame.Push(opArg);
+					stackFrame.Push(opArg1);
 					break;
 				case OpCode.Pop:
 			        stackFrame.Pop();
@@ -40,22 +41,22 @@ namespace ELua {
                     stackFrame.Clear();
                     break;
                 case OpCode.Bind:
-                    stackFrame.Push(stackFrame.Pop().Bind(stackFrame, stackFrame.Pop()));
+					stackFrame.Push(stackFrame.PopRaw().Bind(stackFrame, stackFrame.Pop()));
                     break;
                 case OpCode.Label:
                     // ignored
                     break;
                 case OpCode.Jump:
-                    stackFrame.module.Jump((LuaLabel)opArg);
+                    stackFrame.Jump((LuaLabel)opArg1);
                     break;
                 case OpCode.JumpIf:
 			        if (stackFrame.Pop().ToBoolean(stackFrame)) {
-                        stackFrame.module.Jump((LuaLabel)opArg);
+						stackFrame.Jump((LuaLabel)opArg1);
                     }
 					break;
                 case OpCode.JumpNot:
 			        if (!stackFrame.Pop().ToBoolean(stackFrame)) {
-                        stackFrame.module.Jump((LuaLabel)opArg);
+						stackFrame.Jump((LuaLabel)opArg1);
                     }
 					break;
                 case OpCode.Not:
@@ -109,20 +110,20 @@ namespace ELua {
                 case OpCode.Index:
                     stackFrame.Push(stackFrame.Pop().GetIndex(stackFrame, stackFrame.Pop()));
                     break;
-                case OpCode.List0:
-                    stackFrame.Push(TableHelper.CreateEmpty());
-                    break;
                 case OpCode.List:
-                    stackFrame.Push(TableHelper.CreateList(stackFrame.TakeAll()));
+					stackFrame.Push(TypeHelper.CreateList(stackFrame, stackFrame.Take(((LuaInteger)opArg1).value)));
 			        break;
                 case OpCode.Table:
-                    stackFrame.Push(TableHelper.CreateTable(stackFrame.TakeAll()));
-			        break;
+					stackFrame.Push(TypeHelper.CreateTable(stackFrame, stackFrame.Take(((LuaInteger)opArg1).value)));
+					break;
+				case OpCode.Function:
+					stackFrame.Push(TypeHelper.CreateFunction(stackFrame, ((LuaString)opArg1).value, ((LuaArgs)opArg2).argsList));
+					break;
 				case OpCode.Call:
-					stackFrame.Push(opArg.Call(stackFrame, stackFrame.TakeAll()));
+					stackFrame.Push(stackFrame.Pop().Call(stackFrame, stackFrame.Take(((LuaInteger)opArg1).value)));
 					break;
 				case OpCode.Return:
-					stackFrame.module.Return();
+					stackFrame.Return();
 					break;
 				default:
 					throw new ArgumentOutOfRangeException(opCode.ToString());
@@ -130,10 +131,12 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			if (opArg == null) {
+			if (opArg1 == null) {
 				return opCode.ToString();
+			} else if (opArg2 == null) {
+				return string.Format("{0,-10} {1,-10}", opCode, opArg1);
 			} else {
-				return string.Format("{0,-10} {1}", opCode, opArg);
+				return string.Format("{0,-10} {1,-10} {2,-10}", opCode, opArg1, opArg2);
 			}
 		}
 

@@ -13,7 +13,6 @@ namespace ELua {
 
 		public AnonymousFunctionExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
-			IsSimplify = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			var itemsList = list.Skip(position + 3).Take(len - 4).ToList();
@@ -26,10 +25,8 @@ namespace ELua {
 
 		public override void Generate(ModuleContext context) {
 			name = context.NewUID();
-			var funcContext = new ModuleContext { name = name };
-			context.funcsDict.Add(funcContext.name, funcContext);
-			chunkExp.Generate(funcContext);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = new LuaFunction { name = name } });
+			chunkExp.Generate(context.Bind(name, new ModuleContext { name = name, level = context.level + 1 }));
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg1 = new LuaString { value = name }, opArg2 = new LuaArgs() });
 		}
 
 		public override string GetDebugInfo() {

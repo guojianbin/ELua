@@ -1,28 +1,52 @@
 ﻿namespace ELua {
 
-    /// <summary>
-    /// @author Easily
-    /// </summary>
-    public class LuaBoolean : LuaObject {
+	/// <summary>
+	/// @author Easily
+	/// </summary>
+	public class LuaBoolean : LuaObject {
 
-        public bool value;
+		public bool value;
 
-	    public override LuaObject ToObject(StackFrame stackFrame) {
-		    return this;
-	    }
+		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			return new LuaBoolean { value = Equals(obj) };
+		}
 
-	    public override bool ToBoolean(StackFrame stackFrame) {
-            return value;
-        }
+		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			return new LuaBoolean { value = !Equals(obj) };
+		}
 
-        public override string ToString(StackFrame stackFrame) {
-            return value.ToString();
-        }
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
+		}
 
-        public override string ToString() {
-            return value.ToString();
-        }
+		public override bool ToBoolean(StackFrame stackFrame) {
+			return value;
+		}
 
-    }
+		public override string ToString() {
+			return value.ToString();
+		}
+
+		public override int GetHashCode() {
+			return value.GetHashCode();
+		}
+
+		protected bool Equals(LuaBoolean other) {
+			return value.Equals(other.value);
+		}
+
+		public override bool Equals(object obj) {
+			if (ReferenceEquals(null, obj)) {
+				return false;
+			} else if (ReferenceEquals(this, obj)) {
+				return true;
+			} else if (obj.GetType() != GetType()) {
+				return false;
+			} else {
+				return Equals((LuaBoolean)obj);
+			}
+		}
+
+	}
 
 }

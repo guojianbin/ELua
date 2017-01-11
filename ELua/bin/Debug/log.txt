@@ -1,0 +1,203 @@
+<source>
+b = { "b" = { "b" = { "b" = { "b" = { "b" = function ()
+print("haha")
+end } } } } }
+b."b"."b"."b"."b"."b"()
+function test3()
+local a = function ()
+return 100
+end
+local b = function ()
+return 200
+end
+local c = function ()
+return 300
+end
+return { a, b, c }
+end
+local arr = test3()
+for i=1,3 do
+print(arr[i]())
+end
+
+<extract>
+local _i1_<1> = function ()
+print("haha")
+end
+local _i1_<2> = { "b" = _i1_<1> }
+local _i1_<3> = { "b" = _i1_<2> }
+local _i1_<4> = { "b" = _i1_<3> }
+local _i1_<5> = { "b" = _i1_<4> }
+local _i1_<6> = { "b" = _i1_<5> }
+b = _i1_<6>
+b."b"."b"."b"."b"."b"()
+function test3()
+local _i2_<1> = function ()
+return 100
+end
+local a = _i2_<1>
+local _i2_<2> = function ()
+return 200
+end
+local b = _i2_<2>
+local _i2_<3> = function ()
+return 300
+end
+local c = _i2_<3>
+local _i2_<4> = { a, b, c }
+return _i2_<4>
+end
+local arr = test3()
+for i=1,3 do
+print(arr[i]())
+end
+
+<_v_i0<1>>
+Push       haha      
+Push       print     
+Call       1         
+Clear
+
+<_v_i1<1>>
+Push       100       
+Return
+Clear
+
+<_v_i1<2>>
+Push       200       
+Return
+Clear
+
+<_v_i1<3>>
+Push       300       
+Return
+Clear
+
+<test3>
+Function   _v_i1<1>             
+Push       _i2_<1>   
+Bind
+Clear
+Push       _i2_<1>   
+Push       a         
+Bind
+Clear
+Function   _v_i1<2>             
+Push       _i2_<2>   
+Bind
+Clear
+Push       _i2_<2>   
+Push       b         
+Bind
+Clear
+Function   _v_i1<3>             
+Push       _i2_<3>   
+Bind
+Clear
+Push       _i2_<3>   
+Push       c         
+Bind
+Clear
+Push       c         
+Push       b         
+Push       a         
+List       3         
+Push       _i2_<4>   
+Bind
+Clear
+Push       _i2_<4>   
+Return
+Clear
+
+<test.lua>
+Function   _v_i0<1>             
+Push       _i1_<1>   
+Bind
+Clear
+Push       _i1_<1>   
+Push       b         
+Table      2         
+Push       _i1_<2>   
+Bind
+Clear
+Push       _i1_<2>   
+Push       b         
+Table      2         
+Push       _i1_<3>   
+Bind
+Clear
+Push       _i1_<3>   
+Push       b         
+Table      2         
+Push       _i1_<4>   
+Bind
+Clear
+Push       _i1_<4>   
+Push       b         
+Table      2         
+Push       _i1_<5>   
+Bind
+Clear
+Push       _i1_<5>   
+Push       b         
+Table      2         
+Push       _i1_<6>   
+Bind
+Clear
+Push       _i1_<6>   
+Push       b         
+Bind
+Clear
+Push       b         
+Push       b         
+Push       b         
+Push       b         
+Push       b         
+Push       b         
+Property
+Property
+Property
+Property
+Property
+Call       0         
+Clear
+Function   test3                
+Push       test3     
+Bind
+Clear
+Push       test3     
+Call       0         
+Push       arr       
+Bind
+Clear
+Push       1         
+Push       i         
+Bind
+Clear
+Label      _l_i0<2>  
+Push       3         
+Push       i         
+Greater
+JumpIf     _l_i0<3>  
+Clear
+Push       i         
+Push       arr       
+Index
+Call       0         
+Push       print     
+Call       1         
+Clear
+Push       1         
+Push       i         
+Plus
+Push       i         
+Bind
+Jump       _l_i0<2>  
+Label      _l_i0<3>  
+Clear
+
+<run>
+haha
+100
+200
+300

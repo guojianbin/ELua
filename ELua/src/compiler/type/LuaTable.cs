@@ -15,8 +15,6 @@
 				return stackFrame.nil;
             } else if (!IsInit) {
                 return stackFrame.nil;
-            } else if (IsList) {
-                return list.GetProperty(stackFrame, obj);
             } else {
                 return dict.GetProperty(stackFrame, obj);
             }
@@ -32,25 +30,53 @@
             } else {
                 return dict.GetIndex(stackFrame, obj);
             }
-        }
+		}
 
-        public override string ToString(StackFrame stackFrame) {
-            if (!IsInit) {
-                return "{ }";
-            } else if (IsList) {
-                return list.ToString(stackFrame);
-            } else {
-                return dict.ToString(stackFrame);
-            }
-        }
+		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			return new LuaBoolean { value = Equals(obj) };
+		}
 
-        public override LuaObject ToObject(StackFrame stackFrame) {
-            return this;
-        }
+		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			return new LuaBoolean { value = !Equals(obj) };
+		}
 
-        public override string ToString() {
-            return "table";
-        }
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
+		}
+
+		public override bool ToBoolean(StackFrame stackFrame) {
+			return true;
+		}
+
+		public override int GetHashCode() {
+			return (uid != null ? uid.GetHashCode() : 0);
+		}
+
+		protected bool Equals(LuaFunction other) {
+			return string.Equals(uid, other.uid);
+		}
+
+		public override bool Equals(object obj) {
+			if (ReferenceEquals(null, obj)) {
+				return false;
+			} else if (ReferenceEquals(this, obj)) {
+				return true;
+			} else if (obj.GetType() != GetType()) {
+				return false;
+			} else {
+				return Equals((LuaFunction)obj);
+			}
+		}
+
+		public override string ToString() {
+			if (!IsInit) {
+				return "{ }";
+			} else if (IsList) {
+				return list.ToString();
+			} else {
+				return dict.ToString();
+			}
+		}
 
     }
 

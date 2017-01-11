@@ -14,7 +14,6 @@ namespace ELua {
 			type = Type.Negate;
 			debugInfo = list[position].debugInfo;
 			targetExp = list[position + 1];
-			IsSimplify = targetExp.IsFinally;
 		}
 
 		public override void Extract(SyntaxContext context) {

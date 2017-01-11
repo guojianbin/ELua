@@ -16,7 +16,6 @@ namespace ELua {
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];
 			item2Exp = list[position + 3];
-			IsSimplify = item1Exp.IsFinally && item2Exp.IsFinally;
         }
 
         public override void Extract(SyntaxContext context) {

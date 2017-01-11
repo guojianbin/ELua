@@ -1,2 +1,2 @@
-/ELua/bin
-/ELua/obj
+/**/*.exe
+/**/*.pdb

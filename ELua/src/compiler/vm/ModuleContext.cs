@@ -7,26 +7,31 @@ namespace ELua {
 	/// </summary>
 	public class ModuleContext {
 
+		public string name;
+		public int level;
         public ulong uid;
         public List<ByteCode> list;
-		public string name;
-		public Dictionary<string, ModuleContext> funcsDict;
+		public Dictionary<string, ModuleContext> childDict;
 
 		public int Count {
 			get { return list.Count; }
 		}
 
+		public ModuleContext() {
+			list = new List<ByteCode>();
+			childDict = new Dictionary<string, ModuleContext>();
+		}
+
 		public string NewUID() {
-            return string.Format("_v_<{0}>", (++uid).ToString());
+            return string.Format("_v_i{0}<{1}>", level, (++uid).ToString());
         }
 
 		public string NewLabel() {
-            return string.Format("_l_<{0}>", (++uid).ToString());
+            return string.Format("_l_i{0}<{1}>", level, (++uid).ToString());
         }
 
-        public ModuleContext() {
-			list = new List<ByteCode>();
-			funcsDict = new Dictionary<string, ModuleContext>();
+		public ModuleContext Bind(string name, ModuleContext context) {
+			return childDict[name] = context;
 		}
 
 		public void Add(ByteCode byteCode) {

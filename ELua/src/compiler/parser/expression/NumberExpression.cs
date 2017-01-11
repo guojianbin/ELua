@@ -27,7 +27,7 @@ namespace ELua {
         }
 
 	    public override void Generate(ModuleContext context) {
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = numberVar });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = numberVar });
 		}
 
 		public override string ToString() {

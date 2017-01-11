@@ -1,0 +1,179 @@
+﻿-- f[10] = 1
+-- local a = 100.a + b % f[10].x(100,200+1,300,f(x, a+b("hello world"))) * (-c.y[100] - b) + (c + d) + b + (c * d) - (e / f) * (b + (c * d) - (e / f + 200))
+-- local a = b + c + d
+-- local a = b + (c * d) - (e / f(c))
+-- a()
+-- a()
+-- a(1)
+-- a(1,2,3)
+
+-- local b = 1
+-- local c = 2
+-- local a = b + c
+-- print(a)
+
+-- b = {[1]=2,["2"]=3}
+-- a = {a=100,b=200,c=300}
+-- a = {1,21,33}
+-- a = {}
+-- print("hello world")
+
+-- a = 100 + 20 + 30
+
+-- local a  = 5  - 2
+-- print(a)
+-- local b = 2 * 20
+-- print(b)
+-- local c = -100
+-- print(c)
+-- print(2 + 100)
+
+-- local a = "10"
+-- local b = "10"
+-- if a == b then
+-- 	print(b)
+-- end
+-- print(a)
+
+-- local b = {a=100,b=200,c=200,b=300}
+-- local aa = "a"
+-- print(b[aa])
+
+-- b.a = 500
+-- print(b.a)
+-- print(b.a  - 200)
+-- print(b.c+b.a*(b.b+100))
+-- local a = 200
+-- print(a)
+-- print(b["a"])
+-- local b = {1,2,3}
+-- print(b[1])
+-- print(b[2])
+-- print(b[3])
+-- b[1] = 100
+-- print(b[1])
+-- local c = nil
+-- print(c)
+
+-- local a = 100
+-- local b = 200
+-- local c = a + -b
+-- print(c)
+
+-- local b = 10 + 20
+-- if b  then 
+-- 	local a = 100 + 200
+-- 	print(a)
+-- else
+-- 	local a = 200 + 400
+-- 	print(a)
+-- end
+
+-- local b = 100
+-- local a = 1
+-- local c = 5
+-- print(a and 50 or 80)
+-- print(b and b + 100 and c + 200)
+
+-- local b = true
+-- if b or a + 100 then
+-- 	if b then
+-- 		print(1)
+-- 	else
+-- 		print(5)
+-- 	end
+-- 	if a then
+-- 		print(2)
+-- 	else
+-- 		print(3)
+-- 	end
+-- else
+-- 	print(4)
+-- end
+
+-- local a = 10
+-- local b = 20
+-- if a + b then
+-- 	print(a + b)
+-- end
+
+-- local a = a or 100
+-- local b = a or 200
+-- print(a)
+
+-- local c = 200
+
+-- function test2(a,b)
+-- 	print(a + b)
+-- 	print("hello world")
+-- 	print(c)
+-- 	print(stacktrace())
+-- 	return a * 2
+-- end
+
+-- local test3 = function(a,b)
+-- 	print(a + b)
+-- 	print("hello world")
+-- 	print(c)
+-- 	print(stacktrace())
+-- 	return a * 2
+-- end
+
+-- test3(10,20)
+
+-- local b1 = b
+-- local b2 = b
+-- if b1 == b2 then
+-- 	print("haha")
+-- end
+
+-- local t2 = test2
+-- local t3 = test2
+
+-- t2(1)
+
+-- if t2 == t3 then
+-- 	print("test2")
+-- end
+
+-- b = {function(a,b,c,d)
+-- 	print(1)
+-- end,function()
+-- 	print(2)
+-- end,function()
+-- 	print(3)
+-- end}
+-- function test2(a)
+-- 	if a > 100000 then return end
+-- 	print(a)
+-- 	-- b[a]()
+-- 	a = a + 1
+-- 	test2(a)
+-- 	-- for i=1,10,3 do
+-- 	-- 	print(i)
+-- 	-- end
+-- end
+
+-- test2(1)
+b = {b={b={b={b={b=function()
+	print("haha")
+end}}}}}
+b.b.b.b.b.b()
+
+function test3()
+	local a = function ()
+		return 100
+	end
+	local b = function()
+		return 200
+	end
+	local c = function()
+		return 300
+	end
+	return {a,b,c}
+end
+
+local arr = test3()
+for i = 1, 3 do
+	print(arr[i]())
+end

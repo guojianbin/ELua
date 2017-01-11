@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ELua {
@@ -8,37 +9,48 @@ namespace ELua {
 	/// </summary>
 	public class Module {
 
-		public Logger logger;
-	    public Module parent;
+		public LVM vm;
+		private Logger logger;
+		public Module parent;
 		public ModuleContext context;
 		public Dictionary<string, Module> modulesDict;
         public List<ByteCode> codesList;
-	    public int position;
 		public string name;
 
-		public Module(Logger logger, ModuleContext context) {
+		public Module(LVM vm, Logger logger, ModuleContext context) {
+			this.vm = vm;
 			this.logger = logger;
 			this.context = context;
 			name = context.name;
 			codesList = context.list;
 			modulesDict = new Dictionary<string, Module>();
-			foreach (var item in context.funcsDict) {
-                modulesDict.Add(item.Key, new Module(logger, item.Value) { parent = this });
-            }
+			InitChildren();
 
 			logger.WriteLine(string.Empty, Logger.Type.File);
 			logger.WriteLine(string.Format("<{0}>", name), Logger.Type.File);
 			logger.WriteLine(string.Join("\n", codesList.Select(t => t.ToString())), Logger.Type.File);
 		}
 
-	    public Module Find(string name) {
+		public void InitChildren() {
+			var childList = new List<Module>(context.childDict.Count);
+			foreach (var item in context.childDict) {
+				var module = new Module(vm, logger, item.Value) { parent = this };
+				modulesDict.Add(item.Key, module);
+				childList.Add(module);
+			}
+			foreach (var item in childList.SelectMany(t => ModuleHelper.GetChildren(t))) {
+				modulesDict.Add(item.name, item);
+			}
+		}
+
+		public Module Find(string name) {
 	        Module value;
 	        if (modulesDict.TryGetValue(name, out value)) {
 	            return value;
 	        } else {
 	            value = FindParent(name);
-                modulesDict.Add(name, value);
-	            return value;
+				modulesDict.Add(name, value);
+				return value;
 	        }
 	    }
 
@@ -50,50 +62,30 @@ namespace ELua {
 	        }
 	    }
 
-	    public void Jump(LuaLabel label) {
-			position = label.index;
-		}
-
-		public void Return() {
-			position = codesList.Count;
-		}
-
-		public LuaObject Call(StackFrame stackFrame, string name, string[] argsNames, LuaObject[] argsList) {
+		public void Call(StackFrame stackFrame, string name, string[] argsNames, LuaObject[] argsList) {
 		    var module = Find(name);
-		    if (module == null) {
-		        return stackFrame.nil;
-		    } else {
-                return module.Call(stackFrame, argsNames, argsList);
-            }
+			module.Call(stackFrame, argsNames, argsList);
 		}
 
-		public LuaObject Call(StackFrame stackFrame, string[] argsNames, LuaObject[] argsList) {
-			stackFrame = new StackFrame(stackFrame) { module = this };
-			foreach (var item in argsNames.Zip(argsList, (name, value) => new { name, value })) {
-				stackFrame.Bind(item.name, item.value);
+		public void Call(StackFrame stackFrame, string[] argsNames, LuaObject[] argsList) {
+			var executor = stackFrame.executor;
+			stackFrame = new StackFrame(stackFrame, this, vm.NewUID());
+			var len = Math.Min(argsNames.Length, argsList.Length);
+			for (var i = 0; i < len; i++) {
+				stackFrame.Bind(argsNames[i], argsList[i]);
 			}
-			return Execute(stackFrame);
+			executor.Execute(stackFrame);
 		}
 
-		public LuaObject Call(StackFrame stackFrame) {
-			stackFrame = new StackFrame(stackFrame) { module = this };
-			return Execute(stackFrame);
+		public void Call(StackFrame stackFrame) {
+			stackFrame = new StackFrame(stackFrame, this, vm.NewUID());
+			var executor = new Executor(stackFrame);
+			stackFrame.executor = executor;
+			vm.Execute(executor);
 		}
 
-		private LuaObject Execute(StackFrame stackFrame) {
-			for (position = 0; position < codesList.Count; position++) {
-				codesList[position].Execute(stackFrame);
-			}
-			if (stackFrame.stackLen == 0) {
-				return stackFrame.nil;
-			} else {
-			    var topObj = stackFrame.Pop();
-			    if (topObj.IsNil) {
-                    return stackFrame.nil;
-                } else {
-                    return topObj.ToObject(stackFrame);
-                }
-			}
+		public override string ToString() {
+			return name;
 		}
 
 	}

@@ -25,7 +25,6 @@ namespace ELua {
 			var parser = new ModuleParser();
 			parser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
-
 			module = (ModuleExpression)list[0];
 			var errList = list.Where(t => !t.IsChunked).ToArray();
 

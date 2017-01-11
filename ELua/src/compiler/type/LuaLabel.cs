@@ -8,14 +8,6 @@
 		public string value;
 		public int index;
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
-			return this;
-		}
-
-		public override string ToString(StackFrame stackFrame) {
-			return ToString();
-		}
-
 		public override string ToString() {
 			return value;
 		}

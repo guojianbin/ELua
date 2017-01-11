@@ -16,7 +16,6 @@ namespace ELua {
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];
 			item2Exp = list[position + 2];
-			IsSimplify = item1Exp.IsFinally && item2Exp.IsFinally;
         }
 
         public GreaterExpression(Expression item1Exp, Expression item2Exp) {
@@ -25,7 +24,6 @@ namespace ELua {
             debugInfo = item1Exp.debugInfo;
             this.item1Exp = item1Exp;
             this.item2Exp = item2Exp;
-            IsSimplify = item1Exp.IsFinally && item2Exp.IsFinally;
         }
 
         public override void Extract(SyntaxContext context) {

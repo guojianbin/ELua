@@ -59,21 +59,21 @@
             return this;
         }
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
-			return this;
-		}
-
         public override bool ToBoolean(StackFrame stackFrame) {
             return true;
         }
 
-        public override string ToString(StackFrame stackFrame) {
-            return value.ToString();
-        }
+		public override LuaObject ToObject(StackFrame stackFrame) {
+			return this;
+		}
 
         public override string ToString() {
             return value.ToString();
         }
+
+		public override int GetHashCode() {
+			return value.GetHashCode();
+		}
 
         protected bool Equals(LuaNumber other) {
             return value.Equals(other.value);
@@ -89,10 +89,6 @@
             } else {
                 return Equals((LuaNumber)obj);
             }
-        }
-
-        public override int GetHashCode() {
-            return value.GetHashCode();
         }
 
     }

@@ -61,7 +61,6 @@ namespace ELua {
 		public bool IsLeftValue { get; set; }
 		public bool IsRightValue { get; set; }
 		public bool IsFinally { get; set; }
-		public bool IsSimplify { get; set; }
 		public bool IsChunked { get; set; }
 
 		public Type type;

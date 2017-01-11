@@ -7,13 +7,29 @@
 
 		public string value;
 
+	    public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			return new LuaBoolean { value = Equals(obj) };
+	    }
+
+	    public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			return new LuaBoolean { value = !Equals(obj) };
+	    }
+
 		public override LuaObject ToObject(StackFrame stackFrame) {
 			return this;
 		}
 
-        public override string ToString(StackFrame stackFrame) {
-            return ToString();
-        }
+	    public override bool ToBoolean(StackFrame stackFrame) {
+		    return true;
+	    }
+
+		public override string ToString() {
+			return value;
+		}
+
+		public override int GetHashCode() {
+			return (value != null ? value.GetHashCode() : 0);
+		}
 
         protected bool Equals(LuaString other) {
             return string.Equals(value, other.value);
@@ -29,14 +45,6 @@
             } else {
                 return Equals((LuaString)obj);
             }
-        }
-
-        public override int GetHashCode() {
-            return (value != null ? value.GetHashCode() : 0);
-        }
-
-        public override string ToString() {
-            return string.Format("\"{0}\"", value);
         }
 
     }
