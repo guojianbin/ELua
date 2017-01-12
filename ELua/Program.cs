@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 
 namespace ELua {
@@ -22,7 +23,9 @@ namespace ELua {
 			logger.WriteLine(string.Empty);
 			logger.WriteLine("[output]");
 			vm.Call(file);
-		}
+            GC.Collect();
+            vm.Dispose();
+        }
 
 	}
 

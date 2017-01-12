@@ -9,7 +9,7 @@ namespace ELua {
 	public class Parser {
 
 		public LVM vm;
-		public Expression AST;
+		public Expression ast;
 		public string file;
 
 		public Parser(LVM vm, string file, List<Expression> list) {
@@ -25,11 +25,11 @@ namespace ELua {
 			var parser = new ModuleParser();
 			parser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
-			AST = list[0];
+			ast = list[0];
 			var errList = list.Where(t => !t.IsChunked).ToArray();
 
 			vm.WriteLine("[source]");
-			vm.WriteLine(AST.ToString());
+			vm.WriteLine(ast.ToString());
 			if (errList.Length > 0) {
 				vm.WriteLine(string.Empty);
 				vm.WriteLine(string.Join("\n", errList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t))));
@@ -37,15 +37,15 @@ namespace ELua {
 		}
 
 		private void Extract() {
-			AST.Extract(new SyntaxContext(this, 0));
+			ast.Extract(new SyntaxContext(this, 0));
 			vm.WriteLine(string.Empty, Logger.Type.File);
 			vm.WriteLine("[extract]", Logger.Type.File);
-			vm.WriteLine(AST.ToString(), Logger.Type.File);
+			vm.WriteLine(ast.ToString(), Logger.Type.File);
 		}
 
 		public void Generate() {
 			var context = new ModuleContext(vm, file, 0);
-            AST.Generate(context);
+            ast.Generate(context);
 			vm.Add(new Module(context));
 		}
 

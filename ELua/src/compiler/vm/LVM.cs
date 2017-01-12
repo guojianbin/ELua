@@ -12,34 +12,41 @@ namespace ELua {
 
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
 		public Dictionary<string, Executor> executorDict = new Dictionary<string, Executor>();
-		public LuaObject nil = new LuaNil();
+	    public LuaPools luaPools;
+		public LuaObject nil;
 		public ulong uid;
 		public StackFrame stackFrame;
 		public Logger logger;
+	    public bool IsDisposed;
 
         public LVM(Logger logger) {
             this.logger = logger;
-			stackFrame = new StackFrame(this);
-			stackFrame.Bind("trace", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Trace) });
+            nil = new LuaNil { uid = NewUID() };
+            luaPools = new LuaPools(this);
+            stackFrame = new StackFrame(this);
+            stackFrame.Bind("trace", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Trace) });
 			stackFrame.Bind("print", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Print) });
 			stackFrame.Bind("len", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Len) });
-			stackFrame.Bind("next", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Next) });
 		}
 
 		public string NewUID() {
 			return string.Format("_<{0}>", (++uid).ToString());
 		}
 
-		public void WriteLine(string msg, Logger.Type type = Logger.Type.All) {
+	    public LuaNumber GetNumber(float value) {
+	        return luaPools.GetNumber(value);
+	    }
+
+	    public void PutNumber(LuaNumber item) {
+	        luaPools.PutNumber(item);
+	    }
+
+	    public void WriteLine(string msg, Logger.Type type = Logger.Type.All) {
 			logger.WriteLine(msg, type);
 		}
 
-		public void Next(StackFrame stackFrame, LuaObject[] args) {
-			
-		}
-
 		public void Len(StackFrame stackFrame, LuaObject[] args) {
-			stackFrame.Push(new LuaNumber { value = ((LuaTable)args[0]).Length });
+			stackFrame.Push(GetNumber(((LuaTable)args[0]).Length));
 		}
 
 		public void Print(StackFrame stackFrame, LuaObject[] args) {
@@ -74,6 +81,10 @@ namespace ELua {
 			executorDict.Remove(executor.uid);
 			stackFrame.Clear();
 		}
+
+	    public void Dispose() {
+	        IsDisposed = true;
+	    }
 
 	}
 

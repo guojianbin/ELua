@@ -7,6 +7,7 @@ namespace ELua {
 	/// </summary>
 	public class LuaObject {
 
+	    public LVM vm;
 		public string uid;
 
 		public virtual void Unpack(StackFrame stackFrame) {

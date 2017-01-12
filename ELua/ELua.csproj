@@ -140,7 +140,6 @@
     <Compile Include="src\compiler\parser\syntax\TableParser.cs" />
     <Compile Include="src\compiler\scanner\Scanner.cs" />
     <Compile Include="src\compiler\scanner\Token.cs" />
-    <Compile Include="src\compiler\type\LuaArgs.cs" />
     <Compile Include="src\compiler\type\LuaBoolean.cs" />
     <Compile Include="src\compiler\type\LuaDict.cs" />
     <Compile Include="src\compiler\type\LuaFunction.cs" />
@@ -160,6 +159,7 @@
     <Compile Include="src\compiler\type\TypeHelper.cs" />
     <Compile Include="src\compiler\vm\Executor.cs" />
     <Compile Include="src\compiler\vm\LuaBinder.cs" />
+    <Compile Include="src\compiler\vm\LuaPools.cs" />
     <Compile Include="src\compiler\vm\Module.cs" />
     <Compile Include="src\compiler\vm\DebugInfo.cs" />
     <Compile Include="src\compiler\vm\ByteCode.cs" />

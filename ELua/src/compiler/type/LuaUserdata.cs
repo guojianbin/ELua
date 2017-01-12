@@ -9,10 +9,6 @@ namespace ELua {
 
 		public object value;
 
-		public override LuaNumber ToNumber(StackFrame stackFrame) {
-			return new LuaNumber { value = Convert.ToSingle(value) };
-		}
-
 		public override LuaObject Division(StackFrame stackFrame, LuaObject obj) {
 			return ToNumber(stackFrame).Division(stackFrame, obj);
 		}

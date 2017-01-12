@@ -1,35 +1,79 @@
 [source]
-local dict = { "a" = 1, "b" = 2 }
-function pair()
-
-end
+b = { "b" = { "b" = { "b" = { "b" = { "b" = function ()
+print("haha")
+end } } } } }
+b."b"."b"."b"."b"."b"()
 
 [extract]
-local _<5> = { "a" = 1, "b" = 2 }
-local dict = _<5>
-function pair()
-
+local _<5> = function ()
+print("haha")
 end
+local _<6> = { "b" = _<5> }
+local _<7> = { "b" = _<6> }
+local _<8> = { "b" = _<7> }
+local _<9> = { "b" = _<8> }
+local _<10> = { "b" = _<9> }
+b = _<10>
+b."b"."b"."b"."b"."b"()
 
-[pair]
-
+[_<11>]
+Push       haha      
+Push       print     
+Call
+Clear
 
 [test.lua]
-Push       2         
+Push       function _<11>
+Push       _<5>      
+Bind
+Clear
+Push       _<5>      
 Push       b         
-Push       1         
-Push       a         
-Table      4         
-Push       _<5>      
+Table      2         
+Push       _<6>      
 Bind
 Clear
-Push       _<5>      
-Push       dict      
+Push       _<6>      
+Push       b         
+Table      2         
+Push       _<7>      
 Bind
 Clear
-Push       function pair
-Push       pair      
+Push       _<7>      
+Push       b         
+Table      2         
+Push       _<8>      
 Bind
+Clear
+Push       _<8>      
+Push       b         
+Table      2         
+Push       _<9>      
+Bind
+Clear
+Push       _<9>      
+Push       b         
+Table      2         
+Push       _<10>     
+Bind
+Clear
+Push       _<10>     
+Push       b         
+Bind
+Clear
+Push       b         
+Push       b         
+Push       b         
+Push       b         
+Push       b         
+Push       b         
+Property
+Property
+Property
+Property
+Property
+Call
 Clear
 
 [output]
+haha

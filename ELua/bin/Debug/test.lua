@@ -144,21 +144,17 @@
 -- 	print(3)
 -- end}
 -- function test2(a)
--- 	if a > 100000 then return end
+-- 	if a > 1000 then return end
 -- 	print(a)
--- 	-- b[a]()
 -- 	a = a + 1
 -- 	test2(a)
--- 	-- for i=1,10,3 do
--- 	-- 	print(i)
--- 	-- end
 -- end
 
 -- test2(1)
--- b = {b={b={b={b={b=function()
--- 	print("haha")
--- end}}}}}
--- b.b.b.b.b.b()
+b = {b={b={b={b={b=function()
+	print("haha")
+end}}}}}
+b.b.b.b.b.b()
 
 -- function test3()
 -- 	local a = function ()
@@ -198,17 +194,17 @@
 
 
 ------------------ unpack -=-------------
--- function unpack1(list)
--- 	return unpack2(list, 1)
--- end
-
--- function unpack2(list, i)
--- 	if i <= len(list) then
--- 		return list[i], unpack2(list, i + 1)
+-- function unpack(list, i)
+-- 	if i == nil then
+-- 		return unpack(list, 1)
+-- 	else
+-- 		if i <= len(list) then
+-- 			return list[i], unpack(list, i + 1)
+-- 		end
 -- 	end
 -- end
 
--- print(unpack1({1,2,3,4,5}))
+-- print(unpack({1,2,3}))
 
 -- function test1()
 -- 	return 4,5
@@ -238,7 +234,7 @@
 
 
 -------------------foreach
-local dict = {a=1,b=2}
-function pair(dict)
+-- local dict = {a=1,b=2}
+-- function pair(dict)
 	
-end
+-- end

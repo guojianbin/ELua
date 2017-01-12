@@ -6,7 +6,6 @@ namespace ELua {
 	public class NumberExpression : Expression {
 
         public float value;
-	    public LuaNumber numberVar;
 
         public NumberExpression(string value, DebugInfo debugInfo) {
 			IsFinally = true;
@@ -14,7 +13,6 @@ namespace ELua {
 			IsRightValue = true;
 			this.value = float.Parse(value);
 			this.debugInfo = debugInfo;
-            numberVar = new LuaNumber { value = this.value };
         }
 
 	    public NumberExpression(float value, DebugInfo debugInfo) {
@@ -23,11 +21,10 @@ namespace ELua {
             IsRightValue = true;
 	        this.value = value;
             this.debugInfo = debugInfo;
-            numberVar = new LuaNumber { value = this.value };
         }
 
 	    public override void Generate(ModuleContext context) {
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = numberVar });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = context.vm.GetNumber(value) });
 		}
 
 		public override string ToString() {
