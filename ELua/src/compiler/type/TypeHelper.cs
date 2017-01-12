@@ -23,11 +23,6 @@
             return table;
         }
 
-	    public static LuaFunction CreateFunction(StackFrame stackFrame, string name, string[] argsList) {
-		    var func = new LuaFunction { name = name, argsList = argsList, uid = stackFrame.vm.NewUID() };
-		    return func;
-	    }
-
     }
 
 }

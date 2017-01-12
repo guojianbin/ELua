@@ -47,13 +47,15 @@ namespace ELua {
 
 			Chunk, // stats list
 			Module, // stats list
-			For, // for do end
+			For, // for i=x,y,z do ... end
+			ForEach, // for x,y in list do ... end
             If, // if end
             IfElse, // if else end
 			Define, // local x = y
 			Bind, // x = y
 			Return, // return x
 			Function, // function x() end
+			Unpack, // unpack(x) -> x,y,z
 
 		}
 

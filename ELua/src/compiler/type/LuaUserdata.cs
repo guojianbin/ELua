@@ -61,8 +61,8 @@ namespace ELua {
 			return this;
 		}
 
-		public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
-			return ((Func<StackFrame, LuaObject[], LuaObject>)value)(stackFrame, args);
+		public override void Call(StackFrame stackFrame, LuaObject[] args) {
+			((Action<StackFrame, LuaObject[]>)value)(stackFrame, args);
 		}
 
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {

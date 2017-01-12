@@ -13,7 +13,7 @@ namespace ELua {
         }
 
         public override void Generate(ModuleContext context) {
-            context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaObject { IsNil = true } });
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = context.vm.nil });
         }
 
         public override string ToString() {

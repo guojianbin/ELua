@@ -32,9 +32,9 @@ namespace ELua {
 			index = position + offset;
 			parser = new ParenParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionParser();
+			parser = new FunctionAParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionNParser();
+			parser = new FunctionANParser();
 			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
@@ -94,9 +94,9 @@ namespace ELua {
 			index = position + offset;
 			parser = new ParenParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionParser();
+			parser = new FunctionAParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionNParser();
+			parser = new FunctionANParser();
 			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
@@ -163,6 +163,8 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new ForParser();
 			while (parser.Parse(context, index));
+			parser = new ForEachParser();
+			while (parser.Parse(context, index));
 			parser = new FunctionParser();
 			while (parser.Parse(context, index));
 			parser = new FunctionNParser();
@@ -172,6 +174,8 @@ namespace ELua {
 			parser = new IfElseParser();
 			while (parser.Parse(context, index));
 			parser = new DefineParser();
+			while (parser.Parse(context, index));
+			parser = new DefineNParser();
 			while (parser.Parse(context, index));
 			parser = new BindParser();
 			while (parser.Parse(context, index));

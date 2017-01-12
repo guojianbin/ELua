@@ -17,11 +17,12 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
+			while (true) {
 			parser = new ParenParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionParser();
+			parser = new FunctionAParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionNParser();
+			parser = new FunctionANParser();
 			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
@@ -74,6 +75,12 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
+			if (!ParserHelper.IsOperator(list[index], ",")) {
+				break;
+			}
+			offset += 1;
+			index = position + offset;
+			}
 
 			context.Insert(position, new ReturnNExpression(list, position, offset));
 			context.Remove(position + 1, offset);

@@ -28,8 +28,10 @@ namespace ELua {
 		}
 
 		public override void Generate(ModuleContext context) {
-			chunkExp.Generate(context.Bind(nameExp.value, new ModuleContext { name = nameExp.value, level = context.level + 1 }));
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg1 = new LuaString { value = nameExp.value }, opArg2 = new LuaArgs { argsList= argsList } });
+			var module = new Module(new ModuleContext(context.vm, nameExp.value, context.level + 1) { argsList = argsList });
+			context.vm.Add(module);
+			chunkExp.Generate(context.Bind(nameExp.value, module.context));
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaFunction(module) });
 			nameExp.Generate(context);
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Bind });
 		}

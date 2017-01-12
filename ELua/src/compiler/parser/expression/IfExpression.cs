@@ -21,7 +21,6 @@ namespace ELua {
         }
 
 		public override void Extract(SyntaxContext context) {
-			condExp = ParserHelper.Extract(context, condExp);
 			chunkExp.Extract(context);
         }
 

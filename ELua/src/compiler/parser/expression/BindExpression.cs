@@ -12,18 +12,18 @@ namespace ELua {
 
 		public BindExpression(List<Expression> list, int position, int len) {
 			type = Type.Bind;
-			debugInfo = list[position].debugInfo;
 			IsStatement = true;
+			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];
 			item2Exp = list[position + 2];
 		}
 
 	    public BindExpression(Expression item1Exp, Expression item2Exp) {
             type = Type.Bind;
-            IsStatement = true;
+			IsStatement = true;
+			debugInfo = item1Exp.debugInfo;
             this.item1Exp = item1Exp;
 	        this.item2Exp = item2Exp;
-            debugInfo = item1Exp.debugInfo;
         }
 
 	    public override void Extract(SyntaxContext context) {

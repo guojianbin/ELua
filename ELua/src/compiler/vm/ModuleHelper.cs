@@ -5,14 +5,14 @@ using ELua;
 /// <summary>
 /// @author Easily
 /// </summary>
-internal static class ModuleHelper {
+static internal class ModuleHelper {
 
-	public static IEnumerable<Module> GetChildren(Module module) {
-		var list = new List<Module>();
-		var childList = module.modulesDict.Values;
-		list.AddRange(childList);
-		list.AddRange(childList.SelectMany(t => GetChildren(t)));
-		return list;
-	}
+//	public static IEnumerable<Module> GetChildren(Module module) {
+//		var list = new List<Module>();
+//		var childList = module.modulesList.Values;
+//		list.AddRange(childList);
+//		list.AddRange(childList.SelectMany(t => GetChildren(t)));
+//		return list;
+//	}
 
 }

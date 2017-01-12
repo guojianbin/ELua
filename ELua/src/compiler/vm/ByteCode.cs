@@ -13,13 +13,13 @@ namespace ELua {
 		public enum OpCode {
 
 			Undefine,
-			Push, Pop, Bind, Clear,
+			Push, Pop, Bind, BindN, Clear, Unpack,
             Jump, JumpIf, JumpNot, Label, 
             Negate, Multiply, Division, Mod, Plus, Subtract,
             Not, And, Or,
             Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual,
 			Property, Index, Call, 
-            Table, List, Function,
+            Table, List,
 			Return,
 
 		}
@@ -31,100 +31,180 @@ namespace ELua {
 
 		public void Execute(StackFrame stackFrame) {
 			switch (opCode) {
-				case OpCode.Push:
+				case OpCode.Push: {
 					stackFrame.Push(opArg1);
 					break;
-				case OpCode.Pop:
-			        stackFrame.Pop();
+				}
+				case OpCode.Pop: {
+					stackFrame.Pop();
 					break;
-                case OpCode.Clear:
-                    stackFrame.Clear();
-                    break;
-                case OpCode.Bind:
-					stackFrame.Push(stackFrame.PopRaw().Bind(stackFrame, stackFrame.Pop()));
-                    break;
-                case OpCode.Label:
-                    // ignored
-                    break;
-                case OpCode.Jump:
-                    stackFrame.Jump((LuaLabel)opArg1);
-                    break;
-                case OpCode.JumpIf:
-			        if (stackFrame.Pop().ToBoolean(stackFrame)) {
-						stackFrame.Jump((LuaLabel)opArg1);
-                    }
+				}
+                case OpCode.Clear: {
+	                stackFrame.Clear();
+	                break;
+                }
+                case OpCode.Bind: {
+	                var item1 = stackFrame.PopRaw();
+	                var item2 = stackFrame.Pop();
+	                stackFrame.Push(item1.Bind(stackFrame, item2));
+	                break;
+                }
+				case OpCode.BindN: {
+					var len = ((LuaInteger)opArg1).value;
+					var list1 = stackFrame.TakeRaw(len);
+					var list2 = stackFrame.Take(len);
+					for (var i = 0; i < len; i++) {
+						stackFrame.Push(list1[i].Bind(stackFrame, list2[i]));
+					}
 					break;
-                case OpCode.JumpNot:
-			        if (!stackFrame.Pop().ToBoolean(stackFrame)) {
-						stackFrame.Jump((LuaLabel)opArg1);
-                    }
+				}
+				case OpCode.Unpack: {
+					var item = stackFrame.Pop();
+					item.Unpack(stackFrame);
 					break;
-                case OpCode.Not:
-                    stackFrame.Push(stackFrame.Pop().Not(stackFrame));
-                    break;
-                case OpCode.And:
-                    stackFrame.Push(stackFrame.Pop().And(stackFrame, stackFrame.Pop()));
-                    break;
-                case OpCode.Or:
-                    stackFrame.Push(stackFrame.Pop().Or(stackFrame, stackFrame.Pop()));
-                    break;
-                case OpCode.Negate:
-                    stackFrame.Push(stackFrame.Pop().Negate(stackFrame));
-                    break;
-                case OpCode.Multiply:
-                    stackFrame.Push(stackFrame.Pop().Multiply(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.Division:
-                    stackFrame.Push(stackFrame.Pop().Division(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.Mod:
-                    stackFrame.Push(stackFrame.Pop().Mod(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.Plus:
-			        stackFrame.Push(stackFrame.Pop().Plus(stackFrame, stackFrame.Pop()));
+				}
+                case OpCode.Not: {
+	                var item = stackFrame.Pop();
+	                stackFrame.Push(item.Not(stackFrame));
+	                break;
+                }
+                case OpCode.And: {
+	                var item1 = stackFrame.Pop();
+	                var item2 = stackFrame.Pop();
+	                stackFrame.Push(item1.And(stackFrame, item2));
+	                break;
+                }
+				case OpCode.Or: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Or(stackFrame, item2));
+	                break;
+                }
+				case OpCode.Negate: {
+					var item = stackFrame.Pop();
+					stackFrame.Push(item.Negate(stackFrame));
 					break;
-				case OpCode.Subtract:
-                    stackFrame.Push(stackFrame.Pop().Subtract(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.Less:
-                    stackFrame.Push(stackFrame.Pop().Less(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.Greater:
-                    stackFrame.Push(stackFrame.Pop().Greater(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.LessEqual:
-                    stackFrame.Push(stackFrame.Pop().LessEqual(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.GreaterEqual:
-                    stackFrame.Push(stackFrame.Pop().GreaterEqual(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.Equal:
-                    stackFrame.Push(stackFrame.Pop().Equal(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.NotEqual:
-                    stackFrame.Push(stackFrame.Pop().NotEqual(stackFrame, stackFrame.Pop()));
-                    break;
-				case OpCode.Property:
-                    stackFrame.Push(stackFrame.Pop().GetProperty(stackFrame, stackFrame.Pop()));
+				}
+				case OpCode.Multiply: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Multiply(stackFrame, item2));
 					break;
-                case OpCode.Index:
-                    stackFrame.Push(stackFrame.Pop().GetIndex(stackFrame, stackFrame.Pop()));
-                    break;
-                case OpCode.List:
-					stackFrame.Push(TypeHelper.CreateList(stackFrame, stackFrame.Take(((LuaInteger)opArg1).value)));
-			        break;
-                case OpCode.Table:
-					stackFrame.Push(TypeHelper.CreateTable(stackFrame, stackFrame.Take(((LuaInteger)opArg1).value)));
+				}
+				case OpCode.Division: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Division(stackFrame, item2));
 					break;
-				case OpCode.Function:
-					stackFrame.Push(TypeHelper.CreateFunction(stackFrame, ((LuaString)opArg1).value, ((LuaArgs)opArg2).argsList));
+				}
+				case OpCode.Mod: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Mod(stackFrame, item2));
 					break;
-				case OpCode.Call:
-					stackFrame.Push(stackFrame.Pop().Call(stackFrame, stackFrame.Take(((LuaInteger)opArg1).value)));
+				}
+				case OpCode.Plus: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Plus(stackFrame, item2));
 					break;
-				case OpCode.Return:
+				}
+				case OpCode.Subtract: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Subtract(stackFrame, item2));
+					break;
+				}
+				case OpCode.Less: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Less(stackFrame, item2));
+					break;
+				}
+				case OpCode.Greater: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Greater(stackFrame, item2));
+					break;
+				}
+				case OpCode.LessEqual: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.LessEqual(stackFrame, item2));
+					break;
+				}
+				case OpCode.GreaterEqual: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.GreaterEqual(stackFrame, item2));
+					break;
+				}
+				case OpCode.Equal: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Equal(stackFrame, item2));
+					break;
+				}
+				case OpCode.NotEqual: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.NotEqual(stackFrame, item2));
+					break;
+				}
+				case OpCode.Property: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.GetProperty(stackFrame, item2));
+					break;
+				}
+				case OpCode.Index: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.GetIndex(stackFrame, item2));
+	                break;
+                }
+                case OpCode.List: {
+	                var len = ((LuaInteger)opArg1).value;
+	                var list = stackFrame.Take(len);
+	                stackFrame.Push(TypeHelper.CreateList(stackFrame, list));
+	                break;
+                }
+                case OpCode.Table: {
+	                var len = ((LuaInteger)opArg1).value;
+	                var list = stackFrame.Take(len);
+	                stackFrame.Push(TypeHelper.CreateTable(stackFrame, list));
+	                break;
+                }
+				case OpCode.Call: {
+					var item = stackFrame.Pop();
+					var list = stackFrame.TakeAll();
+					item.Call(stackFrame, list);
+					break;
+				}
+				case OpCode.Return: {
 					stackFrame.Return();
 					break;
+				}
+				case OpCode.Jump: {
+					stackFrame.Jump((LuaLabel)opArg1);
+					break;
+				}
+				case OpCode.JumpIf: {
+					if (stackFrame.Pop().ToBoolean(stackFrame)) {
+						stackFrame.Jump((LuaLabel)opArg1);
+					}
+					break;
+				}
+				case OpCode.JumpNot: {
+					if (!stackFrame.Pop().ToBoolean(stackFrame)) {
+						stackFrame.Jump((LuaLabel)opArg1);
+					}
+					break;
+				}
+				case OpCode.Label: {
+					// ignored
+					break;
+				}
 				default:
 					throw new ArgumentOutOfRangeException(opCode.ToString());
 			}

@@ -20,7 +20,7 @@ namespace ELua {
 		}
 
 		public override void Extract(SyntaxContext context) {
-			context = new SyntaxContext { level = context.level + 1, list = new List<Expression>(), parser = context.parser };
+			context = new SyntaxContext(context.parser, context.level + 1);
 			foreach (var item in itemsList) {
 				item.Extract(context);
 				context.Add(item);

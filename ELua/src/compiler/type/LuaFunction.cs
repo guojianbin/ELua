@@ -5,13 +5,14 @@ namespace ELua {
 	/// </summary>
 	public class LuaFunction : LuaObject {
 
-		public static readonly string[] emptyList = new string[0];
-		public string[] argsList = emptyList;
-		public string name;
+		public Module module;
 
-		public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
-			stackFrame.module.Call(stackFrame, name, argsList, args);
-			return stackFrame.nil;
+		public LuaFunction(Module module) {
+			this.module = module;
+		}
+
+		public override void Call(StackFrame stackFrame, LuaObject[] args) {
+			module.Call(stackFrame, module.context.argsList, args);
 		}
 
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
@@ -31,7 +32,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("function {0}", name);
+			return string.Format("function {0}", module.name);
 		}
 
 		public override int GetHashCode() {

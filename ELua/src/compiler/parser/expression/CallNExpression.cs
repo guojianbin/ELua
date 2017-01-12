@@ -36,7 +36,7 @@ namespace ELua {
 		        itemsList[i].Generate(context);
 		    }
 			targetExp.Generate(context);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg1 = new LuaInteger { value = itemsList.Count } });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call });
 		}
 
 		public override string GetDebugInfo() {

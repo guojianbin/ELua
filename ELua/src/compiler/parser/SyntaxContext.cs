@@ -8,18 +8,31 @@ namespace ELua {
 	public class SyntaxContext {
 
 		public Parser parser;
-		public ulong uid;
+		public LVM vm;
 	    public int level;
 		public List<Expression> list;
 		public bool IsCutting;
 		public Expression cuttingExp;
 
-		public string NewUID() {
-			return string.Format("_i{0}_<{1}>", level.ToString(), (++uid).ToString());
+		public SyntaxContext(Parser parser, int level) {
+			this.parser = parser;
+			this.level = level;
+			vm = parser.vm;
+			list = new List<Expression>();
+		}
+
+		public SyntaxContext(Parser parser, List<Expression> list) {
+			this.parser = parser;
+			this.list = list;
+			vm = parser.vm;
 		}
 
 		public void Add(Expression expression) {
 			list.Add(expression);
+		}
+
+		public string NewUID() {
+			return vm.NewUID();
 		}
 
 		public void Insert(int position, Expression expression) {

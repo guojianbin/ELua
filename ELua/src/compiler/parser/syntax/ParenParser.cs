@@ -19,9 +19,9 @@ namespace ELua {
 			index = position + offset;
 			parser = new ParenParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionParser();
+			parser = new FunctionAParser();
 			while (parser.Parse(context, index));
-			parser = new AnonymousFunctionNParser();
+			parser = new FunctionANParser();
 			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));

@@ -7,7 +7,7 @@
 
         public float value;
 
-        public override LuaObject Negate(StackFrame stackFrame) {
+	    public override LuaObject Negate(StackFrame stackFrame) {
             return new LuaNumber { value = -value };
         }
 

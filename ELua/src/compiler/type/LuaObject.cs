@@ -8,9 +8,12 @@ namespace ELua {
 	public class LuaObject {
 
 		public string uid;
-	    public bool IsNil;
-	    
-	    public virtual LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
+
+		public virtual void Unpack(StackFrame stackFrame) {
+			stackFrame.Push(this);
+		}
+
+		public virtual LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             throw new InvalidOperationException(GetType().Name);
         }
 	    
@@ -18,7 +21,7 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
-        public virtual LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
+        public virtual void Call(StackFrame stackFrame, LuaObject[] args) {
             throw new InvalidOperationException(GetType().Name);
         }
 
@@ -91,27 +94,15 @@ namespace ELua {
         }
 
 		public virtual LuaObject ToObject(StackFrame stackFrame) {
-			if (IsNil) {
-				return stackFrame.nil;
-			} else {
-				throw new InvalidOperationException(GetType().Name);
-			}
+			throw new InvalidOperationException(GetType().Name);
 		}
 
-	    public virtual bool ToBoolean(StackFrame stackFrame) {
-	        if (IsNil) {
-	            return false;
-	        } else {
-	            throw new InvalidOperationException(GetType().Name);
-	        }
+		public virtual bool ToBoolean(StackFrame stackFrame) {
+			throw new InvalidOperationException(GetType().Name);
         }
 
 		public override string ToString() {
-			if (IsNil) {
-				return "nil";
-			} else {
-				throw new InvalidOperationException(GetType().Name);
-			}
+			throw new InvalidOperationException(GetType().Name);
 		}
 
 	}

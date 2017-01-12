@@ -20,8 +20,8 @@
 	        return this;
 	    }
 
-	    public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
-			return stackFrame.Find(name).Call(stackFrame, args);
+	    public override void Call(StackFrame stackFrame, LuaObject[] args) {
+			stackFrame.Find(name).Call(stackFrame, args);
 		}
 
 	    public override LuaObject Less(StackFrame stackFrame, LuaObject obj) {

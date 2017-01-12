@@ -11,7 +11,7 @@
         public LuaObject value;
 
         public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
-            list[index] = obj;
+			list.Bind(index, obj);
             return this;
         }
 
@@ -83,8 +83,8 @@
 			return value.Equal(stackFrame, obj);
 	    }
 
-	    public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
-			return value.Call(stackFrame, args);
+	    public override void Call(StackFrame stackFrame, LuaObject[] args) {
+			value.Call(stackFrame, args);
 		}
 
         public override LuaNumber ToNumber(StackFrame stackFrame) {

@@ -74,8 +74,8 @@
             return value.Subtract(stackFrame, obj);
         }
 
-	    public override LuaObject Call(StackFrame stackFrame, LuaObject[] args) {
-		    return value.Call(stackFrame, args);
+	    public override void Call(StackFrame stackFrame, LuaObject[] args) {
+		    value.Call(stackFrame, args);
 	    }
 
 	    public override LuaNumber ToNumber(StackFrame stackFrame) {

@@ -6,13 +6,13 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class AnonymousFunctionNExpression : Expression {
+	public class FunctionANExpression : Expression {
 
 		public string name;
 		public string[] argsList;
 		public ChunkExpression chunkExp;
 
-		public AnonymousFunctionNExpression(List<Expression> list, int position, int len) {
+		public FunctionANExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
@@ -28,8 +28,10 @@ namespace ELua {
 
 		public override void Generate(ModuleContext context) {
 			name = context.NewUID();
-			chunkExp.Generate(context.Bind(name, new ModuleContext { name = name, level = context.level + 1 }));
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg1 = new LuaString { value = name }, opArg2 = new LuaArgs { argsList = argsList } });
+			var module = new Module(new ModuleContext(context.vm, name, context.level + 1) { argsList = argsList });
+			context.vm.Add(module);
+			chunkExp.Generate(context.Bind(name, module.context));
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaFunction(module) });
 		}
 
 		public override string GetDebugInfo() {

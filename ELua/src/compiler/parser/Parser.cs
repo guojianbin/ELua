@@ -8,12 +8,12 @@ namespace ELua {
 	/// </summary>
 	public class Parser {
 
-		public Logger logger;
-		public ModuleExpression module;
+		public LVM vm;
+		public Expression AST;
 		public string file;
 
-		public Parser(Logger logger, string file, List<Expression> list) {
-			this.logger = logger;
+		public Parser(LVM vm, string file, List<Expression> list) {
+			this.vm = vm;
 			this.file = file;
 			Parse(list);
 			Extract();
@@ -21,32 +21,32 @@ namespace ELua {
 
 		private void Parse(List<Expression> list) {
 			list.Add(new EOSExpression());
-			var context = new SyntaxContext { list = list, parser = this };
+			var context = new SyntaxContext(this, list);
 			var parser = new ModuleParser();
 			parser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
-			module = (ModuleExpression)list[0];
+			AST = list[0];
 			var errList = list.Where(t => !t.IsChunked).ToArray();
 
-			logger.WriteLine("<source>");
-			logger.WriteLine(module.ToString());
+			vm.WriteLine("[source]");
+			vm.WriteLine(AST.ToString());
 			if (errList.Length > 0) {
-				logger.WriteLine(string.Empty);
-				logger.WriteLine(string.Join("\n", errList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t))));
+				vm.WriteLine(string.Empty);
+				vm.WriteLine(string.Join("\n", errList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t))));
 			}
 		}
 
 		private void Extract() {
-			module.Extract(new SyntaxContext { parser = this });
-			logger.WriteLine(string.Empty);
-			logger.WriteLine("<extract>");
-			logger.WriteLine(module.ToString());
+			AST.Extract(new SyntaxContext(this, 0));
+			vm.WriteLine(string.Empty, Logger.Type.File);
+			vm.WriteLine("[extract]", Logger.Type.File);
+			vm.WriteLine(AST.ToString(), Logger.Type.File);
 		}
 
-		public ModuleContext Generate() {
-			var context = new ModuleContext { name = file };
-            module.Generate(context);
-			return context;
+		public void Generate() {
+			var context = new ModuleContext(vm, file, 0);
+            AST.Generate(context);
+			vm.Add(new Module(context));
 		}
 
 	}

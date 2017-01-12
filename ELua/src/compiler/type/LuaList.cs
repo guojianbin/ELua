@@ -10,14 +10,19 @@ namespace ELua {
     public class LuaList {
 
         public LuaTable table;
-        public List<LuaObject> itemsList = new List<LuaObject>();
+		public List<LuaListItem> itemsList = new List<LuaListItem>();
 
-        public LuaObject this[int index] {
-            set { itemsList[index] = value; }
-            get { return itemsList[index]; }
-        }
+	    public int Length {
+		    get { return itemsList.Count; }
+	    }
 
-        public void Add(LuaObject item) {
+	    public void Bind(int index, LuaObject value) {
+			var item = new LuaListItem { table = table, list = this, index = index, value = value };
+		    itemsList[index] = item;
+	    }
+
+        public void Add(LuaObject value) {
+	        var item = new LuaListItem { table = table, list = this, index = itemsList.Count, value = value };
             itemsList.Add(item);
         }
 
@@ -27,7 +32,7 @@ namespace ELua {
             if (value == null) {
                 return stackFrame.nil;
             } else {
-                return new LuaListItem { table = table, list = this, index = index, value = value };
+                return value;
             }
         }
 
@@ -35,7 +40,7 @@ namespace ELua {
 			var sb = new StringBuilder();
 			sb.Append('{');
 			foreach (var item in itemsList) {
-				sb.Append(item);
+				sb.Append(item.value);
 				sb.Append(',');
 			}
 			sb.Remove(sb.Length - 1, 1);

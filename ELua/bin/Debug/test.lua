@@ -155,25 +155,90 @@
 -- end
 
 -- test2(1)
-b = {b={b={b={b={b=function()
-	print("haha")
-end}}}}}
-b.b.b.b.b.b()
+-- b = {b={b={b={b={b=function()
+-- 	print("haha")
+-- end}}}}}
+-- b.b.b.b.b.b()
 
-function test3()
-	local a = function ()
-		return 100
-	end
-	local b = function()
-		return 200
-	end
-	local c = function()
-		return 300
-	end
-	return {a,b,c}
-end
+-- function test3()
+-- 	local a = function ()
+-- 		return 100,200
+-- 	end
+-- 	local b = function()
+-- 		return 200
+-- 	end
+-- 	local c = function()
+-- 		return 300
+-- 	end
+-- 	return {a,b,c}
+-- end
 
-local arr = test3()
-for i = 1, 3 do
-	print(arr[i]())
+-- local arr = test3()
+-- for i = 1, 3 do
+-- 	print(arr[i]())
+-- end
+
+
+-- function test3()
+-- 	local a = function ()
+-- 		return 100
+-- 	end
+-- 	return {a}
+-- end
+
+-- print(test3()[1]())
+
+-- arr[1] = 100
+-- arr[2] = 200
+-- arr[3] = 300
+
+-- for i = 1, 3 do
+-- 	print(arr[i])
+-- end
+
+
+------------------ unpack -=-------------
+-- function unpack1(list)
+-- 	return unpack2(list, 1)
+-- end
+
+-- function unpack2(list, i)
+-- 	if i <= len(list) then
+-- 		return list[i], unpack2(list, i + 1)
+-- 	end
+-- end
+
+-- print(unpack1({1,2,3,4,5}))
+
+-- function test1()
+-- 	return 4,5
+-- end
+
+-- function test2()
+-- 	return 1,2,3,test1()
+-- end
+
+-- print(test2())
+
+
+
+
+
+
+-------------------defineN
+-- function test1()
+-- 	return 1,2,3
+-- end
+-- function test2()
+-- 	return 4,5
+-- end
+-- local a,b,c,d,e = test1(),test2()
+-- print(a,b,c,d,e)
+
+
+
+-------------------foreach
+local dict = {a=1,b=2}
+function pair(dict)
+	
 end

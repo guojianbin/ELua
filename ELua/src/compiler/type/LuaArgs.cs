@@ -7,7 +7,7 @@ namespace ELua {
 	/// </summary>
 	public class LuaArgs : LuaObject {
 
-		public string[] argsList = LuaFunction.emptyList;
+		public string[] argsList = ModuleContext.emptyList;
 
 		public override string ToString() {
 			return string.Join(", ", argsList.Select(t => t.ToString()));

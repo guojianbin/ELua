@@ -12,48 +12,53 @@ namespace ELua {
 
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
 		public Dictionary<string, Executor> executorDict = new Dictionary<string, Executor>();
-		public LuaObject nil = new LuaObject { IsNil = true };
+		public LuaObject nil = new LuaNil();
 		public ulong uid;
 		public StackFrame stackFrame;
 		public Logger logger;
 
-		public Stack<StackFrame> callStack = new Stack<StackFrame>();
-		public StackFrame currentFrame;
-		public bool IsExecuting;
-
         public LVM(Logger logger) {
             this.logger = logger;
-            stackFrame = new StackFrame(this);
-			stackFrame.Bind("print", new LuaUserdata { uid = NewUID(), value = new Func<StackFrame, LuaObject[], LuaObject>(Print) });
-			stackFrame.Bind("stacktrace", new LuaUserdata { uid = NewUID(), value = new Func<StackFrame, LuaObject[], LuaObject>(StackTrace) });
+			stackFrame = new StackFrame(this);
+			stackFrame.Bind("trace", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Trace) });
+			stackFrame.Bind("print", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Print) });
+			stackFrame.Bind("len", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Len) });
+			stackFrame.Bind("next", new LuaUserdata { uid = NewUID(), value = new Action<StackFrame, LuaObject[]>(Next) });
 		}
 
 		public string NewUID() {
-			return string.Format("_u_<{0}>", (++uid).ToString());
+			return string.Format("_<{0}>", (++uid).ToString());
 		}
 
-		public LuaObject Print(StackFrame stackFrame, LuaObject[] args) {
-			logger.WriteLine(string.Join(", ", args.Select(t => t.ToString())));
-            return nil;
+		public void WriteLine(string msg, Logger.Type type = Logger.Type.All) {
+			logger.WriteLine(msg, type);
 		}
 
-		public LuaObject StackTrace(StackFrame stackFrame, LuaObject[] args) {
+		public void Next(StackFrame stackFrame, LuaObject[] args) {
+			
+		}
+
+		public void Len(StackFrame stackFrame, LuaObject[] args) {
+			stackFrame.Push(new LuaNumber { value = ((LuaTable)args[0]).Length });
+		}
+
+		public void Print(StackFrame stackFrame, LuaObject[] args) {
+			WriteLine(string.Join(", ", args.Select(t => t.ToString())));
+		}
+
+		public void Trace(StackFrame stackFrame, LuaObject[] args) {
 			var sb = new StringBuilder();
-			sb.Append("stacktrace:");
+			sb.Append("trace:");
 			while (stackFrame.module != null) {
 				sb.Append(stackFrame.module.name);
 				sb.Append(';');
 				stackFrame = stackFrame.parent;
 			}
-			return new LuaString { value = sb.ToString() };
-		}
-
-		public void Generate(ModuleContext context) {
-			Add(new Module(this, logger, context));
+			stackFrame.Push(new LuaString { value = sb.ToString() });
 		}
 
 	    public void Add(Module module) {
-	        modulesDict.Add(module.name, module);
+		    modulesDict[module.name] = module;
 	    }
 
 	    public void Call(string name) {

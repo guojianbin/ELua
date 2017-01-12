@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class AnonymousFunctionNParser : IParser {
+	public class FunctionANParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -51,6 +51,8 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new ForParser();
 			while (parser.Parse(context, index));
+			parser = new ForEachParser();
+			while (parser.Parse(context, index));
 			parser = new FunctionParser();
 			while (parser.Parse(context, index));
 			parser = new FunctionNParser();
@@ -60,6 +62,8 @@ namespace ELua {
 			parser = new IfElseParser();
 			while (parser.Parse(context, index));
 			parser = new DefineParser();
+			while (parser.Parse(context, index));
+			parser = new DefineNParser();
 			while (parser.Parse(context, index));
 			parser = new BindParser();
 			while (parser.Parse(context, index));
@@ -79,7 +83,7 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new AnonymousFunctionNExpression(list, position, offset));
+			context.Insert(position, new FunctionANExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

@@ -10,10 +10,20 @@
         public bool IsList;
         public bool IsInit;
 
-        public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
-            if (IsNil) {
-				return stackFrame.nil;
-            } else if (!IsInit) {
+	    public int Length {
+		    get {
+			    if (!IsInit) {
+				    return 0;
+			    } else if (IsList) {
+				    return list.Length;
+			    } else {
+				    return dict.Length;
+			    }
+		    }
+	    }
+
+	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
+            if (!IsInit) {
                 return stackFrame.nil;
             } else {
                 return dict.GetProperty(stackFrame, obj);
@@ -21,9 +31,7 @@
         }
 
         public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
-            if (IsNil) {
-				return stackFrame.nil;
-            } else if (!IsInit) {
+            if (!IsInit) {
                 return stackFrame.nil;
             } else if (IsList) {
                 return list.GetIndex(stackFrame, obj);

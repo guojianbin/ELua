@@ -9,7 +9,6 @@ namespace ELua {
 	public class StackFrame {
 
 		public static readonly LuaObject[] emptyList = new LuaObject[0];
-
 		public string uid;
 		public Executor executor;
 		public LuaObject nil;
@@ -22,7 +21,6 @@ namespace ELua {
 		public int level;
 		public int position;
 		public IEnumerator iterator;
-		public LuaObject result;
 
 	    public int stackLen {
 	        get { return stack.Count; }
@@ -54,26 +52,50 @@ namespace ELua {
 		}
 
 		public LuaObject PopRaw() {
-			return stack.Pop();
+			if (stackLen == 0) {
+				return nil;
+			} else {
+				return stack.Pop();
+			}
 		}
 
 		public LuaObject Pop() {
-			return PopRaw().ToObject(this);
+			if (stackLen == 0) {
+				return nil;
+			} else {
+				return stack.Pop().ToObject(this);
+			}
 		}
 
 	    public void Clear() {
-	        stack.Clear();
+	        stack.ClearAll();
 	    }
+
+		public LuaObject[] TakeAll() {
+			return Take(stackLen);
+		}
 
 		public LuaObject[] Take(int len) {
 			if (len == 0) {
 				return emptyList;
 			} else {
-				var arr = new LuaObject[len];
+				var list = new LuaObject[len];
 				for (var i = 0; i < len; i++) {
-					arr[i] = Pop();
+					list[i] = Pop();
 				}
-				return arr;
+				return list;
+			}
+		}
+
+		public LuaObject[] TakeRaw(int len) {
+			if (len == 0) {
+				return emptyList;
+			} else {
+				var list = new LuaObject[len];
+				for (var i = 0; i < len; i++) {
+					list[i] = PopRaw();
+				}
+				return list;
 			}
 		}
 
@@ -93,10 +115,10 @@ namespace ELua {
 		}
 
 		public LuaObject FindParent(string name) {
-			if (parent != null) {
-				return parent.Find(name);
-			} else {
+			if (parent == null) {
 				return nil;
+			} else {
+				return parent.Find(name);
 			}
 		}
 
@@ -110,7 +132,6 @@ namespace ELua {
 
 		public bool MoveNext() {
 			if (!iterator.MoveNext()) {
-				parent.Push(result);
 				return false;
 			} else {
 				return true;
@@ -122,15 +143,11 @@ namespace ELua {
 				codesList[position].Execute(this);
 				yield return null;
 			}
-			if (stackLen == 0) {
-				result = nil;
-			} else {
-				var topObj = PopRaw();
-				if (topObj.IsNil) {
-					result = nil;
-				} else {
-					result = topObj.ToObject(this);
-				}
+			var len = stackLen;
+			if (len == 1) {
+				parent.Push(Pop());
+			} else if (len > 1) {
+				parent.Push(new LuaTuple(TakeAll()));
 			}
 		}
 

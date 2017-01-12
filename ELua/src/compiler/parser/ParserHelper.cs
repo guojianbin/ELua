@@ -55,23 +55,26 @@ namespace ELua {
                 return expression;
             }
             expression.Extract(context);
-	        if (context.IsCutting) { // ¶ÌÂ·ÇóÖµ
+	        if (context.IsCutting) {
 		        context.IsCutting = false;
 		        return context.cuttingExp;
-	        }
-            if (expression.IsLeftValue || expression.IsStatement) {
-                return expression;
-            } else {
-				var itemObj = Wrapper(expression, context.NewUID());
-				context.Add(itemObj.Value);
-	            return itemObj.Key;
-            }
+	        } else if (expression.IsRightValue && !expression.IsLeftValue) {
+				var ret = Wrapper(expression, context.NewUID());
+				context.Add(ret.Value);
+		        if (expression.type == Expression.Type.Call) {
+					return new UnpackExpression(ret.Key);			
+				} else {
+					return ret.Key;
+		        }
+	        } else {
+				return expression;
+			}
         }
 
-		public static KeyValuePair<Expression, Expression> Wrapper(Expression expression, string name) {
+		public static KeyValuePair<WordExpression, DefineExpression> Wrapper(Expression expression, string name) {
 			var itemKey = new WordExpression(name, expression.debugInfo);
 			var itemValue = new DefineExpression(itemKey, expression);
-			return new KeyValuePair<Expression, Expression>(itemKey, itemValue);
+			return new KeyValuePair<WordExpression, DefineExpression>(itemKey, itemValue);
 		}
 
     }

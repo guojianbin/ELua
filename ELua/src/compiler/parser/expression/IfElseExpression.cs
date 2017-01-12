@@ -32,17 +32,7 @@ namespace ELua {
 			chunk2Exp = new ChunkExpression(new List<Expression> { item2Exp });
 		}
 
-		public IfElseExpression(Expression condExp, List<Expression> items1List, List<Expression> items2List) {
-			IsStatement = true;
-			type = Type.IfElse;
-			debugInfo = condExp.debugInfo;
-		    this.condExp = condExp;
-			chunk1Exp = new ChunkExpression(items1List);
-			chunk2Exp = new ChunkExpression(items2List);
-	    }
-
 	    public override void Extract(SyntaxContext context) {
-            condExp = ParserHelper.Extract(context, condExp);
 			chunk1Exp.Extract(context);
 			chunk2Exp.Extract(context);
         }

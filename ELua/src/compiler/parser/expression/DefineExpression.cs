@@ -19,8 +19,8 @@ namespace ELua {
 		}
 
 		public DefineExpression(Expression item1Exp, Expression item2Exp) {
+			IsStatement = true;
             type = Type.Define;
-            IsStatement = true;
 		    debugInfo = item1Exp.debugInfo;
             this.item1Exp = item1Exp;
 			this.item2Exp = item2Exp;
