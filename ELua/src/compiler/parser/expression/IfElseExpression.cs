@@ -9,8 +9,8 @@ namespace ELua {
     public class IfElseExpression : Expression {
 
         public Expression condExp;
-	    public ChunkExpression chunk1Exp;
-	    public ChunkExpression chunk2Exp;
+		public Expression module1Exp;
+		public Expression module2Exp;
 
         public IfElseExpression(List<Expression> list, int position, int len) {
             IsStatement = true;
@@ -19,8 +19,8 @@ namespace ELua {
             condExp = list[position + 1];
 	        var items1List = list.Skip(position + 3).TakeWhile(t => !ParserHelper.IsKeyword(t, "else")).ToList();
 			var items2List = list.Skip(position + 4 + items1List.Count).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
-			chunk1Exp = new ChunkExpression(items1List);
-			chunk2Exp = new ChunkExpression(items2List);
+			module1Exp = new ModuleExpression(items1List);
+			module2Exp = new ModuleExpression(items2List);
         }
 
 		public IfElseExpression(Expression condExp, Expression item1Exp, Expression item2Exp) {
@@ -28,37 +28,37 @@ namespace ELua {
 			type = Type.IfElse;
 			debugInfo = condExp.debugInfo;
 			this.condExp = condExp;
-			chunk1Exp = new ChunkExpression(new List<Expression> { item1Exp });
-			chunk2Exp = new ChunkExpression(new List<Expression> { item2Exp });
+			module1Exp = new ModuleExpression(new List<Expression> { item1Exp });
+			module2Exp = new ModuleExpression(new List<Expression> { item2Exp });
 		}
 
 	    public override void Extract(SyntaxContext context) {
-			chunk1Exp.Extract(context);
-			chunk2Exp.Extract(context);
+			module1Exp.Extract(context);
+			module2Exp.Extract(context);
         }
 
         public override void Generate(ModuleContext context) {
             condExp.Generate(context);
             var elseLabel = new LabelExpression(context.NewUID(), condExp.debugInfo);
             var endLabel = new LabelExpression(context.NewUID(), condExp.debugInfo);
-	        var jumpElse = new LuaLabel { value = elseLabel.value, index = elseLabel.index};
+	        var jumpElse = new LuaLabel(context.vm, elseLabel.value, elseLabel.index);
 	        context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpNot, opArg1 = jumpElse });
-			chunk1Exp.Generate(context);
-	        var jumpEnd = new LuaLabel { value = endLabel.value, index = endLabel.index };
+			module1Exp.Generate(context);
+			var jumpEnd = new LuaLabel(context.vm, endLabel.value, endLabel.index);
 	        context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg1 = jumpEnd });
             elseLabel.Generate(context);
 	        jumpElse.index = elseLabel.index;
-			chunk2Exp.Generate(context);
+			module2Exp.Generate(context);
             endLabel.Generate(context);
 	        jumpEnd.index = endLabel.index;
         }
 
         public override string GetDebugInfo() {
-            return DebugInfo.ToString(condExp, chunk1Exp, chunk2Exp);
+            return DebugInfo.ToString(condExp, module1Exp, module2Exp);
         }
 
         public override string ToString() {
-            return string.Format("if {0} then\n{1}\nelse\n{2}\nend", condExp, chunk1Exp, chunk2Exp);
+            return string.Format("if {0} then\n{1}\nelse\n{2}\nend", condExp, module1Exp, module2Exp);
         }
 
     }

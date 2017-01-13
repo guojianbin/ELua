@@ -13,12 +13,14 @@ namespace ELua {
 		public ModuleContext context;
         public List<ByteCode> codesList;
 		public string name;
+		public int level;
 
 		public Module(ModuleContext context) {
 			this.context = context;
 			vm = context.vm;
 			name = context.name;
 			codesList = context.list;
+			level = context.level;
 		}
 
 		public void Call(StackFrame stackFrame, string[] argsNames, LuaObject[] argsList) {

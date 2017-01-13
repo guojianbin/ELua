@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ELua {
 
@@ -7,37 +8,49 @@ namespace ELua {
 	/// </summary>
 	public class ModuleExpression : Expression {
 
-		public ChunkExpression chunkExp;
+		public List<Expression> itemsList;
 
 		public ModuleExpression(List<Expression> list, int position, int len) {
-			IsChunked = true;
+			IsModule = true;
 			type = Type.Module;
 			debugInfo = list[position].debugInfo;
-			var itemsList = new List<Expression>();
+			itemsList = new List<Expression>();
 			for (var i = 0; i < len; i++) {
 				itemsList.Add(list[position + i]);
 			}
-		    if (itemsList.Count > 0) {
-                chunkExp = new ChunkExpression(itemsList);
-            } else {
-		        chunkExp = new ChunkExpression(new List<Expression>());
-		    }
+		}
+
+		public ModuleExpression(List<Expression> itemsList) {
+			IsModule = true;
+			type = Type.Module;
+			this.itemsList = itemsList;
+            if (itemsList.Count > 0) {
+                debugInfo = itemsList[0].debugInfo;
+            }
 		}
 
 		public override void Extract(SyntaxContext context) {
-			chunkExp.Extract(context);
+			context = new SyntaxContext(context.parser, context.level + 1);
+			foreach (var item in itemsList) {
+				item.Extract(context);
+				context.Add(item);
+			}
+			itemsList = context.list;
 		}
 
 		public override void Generate(ModuleContext context) {
-			chunkExp.Generate(context);
+			foreach (var item in itemsList) {
+				item.Generate(context);
+				context.Add(new ByteCode { opCode = ByteCode.OpCode.Clear });
+			}
 		}
 
 		public override string GetDebugInfo() {
-			return chunkExp.GetDebugInfo();
+			return DebugInfo.ToString(itemsList.ToArray());
 		}
 
 		public override string ToString() {
-			return chunkExp.ToString();
+			return string.Join("\n", itemsList.Select(t => t.ToString()));
 		}
 
 	}

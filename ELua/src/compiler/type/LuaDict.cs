@@ -11,12 +11,16 @@ namespace ELua {
         public LuaTable table;
 		public Dictionary<LuaObject, LuaDictItem> itemsDict = new Dictionary<LuaObject, LuaDictItem>();
 
-		public int Length {
+		public int Count {
 			get { return itemsDict.Count; }
 		}
 
+	    public LuaDict(LuaTable table) {
+		    this.table = table;
+	    }
+
 	    public LuaObject Bind(LuaObject key, LuaObject value) {
-			return itemsDict[key] = new LuaDictItem { table = table, dict = this, key = key, value = value };
+			return itemsDict[key] = table.vm.GetDictItem(table, this, key, value);
 	    }
 
 		public LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
@@ -31,6 +35,10 @@ namespace ELua {
 		        return value;
 	        }
         }
+
+		public void Clear() {
+			itemsDict.Clear();
+		}
 
 	    public override string ToString() {
 			var sb = new StringBuilder();

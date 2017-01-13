@@ -21,6 +21,7 @@ namespace ELua {
 			Nil, // nil
 			Boolean, // true, false
 			Label, // xx:
+			Break, // break
 
 			Paren, // (x)
 			Negate, // -x
@@ -45,10 +46,10 @@ namespace ELua {
             And, // and
             Or, // or
 
-			Chunk, // stats list
 			Module, // stats list
 			For, // for i=x,y,z do ... end
 			ForEach, // for x,y in list do ... end
+            While, // while do
             If, // if end
             IfElse, // if else end
 			Define, // local x = y
@@ -63,7 +64,7 @@ namespace ELua {
 		public bool IsLeftValue { get; set; }
 		public bool IsRightValue { get; set; }
 		public bool IsFinally { get; set; }
-		public bool IsChunked { get; set; }
+		public bool IsModule { get; set; }
 
 		public Type type;
 		public DebugInfo debugInfo;

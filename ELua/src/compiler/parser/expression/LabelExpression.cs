@@ -17,7 +17,7 @@ namespace ELua {
 
         public override void Generate(ModuleContext context) {
 	        index = context.Count;
-            context.Add(new ByteCode { opCode = ByteCode.OpCode.Label, opArg1 = new LuaLabel { value = value, index = index} });
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Label, opArg1 = new LuaLabel(context.vm, value, index) });
         }
 
         public override string ToString() {

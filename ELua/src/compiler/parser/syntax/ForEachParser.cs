@@ -104,6 +104,10 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new ReturnParser();
 			while (parser.Parse(context, index));
+			parser = new BreakParser();
+			while (parser.Parse(context, index));
+			parser = new WhileParser();
+			while (parser.Parse(context, index));
 			parser = new ForNParser();
 			while (parser.Parse(context, index));
 			parser = new ForParser();
@@ -123,6 +127,8 @@ namespace ELua {
 			parser = new DefineNParser();
 			while (parser.Parse(context, index));
 			parser = new BindParser();
+			while (parser.Parse(context, index));
+			parser = new BindNParser();
 			while (parser.Parse(context, index));
 			parser = new CallParser();
 			while (parser.Parse(context, index));

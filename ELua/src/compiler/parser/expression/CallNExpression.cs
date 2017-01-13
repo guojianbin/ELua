@@ -24,6 +24,15 @@ namespace ELua {
 			}
 		}
 
+		public CallNExpression(Expression targetExp, List<Expression> itemsList) {
+			IsRightValue = true;
+			IsStatement = true;
+			type = Type.Call;
+			debugInfo =targetExp.debugInfo;
+			this.targetExp = targetExp;
+			this.itemsList = itemsList;
+		}
+
 		public override void Extract(SyntaxContext context) {
 			targetExp = ParserHelper.Extract(context, targetExp);
 			for (var i = 0; i < itemsList.Count; i++) {

@@ -5,9 +5,9 @@ namespace ELua {
 	/// </summary>
 	public class UnpackExpression : Expression {
 
-		public WordExpression targetExp;
+		public Expression targetExp;
 
-		public UnpackExpression(WordExpression targetExp) {
+		public UnpackExpression(Expression targetExp) {
 			type = Type.Unpack;
 			this.targetExp = targetExp;
 		}

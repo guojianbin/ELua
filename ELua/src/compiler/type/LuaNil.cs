@@ -5,17 +5,21 @@
 	/// </summary>
 	public class LuaNil : LuaObject {
 
+		public LuaNil(LVM vm, string uid) : base(vm) {
+			this.uid = uid;
+		}
+
 		public override void Unpack(StackFrame stackFrame) {
             // ignored
-        }
+		}
 
-        public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = Equals(obj) };
-        }
+		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			return vm.GetBoolean(Equals(obj));
+		}
 
-        public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = !Equals(obj) };
-        }
+		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			return vm.GetBoolean(!Equals(obj));
+		}
 
         public override LuaObject ToObject(StackFrame stackFrame) {
 			return this;

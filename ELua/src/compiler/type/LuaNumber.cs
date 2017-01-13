@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ELua {
+﻿namespace ELua {
 
     /// <summary>
     /// @author Easily
@@ -8,6 +6,10 @@ namespace ELua {
     public class LuaNumber : LuaObject {
 
         public float value;
+
+	    public LuaNumber(LVM vm, float value) : base(vm) {
+		    this.value = value;
+	    }
 
 	    public override LuaObject Negate(StackFrame stackFrame) {
 	        return vm.GetNumber(-value);
@@ -34,28 +36,28 @@ namespace ELua {
         }
 
         public override LuaObject Less(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = value < obj.ToNumber(stackFrame).value };
+			return vm.GetBoolean(value < obj.ToNumber(stackFrame).value);
         }
 
         public override LuaObject Greater(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = value > obj.ToNumber(stackFrame).value };
+			return vm.GetBoolean(value > obj.ToNumber(stackFrame).value);
         }
 
         public override LuaObject LessEqual(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = value <= obj.ToNumber(stackFrame).value };
+			return vm.GetBoolean(value <= obj.ToNumber(stackFrame).value);
         }
 
         public override LuaObject GreaterEqual(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = value >= obj.ToNumber(stackFrame).value };
-        }
+			return vm.GetBoolean(value >= obj.ToNumber(stackFrame).value);
+		}
 
-        public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = Equals(obj) };
-        }
+		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			return vm.GetBoolean(Equals(obj));
+		}
 
-        public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
-            return new LuaBoolean { value = !Equals(obj) };
-        }
+		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			return vm.GetBoolean(!Equals(obj));
+		}
 
         public override LuaNumber ToNumber(StackFrame stackFrame) {
             return this;

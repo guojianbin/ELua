@@ -7,7 +7,8 @@ namespace ELua {
 
 		public Module module;
 
-		public LuaFunction(Module module) {
+		public LuaFunction(LVM vm, string uid, Module module) : base(vm) {
+			this.uid = uid;
 			this.module = module;
 		}
 
@@ -16,11 +17,11 @@ namespace ELua {
 		}
 
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
-			return new LuaBoolean { value = Equals(obj) };
+			return vm.GetBoolean(Equals(obj));
 		}
 
 		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
-			return new LuaBoolean { value = !Equals(obj) };
+			return vm.GetBoolean(!Equals(obj));
 		}
 
 		public override bool ToBoolean(StackFrame stackFrame) {

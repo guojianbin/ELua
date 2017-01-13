@@ -12,29 +12,39 @@ namespace ELua {
         public LuaTable table;
 		public List<LuaListItem> itemsList = new List<LuaListItem>();
 
-	    public int Length {
+	    public int Count {
 		    get { return itemsList.Count; }
 	    }
 
+	    public LuaList(LuaTable table) {
+		    this.table = table;
+	    }
+
 	    public void Bind(int index, LuaObject value) {
-			var item = new LuaListItem { table = table, list = this, index = index, value = value };
-		    itemsList[index] = item;
+			itemsList[index] = table.vm.GetListItem(table, this, index, value);
 	    }
 
         public void Add(LuaObject value) {
-	        var item = new LuaListItem { table = table, list = this, index = itemsList.Count, value = value };
-            itemsList.Add(item);
+            itemsList.Add(table.vm.GetListItem(table, this, Count, value));
         }
 
-        public LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+	    public LuaListItem IndexOf(int index) {
+			return itemsList.ElementAtOrDefault(index);
+	    }
+
+	    public LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
             var index = (int)obj.ToNumber(stackFrame).value - 1;
-            var value = itemsList.ElementAtOrDefault(index);
-            if (value == null) {
-                return stackFrame.nil;
-            } else {
-                return value;
-            }
+		    var value = IndexOf(index);
+		    if (value == null) {
+			    return stackFrame.nil;
+			} else {
+				return value;
+		    }
         }
+
+	    public void Clear() {
+		    itemsList.Clear();
+	    }
 
 		public override string ToString() {
 			var sb = new StringBuilder();

@@ -7,12 +7,16 @@
 
 		public bool value;
 
+		public LuaBoolean(LVM vm, bool value) : base(vm) {
+			this.value = value;
+		}
+
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
-			return new LuaBoolean { value = Equals(obj) };
+			return vm.GetBoolean(Equals(obj));
 		}
 
 		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
-			return new LuaBoolean { value = !Equals(obj) };
+			return vm.GetBoolean(!Equals(obj));
 		}
 
 		public override LuaObject ToObject(StackFrame stackFrame) {

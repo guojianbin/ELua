@@ -8,8 +8,13 @@
 		public string value;
 		public int index;
 
+		public LuaLabel(LVM vm, string value, int index) : base(vm) {
+			this.value = value;
+			this.index = index;
+		}
+
 		public override string ToString() {
-			return value;
+			return string.Format("{0}:{1}", value, index);
 		}
 
 		protected bool Equals(LuaLabel other) {

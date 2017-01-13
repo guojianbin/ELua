@@ -58,16 +58,14 @@ namespace ELua {
 	        if (context.IsCutting) {
 		        context.IsCutting = false;
 		        return context.cuttingExp;
-	        } else if (expression.IsRightValue && !expression.IsLeftValue) {
+			} else {
 				var ret = Wrapper(expression, context.NewUID());
 				context.Add(ret.Value);
-		        if (expression.type == Expression.Type.Call) {
-					return new UnpackExpression(ret.Key);			
+				if (expression.type == Expression.Type.Call) {
+					return new UnpackExpression(ret.Key);
 				} else {
 					return ret.Key;
-		        }
-	        } else {
-				return expression;
+				}
 			}
         }
 

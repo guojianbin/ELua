@@ -147,7 +147,7 @@ namespace ELua {
 			if (len == 1) {
 				parent.Push(Pop());
 			} else if (len > 1) {
-				parent.Push(new LuaTuple(TakeAll()));
+				parent.Push(vm.GetTuple(TakeAll()));
 			}
 		}
 

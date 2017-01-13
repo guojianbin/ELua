@@ -6,25 +6,17 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class DefineNExpression : Expression {
+	public class BindNExpression : Expression {
 
 		public List<Expression> items1List;
 		public List<Expression> items2List;
 
-		public DefineNExpression(List<Expression> list, int position, int len) {
+		public BindNExpression(List<Expression> list, int position, int len) {
 			IsStatement = true;
 			type = Type.Define;
 			debugInfo = list[position].debugInfo;
-			items1List = list.Skip(position + 1).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.type == Type.Word).ToList();
+			items1List = list.Skip(position).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.IsLeftValue).ToList();
 			items2List = list.Skip(position + items1List.Count * 2).Take(len - items1List.Count * 2).Where(t => t.IsRightValue).ToList();
-		}
-
-		public DefineNExpression(List<Expression> items1List, List<Expression> items2List) {
-			IsStatement = true;
-			type = Type.Define;
-			debugInfo = items1List[0].debugInfo;
-			this.items1List = items1List;
-			this.items2List = items2List;
 		}
 
 		public override void Extract(SyntaxContext context) {
@@ -48,7 +40,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("local {0} = {1}", string.Join(", ", items1List.Select(t => t.ToString())), string.Join(", ", items2List.Select(t => t.ToString())));
+			return string.Format("{0} = {1}", string.Join(", ", items1List.Select(t => t.ToString())), string.Join(", ", items2List.Select(t => t.ToString())));
 		}
 
 	}

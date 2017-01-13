@@ -10,7 +10,14 @@
         public LuaObject key;
         public LuaObject value;
 
-        public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
+	    public LuaDictItem(LVM vm, LuaTable table, LuaDict dict, LuaObject key, LuaObject value) : base(vm) {
+		    this.table = table;
+		    this.dict = dict;
+		    this.key = key;
+		    this.value = value;
+	    }
+
+	    public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
 	        return dict.Bind(key, obj);
         }
 

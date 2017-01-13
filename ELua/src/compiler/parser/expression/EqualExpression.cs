@@ -18,7 +18,15 @@ namespace ELua {
 			item2Exp = list[position + 3];
         }
 
-        public override void Extract(SyntaxContext context) {
+		public EqualExpression(Expression item1Exp, Expression item2Exp) {
+			IsRightValue = true;
+			type = Type.Equal;
+			debugInfo = item1Exp.debugInfo;
+		    this.item1Exp = item1Exp;
+		    this.item2Exp = item2Exp;
+	    }
+
+	    public override void Extract(SyntaxContext context) {
             item1Exp = ParserHelper.Extract(context, item1Exp);
             item2Exp = ParserHelper.Extract(context, item2Exp);
         }

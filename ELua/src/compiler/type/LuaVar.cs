@@ -7,7 +7,11 @@
 
 		public string name;
 
-	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
+		public LuaVar(LVM vm, string name) : base(vm) {
+			this.name = name;
+		}
+
+		public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
 	        return stackFrame.Find(name).GetProperty(stackFrame, obj);
 	    }
 

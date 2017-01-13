@@ -26,7 +26,7 @@ namespace ELua {
 			parser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
 			ast = list[0];
-			var errList = list.Where(t => !t.IsChunked).ToArray();
+			var errList = list.Where(t => !t.IsModule).ToArray();
 
 			vm.WriteLine("[source]");
 			vm.WriteLine(ast.ToString());

@@ -5,22 +5,30 @@ namespace ELua {
     /// </summary>
     public class BooleanExpression : Expression {
 
-        public string value;
+	    public bool value;
 
         public BooleanExpression(string value, DebugInfo debugInfo) {
             IsFinally = true;
             type = Type.Boolean;
-            IsRightValue = true;
-            this.value = value;
-            this.debugInfo = debugInfo;
+			IsRightValue = true;
+			this.debugInfo = debugInfo;
+            this.value = bool.Parse(value);
         }
 
-        public override void Generate(ModuleContext context) {
-            context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaBoolean { value = bool.Parse(value)} });
+		public BooleanExpression(bool value, DebugInfo debugInfo) {
+			IsFinally = true;
+			type = Type.Boolean;
+			IsRightValue = true;
+			this.debugInfo = debugInfo;
+		    this.value = value;
+	    }
+
+	    public override void Generate(ModuleContext context) {
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = context.vm.GetBoolean(value) });
         }
 
         public override string ToString() {
-            return value;
+            return value.ToString();
         }
 
     }

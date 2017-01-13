@@ -14,6 +14,8 @@ namespace ELua {
 		public string name;
 		public int level;
 		public List<ByteCode> list;
+		public bool IsBreak;
+		public List<LuaLabel> endLabels = new List<LuaLabel>();
 
 		public int Count {
 			get { return list.Count; }
@@ -39,6 +41,21 @@ namespace ELua {
 		    byteCode.index = Count;
             list.Add(byteCode);
 		}
+
+	    public void ResetBreak(LuaLabel endLabel) {
+	        if (IsBreak) {
+                foreach (var item in endLabels) {
+                    item.value = endLabel.value;
+                    item.index = endLabel.index;
+                }
+                ClearBreak();
+            }
+        }
+
+	    public void ClearBreak() {
+	        IsBreak = false;
+            endLabels.Clear();
+	    }
 
 	}
 

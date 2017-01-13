@@ -212,11 +212,11 @@ namespace ELua {
 
 		public override string ToString() {
 			if (opArg1 == null) {
-				return opCode.ToString();
+				return string.Format("{0,-3} {1}", index, opCode.ToString());
 			} else if (opArg2 == null) {
-				return string.Format("{0,-10} {1,-10}", opCode, opArg1);
+				return string.Format("{2,-3} {0,-10} {1,-10}", opCode, opArg1, index);
 			} else {
-				return string.Format("{0,-10} {1,-10} {2,-10}", opCode, opArg1, opArg2);
+				return string.Format("{3,-3} {0,-10} {1,-10} {2,-10}", opCode, opArg1, opArg2, index);
 			}
 		}
 

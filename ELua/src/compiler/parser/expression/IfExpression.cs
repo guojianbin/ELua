@@ -9,7 +9,7 @@ namespace ELua {
     public class IfExpression : Expression {
 
 	    public Expression condExp;
-	    public ChunkExpression chunkExp;
+	    public Expression moduleExp;
 
         public IfExpression(List<Expression> list, int position, int len) {
             IsStatement = true;
@@ -17,29 +17,37 @@ namespace ELua {
             debugInfo = list[position].debugInfo;
             condExp = list[position + 1];
             var itemsList = list.Skip(position + 3).Take(len - 4).ToList();
-			chunkExp = new ChunkExpression(itemsList);
+			moduleExp = new ModuleExpression(itemsList);
         }
 
-		public override void Extract(SyntaxContext context) {
-			chunkExp.Extract(context);
+		public IfExpression(Expression condExp, Expression moduleExp) {
+			IsStatement = true;
+			type = Type.If;
+			debugInfo = condExp.debugInfo;
+		    this.condExp = condExp;
+		    this.moduleExp = moduleExp;
+	    }
+
+	    public override void Extract(SyntaxContext context) {
+			moduleExp.Extract(context);
         }
 
         public override void Generate(ModuleContext context) {
             condExp.Generate(context);
             var endLabel = new LabelExpression(context.NewUID(), condExp.debugInfo);
-	        var jumpEnd = new LuaLabel { value = endLabel.value, index = endLabel.index };
+			var jumpEnd = new LuaLabel(context.vm, endLabel.value, endLabel.index);
 	        context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpNot, opArg1 = jumpEnd });
-			chunkExp.Generate(context);
+			moduleExp.Generate(context);
             endLabel.Generate(context);
 	        jumpEnd.index = endLabel.index;
         }
 
         public override string GetDebugInfo() {
-            return DebugInfo.ToString(condExp, chunkExp);
+            return DebugInfo.ToString(condExp, moduleExp);
         }
 
         public override string ToString() {
-            return string.Format("if {0} then\n{1}\nend", condExp, chunkExp);
+            return string.Format("if {0} then\n{1}\nend", condExp, moduleExp);
         }
 
     }

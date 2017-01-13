@@ -10,6 +10,10 @@ namespace ELua {
 	    public LVM vm;
 		public string uid;
 
+		public LuaObject(LVM vm) {
+			this.vm = vm;
+		}
+
 		public virtual void Unpack(StackFrame stackFrame) {
 			stackFrame.Push(this);
 		}
@@ -31,7 +35,7 @@ namespace ELua {
         }
 
         public LuaObject Not(StackFrame stackFrame) {
-            return new LuaBoolean { value = !ToBoolean(stackFrame) };
+			return vm.GetBoolean(!ToBoolean(stackFrame));
         }
 
         public LuaObject And(StackFrame stackFrame, LuaObject obj) {

@@ -10,7 +10,7 @@ namespace ELua {
 
 		public string[] argsList;
 		public WordExpression nameExp;
-		public ChunkExpression chunkExp;
+		public Expression moduleExp;
 
 		public FunctionNExpression(List<Expression> list, int position, int len) {
 			IsStatement = true;
@@ -20,28 +20,28 @@ namespace ELua {
 			var wordList = list.Skip(position + 3).TakeWhile(t => !ParserHelper.IsOperator(t, ")")).Where(t => t.type == Type.Word);
 			argsList = wordList.Cast<WordExpression>().Select(t => t.value).ToArray();
 			var itemsList = list.Skip(position + 3 + argsList.Length * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
-			chunkExp = new ChunkExpression(itemsList);
+			moduleExp = new ModuleExpression(itemsList);
 		}
 
 		public override void Extract(SyntaxContext context) {
-			chunkExp.Extract(context);
+			moduleExp.Extract(context);
 		}
 
 		public override void Generate(ModuleContext context) {
 			var module = new Module(new ModuleContext(context.vm, nameExp.value, context.level + 1) { argsList = argsList });
 			context.vm.Add(module);
-			chunkExp.Generate(context.Bind(nameExp.value, module.context));
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaFunction(module) });
+			moduleExp.Generate(context.Bind(nameExp.value, module.context));
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaFunction(context.vm, context.vm.NewUID(), module) });
 			nameExp.Generate(context);
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Bind });
 		}
 
 		public override string GetDebugInfo() {
-			return DebugInfo.ToString(chunkExp);
+			return DebugInfo.ToString(moduleExp);
 		}
 
 		public override string ToString() {
-			return string.Format("function {0}()\n{1}\nend", nameExp, chunkExp);
+			return string.Format("function {0}()\n{1}\nend", nameExp, moduleExp);
 		}
 
 	}

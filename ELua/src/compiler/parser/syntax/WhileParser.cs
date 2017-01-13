@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class IfParser : IParser {
+	public class WhileParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -12,7 +12,7 @@ namespace ELua {
 			var index = position;
 			IParser parser;
 
-			if (!ParserHelper.IsKeyword(list[index], "if")) {
+			if (!ParserHelper.IsKeyword(list[index], "while")) {
 				return false;
 			}
 			offset += 1;
@@ -74,7 +74,7 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			if (!ParserHelper.IsKeyword(list[index], "then")) {
+			if (!ParserHelper.IsKeyword(list[index], "do")) {
 				return false;
 			}
 			offset += 1;
@@ -126,7 +126,7 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new IfExpression(list, position, offset));
+			context.Insert(position, new WhileExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

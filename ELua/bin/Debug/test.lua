@@ -136,6 +136,8 @@
 -- 	print("test2")
 -- end
 
+
+-----------------------rescurse
 -- b = {function(a,b,c,d)
 -- 	print(1)
 -- end,function()
@@ -143,19 +145,25 @@
 -- end,function()
 -- 	print(3)
 -- end}
+
 -- function test2(a)
--- 	if a > 1000 then return end
+-- 	if a > 10000 then return end
 -- 	print(a)
 -- 	a = a + 1
 -- 	test2(a)
 -- end
 
 -- test2(1)
-b = {b={b={b={b={b=function()
-	print("haha")
-end}}}}}
-b.b.b.b.b.b()
 
+
+
+
+-- b = {b={b={b={b={b=function()
+-- 	print("haha")
+-- end}}}}}
+-- b.b.b.b.b.b()
+
+----------------------------dict
 -- function test3()
 -- 	local a = function ()
 -- 		return 100,200
@@ -233,8 +241,52 @@ b.b.b.b.b.b()
 
 
 
+
+
+-------------------swap
+-- local a,b = 1,2
+-- print(a,b)
+
+-- arr = {3,4}
+-- for i = 1, len(arr) do
+-- 	print(arr[i])
+-- end
+
+-- arr[1],arr[2] = a,b
+
+-- for i = 1, len(arr) do
+-- 	print(arr[i])
+-- end
+
+
+
+
+
+----------------while do
+
+local arr = {1,2,3}
+local i = 1
+while i <= len(arr) do 
+	print(arr[i])
+	i = i + 1
+	if i == 2 then break end
+end
+
+
+
 -------------------foreach
--- local dict = {a=1,b=2}
--- function pair(dict)
-	
+-- local arr = {1,2,3}
+-- function ipairs(arr)
+-- 	i = 0
+-- 	n = len(arr)
+-- 	return function()
+-- 		i = i + 1
+-- 		if i <= n then
+-- 			return i,arr[i]
+-- 		end
+-- 	end
+-- end
+
+-- for i, v in ipairs(arr) do
+-- 	print(i,v)
 -- end

@@ -10,7 +10,14 @@
         public int index;
         public LuaObject value;
 
-        public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
+	    public LuaListItem(LVM vm, LuaTable table, LuaList list, int index, LuaObject value) : base(vm) {
+		    this.table = table;
+		    this.list = list;
+		    this.index = index;
+		    this.value = value;
+	    }
+
+	    public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
 			list.Bind(index, obj);
             return this;
         }
