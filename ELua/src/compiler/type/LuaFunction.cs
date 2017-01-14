@@ -7,10 +7,10 @@ namespace ELua {
 
 		public Module module;
 
-		public LuaFunction(LVM vm, string uid, Module module) : base(vm) {
-			this.uid = uid;
+		public LuaFunction(LVM vm, Module module) : base(vm) {
 			this.module = module;
-		}
+            uid = vm.NewUID();
+        }
 
 		public override void Call(StackFrame stackFrame, LuaObject[] args) {
 			module.Call(stackFrame, module.context.argsList, args);

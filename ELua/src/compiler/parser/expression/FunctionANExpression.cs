@@ -31,7 +31,7 @@ namespace ELua {
 			var module = new Module(new ModuleContext(context.vm, name, context.level + 1) { argsList = argsList });
 			context.vm.Add(module);
 			moduleExp.Generate(context.Bind(name, module.context));
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = new LuaFunction(context.vm, context.vm.NewUID(), module) });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg1 = new LuaModule(context.vm, module) });
 		}
 
 		public override string GetDebugInfo() {

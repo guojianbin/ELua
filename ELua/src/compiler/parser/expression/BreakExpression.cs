@@ -20,10 +20,9 @@ namespace ELua {
 
 		public override void Generate(ModuleContext context) {
 			var jumpEnd = new LuaLabel(context.vm, null, 0);
-			context.IsBreak = true;
-			context.endLabels.Add(jumpEnd);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg1 = jumpEnd });
-		}
+            context.OnBreak(jumpEnd);
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg1 = jumpEnd });
+        }
 
 	    public override void Extract(SyntaxContext context) {
 	        // ignored

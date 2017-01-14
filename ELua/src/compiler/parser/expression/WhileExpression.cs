@@ -33,7 +33,7 @@ namespace ELua {
 		}
 
 		public override void Generate(ModuleContext context) {
-            context.ClearBreak();
+            context.BeginLoop();
 			var beginLabel = new LabelExpression(context.NewUID(), condExp.debugInfo);
 			beginLabel.Generate(context);
 			var jumpBegin = new LuaLabel(context.vm, beginLabel.value, beginLabel.index);
@@ -45,7 +45,7 @@ namespace ELua {
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg1 = jumpBegin });
 			endLabel.Generate(context);
 			jumpEnd.index = endLabel.index;
-            context.ResetBreak(jumpEnd);
+            context.EndLoop(jumpEnd);
         }
 
 		public override string GetDebugInfo() {

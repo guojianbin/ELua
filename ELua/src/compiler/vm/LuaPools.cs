@@ -15,6 +15,7 @@ namespace ELua {
 		public Queue<LuaUserdata> userdataPool = new Queue<LuaUserdata>();
 		public Queue<LuaTuple> tuplePool = new Queue<LuaTuple>();
 		public Queue<LuaVar> varPool = new Queue<LuaVar>();
+		public Queue<LuaFunction> functionPool = new Queue<LuaFunction>();
 		public Queue<LuaListItem> listItemPool = new Queue<LuaListItem>();
 		public Queue<LuaDictItem> dictItemPool = new Queue<LuaDictItem>();
 
@@ -62,9 +63,23 @@ namespace ELua {
 
 		public void PutString(LuaString item) {
 			stringPool.Enqueue(item);
-		}
+        }
 
-		public LuaVar GetVar(string name) {
+        public LuaFunction GetFunction(Module value) {
+            if (functionPool.Count == 0) {
+                return new LuaFunction(vm, value);
+            } else {
+                var item = functionPool.Dequeue();
+                item.module = value;
+                return item;
+            }
+        }
+
+        public void PutFunction(LuaFunction item) {
+            functionPool.Enqueue(item);
+        }
+
+        public LuaVar GetVar(string name) {
 			if (varPool.Count == 0) {
 				return new LuaVar(vm, name);
 			} else {

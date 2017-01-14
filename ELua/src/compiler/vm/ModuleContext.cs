@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ELua {
 
@@ -14,8 +15,7 @@ namespace ELua {
 		public string name;
 		public int level;
 		public List<ByteCode> list;
-		public bool IsBreak;
-		public List<LuaLabel> endLabels = new List<LuaLabel>();
+	    public Stack<Queue<LuaLabel>> breakStack = new Stack<Queue<LuaLabel>>();
 
 		public int Count {
 			get { return list.Count; }
@@ -40,22 +40,24 @@ namespace ELua {
 		public void Add(ByteCode byteCode) {
 		    byteCode.index = Count;
             list.Add(byteCode);
-		}
-
-	    public void ResetBreak(LuaLabel endLabel) {
-	        if (IsBreak) {
-                foreach (var item in endLabels) {
-                    item.value = endLabel.value;
-                    item.index = endLabel.index;
-                }
-                ClearBreak();
-            }
         }
 
-	    public void ClearBreak() {
-	        IsBreak = false;
-            endLabels.Clear();
+        public void BeginLoop() {
+            breakStack.Push(new Queue<LuaLabel>());
+        }
+
+	    public void OnBreak(LuaLabel label) {
+	        breakStack.Peek().Enqueue(label);
 	    }
+
+        public void EndLoop(LuaLabel endLabel) {
+            var queue = breakStack.Pop();
+            while (queue.Count > 0) {
+                var item = queue.Dequeue();
+                item.value = endLabel.value;
+                item.index = endLabel.index;
+            }
+        }
 
 	}
 

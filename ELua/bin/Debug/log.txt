@@ -2,9 +2,15 @@
 local arr = { 1, 2, 3 }
 local i = 1
 while i <= len(arr) do
+for j=1,10 do
+print(j + 10)
+if j == 2 then
+break
+end
+end
 print(arr[i])
 i = i + 1
-if i == 2 then
+if i == 3 then
 break
 end
 end
@@ -14,11 +20,18 @@ local #5 = { 1, 2, 3 }
 local arr = #5
 local i = 1
 while i <= len(arr) do
-local #6 = arr[i]
+for j=1,10 do
+local #6 = j + 10
 print(#6)
-local #7 = i + 1
-i = #7
-if i == 2 then
+if j == 2 then
+break
+end
+end
+local #7 = arr[i]
+print(#7)
+local #8 = i + 1
+i = #8
+if i == 3 then
 break
 end
 end
@@ -39,44 +52,85 @@ end
 12  Push       i         
 13  Bind
 14  Clear
-15  Label      #8:15     
+15  Label      #9:15     
 16  Push       arr       
 17  Push       len       
 18  Call
 19  Push       i         
 20  LessEqual
-21  JumpNot    #9:51     
-22  Push       i         
-23  Push       arr       
-24  Index
-25  Push       #6        
-26  Bind
-27  Clear
-28  Push       #6        
-29  Push       print     
-30  Call
+21  JumpNot    #10:87    
+22  Push       1         
+23  Push       j         
+24  Bind
+25  Clear
+26  Label      #11:26    
+27  Push       10        
+28  Push       j         
+29  Greater
+30  JumpIf     #12:56    
 31  Clear
-32  Push       1         
-33  Push       i         
+32  Push       10        
+33  Push       j         
 34  Plus
-35  Push       #7        
+35  Push       #6        
 36  Bind
 37  Clear
-38  Push       #7        
-39  Push       i         
-40  Bind
+38  Push       #6        
+39  Push       print     
+40  Call
 41  Clear
 42  Push       2         
-43  Push       i         
+43  Push       j         
 44  Equal
-45  JumpNot    #10:48    
-46  Jump       #9:51     
+45  JumpNot    #13:48    
+46  Jump       #12:56    
 47  Clear
-48  Label      #10:48    
+48  Label      #13:48    
 49  Clear
-50  Jump       #8:15     
-51  Label      #9:51     
-52  Clear
+50  Push       1         
+51  Push       j         
+52  Plus
+53  Push       j         
+54  Bind
+55  Jump       #11:26    
+56  Label      #12:56    
+57  Clear
+58  Push       i         
+59  Push       arr       
+60  Index
+61  Push       #7        
+62  Bind
+63  Clear
+64  Push       #7        
+65  Push       print     
+66  Call
+67  Clear
+68  Push       1         
+69  Push       i         
+70  Plus
+71  Push       #8        
+72  Bind
+73  Clear
+74  Push       #8        
+75  Push       i         
+76  Bind
+77  Clear
+78  Push       3         
+79  Push       i         
+80  Equal
+81  JumpNot    #14:84    
+82  Jump       #10:87    
+83  Clear
+84  Label      #14:84    
+85  Clear
+86  Jump       #9:15     
+87  Label      #10:87    
+88  Clear
 
 [output]
+11
+12
 1
+11
+12
+2

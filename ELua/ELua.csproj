@@ -152,6 +152,7 @@
     <Compile Include="src\compiler\type\LuaLabel.cs" />
     <Compile Include="src\compiler\type\LuaList.cs" />
     <Compile Include="src\compiler\type\LuaListItem.cs" />
+    <Compile Include="src\compiler\type\LuaModule.cs" />
     <Compile Include="src\compiler\type\LuaNil.cs" />
     <Compile Include="src\compiler\type\LuaTuple.cs" />
     <Compile Include="src\compiler\type\LuaNumber.cs" />

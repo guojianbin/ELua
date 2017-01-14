@@ -37,7 +37,7 @@ namespace ELua {
         }
 
         public override void Generate(ModuleContext context) {
-            context.ClearBreak();
+            context.BeginLoop();
             var bindIndex = new BindExpression(indexExp, beginExp);
             bindIndex.Generate(context);
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Clear });
@@ -54,7 +54,7 @@ namespace ELua {
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg1 = jumpBegin });
             endLabel.Generate(context);
 			jumpEnd.index = endLabel.index;
-            context.ResetBreak(jumpEnd);
+            context.EndLoop(jumpEnd);
         }
 
         public override string GetDebugInfo() {

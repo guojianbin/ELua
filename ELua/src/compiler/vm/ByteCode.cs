@@ -18,7 +18,7 @@ namespace ELua {
             Negate, Multiply, Division, Mod, Plus, Subtract,
             Not, And, Or,
             Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual,
-			Property, Index, Call, 
+			Property, Index, Call, Function,
             Table, List,
 			Return,
 
@@ -179,6 +179,11 @@ namespace ELua {
 					var item = stackFrame.Pop();
 					var list = stackFrame.TakeAll();
 					item.Call(stackFrame, list);
+					break;
+				}
+				case OpCode.Function: {
+					var item = (LuaModule)opArg1;
+			        stackFrame.Push(stackFrame.vm.GetFunction(item.value));
 					break;
 				}
 				case OpCode.Return: {

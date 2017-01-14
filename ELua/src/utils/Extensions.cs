@@ -45,9 +45,17 @@ namespace ELua {
 
 		public static void PutVar(this LVM vm, LuaVar item) {
 			vm.luaPools.PutVar(item);
-		}
+        }
 
-		public static LuaTable GetTable(this LVM vm) {
+        public static LuaFunction GetFunction(this LVM vm, Module value) {
+            return vm.luaPools.GetFunction(value);
+        }
+
+        public static void PuFunction(this LVM vm, LuaFunction item) {
+            vm.luaPools.PutFunction(item);
+        }
+
+        public static LuaTable GetTable(this LVM vm) {
 			return vm.luaPools.GetTable();
 		}
 
