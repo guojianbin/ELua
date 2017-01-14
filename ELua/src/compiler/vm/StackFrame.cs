@@ -100,7 +100,7 @@ namespace ELua {
 		}
 
 		public void Bind(string name, LuaObject obj) {
-			context[name] = new LuaBinder { stackFrame = this, name = name, obj = obj };
+			context[name] = new LuaBinder(this, name, obj);
 		}
 
 		public LuaObject Find(string name) {

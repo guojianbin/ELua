@@ -29,7 +29,8 @@ namespace ELua {
 	    }
 
 	    public override void Extract(SyntaxContext context) {
-			moduleExp.Extract(context);
+            condExp = ParserHelper.Extract(context, condExp);
+            moduleExp.Extract(context);
         }
 
         public override void Generate(ModuleContext context) {

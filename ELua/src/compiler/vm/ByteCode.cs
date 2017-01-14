@@ -177,7 +177,7 @@ namespace ELua {
                 }
 				case OpCode.Call: {
 					var item = stackFrame.Pop();
-					var list = stackFrame.TakeAll();
+			        var list = stackFrame.Take(((LuaInteger)opArg1).value);
 					item.Call(stackFrame, list);
 					break;
 				}

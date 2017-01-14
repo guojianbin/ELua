@@ -94,7 +94,6 @@
     <Compile Include="src\compiler\parser\expression\SubtractExpression.cs" />
     <Compile Include="src\compiler\parser\expression\TableNExpression.cs" />
     <Compile Include="src\compiler\parser\expression\TableExpression.cs" />
-    <Compile Include="src\compiler\parser\expression\UnpackExpression.cs" />
     <Compile Include="src\compiler\parser\expression\WhileExpression.cs" />
     <Compile Include="src\compiler\parser\expression\WordExpression.cs" />
     <Compile Include="src\compiler\parser\IParser.cs" />

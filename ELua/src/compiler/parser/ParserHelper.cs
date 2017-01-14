@@ -61,11 +61,7 @@ namespace ELua {
 			} else {
 				var ret = Wrapper(expression, context.NewUID());
 				context.Add(ret.Value);
-				if (expression.type == Expression.Type.Call) {
-					return new UnpackExpression(ret.Key);
-				} else {
-					return ret.Key;
-				}
+			    return ret.Key;
 			}
         }
 

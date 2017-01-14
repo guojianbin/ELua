@@ -75,6 +75,9 @@
 -- print(a and 50 or 80)
 -- print(b and b + 100 and c + 200)
 
+
+
+--------------------短路求值
 -- local b = true
 -- if b or a + 100 then
 -- 	if b then
@@ -264,17 +267,17 @@
 
 ----------------while do
 
-local arr = {1,2,3}
-local i = 1
-while i <= len(arr) do 
-	for j=1,10 do
-		print(j + 10)
-		if j == 2 then break end
-	end
-	print(arr[i])
-	i = i + 1
-	if i == 3 then break end
-end
+-- local arr = {1,2,3}
+-- local i = 1
+-- while i <= len(arr) do 
+-- 	for j=1,10 do
+-- 		print(j + 10)
+-- 		if j == 2 then break end
+-- 	end
+-- 	print(arr[i])
+-- 	i = i + 1
+-- 	if i == 3 then break end
+-- end
 
 
 
