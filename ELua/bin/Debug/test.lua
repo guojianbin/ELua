@@ -370,4 +370,5 @@ t[1] = 100
 t[-1] = 200
 print(t[1])
 print(t[-1])
-
+t.a = 11
+print(t.a)

@@ -11,9 +11,8 @@
 		        return table;
 	        } else {
 				var table = stackFrame.vm.GetTable();
-				table.InitList();
-				for (var i = 0; i < args.Length; i++) {
-					table.Add(args[i]);
+				foreach (var item in args) {
+				    table.Add(item);
 				}
 				return table;
 	        }
@@ -25,7 +24,6 @@
 				return table;
 	        } else {
 				var table = stackFrame.vm.GetTable();
-				table.InitDict();
 				for (var i = 0; i < args.Length; i += 2) {
 					table.Bind(args[i], args[i + 1]);
 				}

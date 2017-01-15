@@ -5,12 +5,12 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class LuaObject {
+	public abstract class LuaObject {
 
 	    public LVM vm;
 		public string uid;
 
-		public LuaObject(LVM vm) {
+	    protected LuaObject(LVM vm) {
 			this.vm = vm;
 		}
 

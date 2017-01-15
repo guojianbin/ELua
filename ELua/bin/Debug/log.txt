@@ -4,6 +4,8 @@ t[1] = 100
 t[-1] = 200
 print(t[1])
 print(t[-1])
+t["a"] = 11
+print(t["a"])
 
 [extract]
 local #6 = { 1, 2, 3 }
@@ -14,7 +16,9 @@ t[#7] = 200
 print(t[1])
 local #8 = -1
 print(t[#8])
-complie 69ms
+t["a"] = 11
+print(t["a"])
+complie 71ms
 
 [test.lua]
 0   Push       3         
@@ -62,7 +66,20 @@ complie 69ms
 42  Var        print     
 43  Call       1         
 44  Clear
+45  Push       11        
+46  Push       a         
+47  Var        t         
+48  Property
+49  Bind
+50  Clear
+51  Push       a         
+52  Var        t         
+53  Property
+54  Var        print     
+55  Call       1         
+56  Clear
 
 [output]
 2
 200
+11
