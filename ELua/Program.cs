@@ -15,7 +15,7 @@ namespace ELua {
 			var scanner = new Scanner(file, File.ReadAllText(file));
 			var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
 			parser.Generate();
-		    logger.WriteLine(string.Format("{0}ms", sw.ElapsedMilliseconds));
+		    logger.WriteLine(string.Format("complie {0}ms", sw.ElapsedMilliseconds));
 
 			foreach (var module in vm.modulesDict.Values) {
 				logger.WriteLine(string.Empty, Logger.Type.File);

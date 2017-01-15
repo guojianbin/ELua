@@ -25,6 +25,45 @@ $body$
 }
 ]]
 
+pool == --[[
+using System.Collections.Generic;
+
+namespace ELua {
+
+    /// <summary>
+    /// @author Easily
+    /// auto generated! don't modify !
+    /// </summary>
+    public static class ParserPools {
+
+$pool_list$
+$get_parser$
+$put_parser$
+    }
+
+}
+]]
+
+pool_list == --[[
+        public static Queue<$name$Parser> $name$ParserPool = new Queue<$name$Parser>();
+]]
+
+get_parser == --[[
+        public static $name$Parser Get$name$Parser() {
+            if ($name$ParserPool.Count == 0) {
+                return new $name$Parser();
+            } else {
+                return $name$ParserPool.Dequeue();
+            }
+        }
+]]
+
+put_parser == --[[
+        public static void Put$name$Parser(IParser parser) {
+            $name$ParserPool.Enqueue(($name$Parser)parser);
+        }
+]]
+
 move_next == --[[
 			offset += 1;
 			index = position + offset;
@@ -38,6 +77,12 @@ move_pre == --[[
 parser == --[[
 			parser = new $name$Parser();
 			while (parser.Parse(context, index));
+]]
+
+pool_parser == --[[
+			parser = ParserPools.Get$name$Parser();
+			while (parser.Parse(context, index));
+			ParserPools.Put$name$Parser(parser);
 ]]
 
 is_keyword == --[[

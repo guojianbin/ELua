@@ -23,6 +23,7 @@ namespace Doge {
 			var tempDict = ParseTemp(tempStr);
 
 			WriteParser(syntaxDict, defDict, expDict, tempDict);
+            WritePools(syntaxDict, tempDict);
 		}
 
 		private static void WriteParser(Dictionary<string, string> syntaxDict, Dictionary<string, string> defDict, Dictionary<string, int> expDict, Dictionary<string, string> tempDict) {
@@ -39,6 +40,25 @@ namespace Doge {
 				File.WriteAllText(filePath, fileStr);
 			}
 		}
+
+	    public static void WritePools(Dictionary<string, string> syntaxDict, Dictionary<string, string> tempDict) {
+            var poolSb = new StringBuilder();
+            var getSb = new StringBuilder();
+            var putSb = new StringBuilder();
+	        foreach (var item in syntaxDict) {
+	            poolSb.Append(tempDict["pool_list"].Replace("$name$", item.Key));
+	            poolSb.Append('\n');
+	            getSb.Append(tempDict["get_parser"].Replace("$name$", item.Key));
+	            getSb.Append('\n');
+                getSb.Append('\n');
+                putSb.Append(tempDict["put_parser"].Replace("$name$", item.Key));
+	            putSb.Append('\n');
+                putSb.Append('\n');
+            }
+	        var content = tempDict["pool"].Replace("$pool_list$", poolSb.ToString()).Replace("$get_parser$", getSb.ToString()).Replace("$put_parser$", putSb.ToString());
+	        var filePath = string.Format("{0}/ParserPools.cs", syntaxRoot);
+            File.WriteAllText(filePath, content);
+	    }
 
 		private static Dictionary<string, int> ParseExps(string content) {
 			var expReg = new Regex(@"#begin exprexsion((.|\n)*?)#end exprexsion");

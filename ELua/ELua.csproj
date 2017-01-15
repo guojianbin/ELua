@@ -135,6 +135,7 @@
     <Compile Include="src\compiler\parser\syntax\NotParser.cs" />
     <Compile Include="src\compiler\parser\syntax\OrParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ParenParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\ParserPools.cs" />
     <Compile Include="src\compiler\parser\syntax\PlusParser.cs" />
     <Compile Include="src\compiler\parser\syntax\PropertyParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ReturnNParser.cs" />
