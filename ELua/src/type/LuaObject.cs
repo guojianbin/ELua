@@ -30,7 +30,7 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
-        public virtual LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
+        public virtual void Bind(StackFrame stackFrame, LuaObject obj) {
             throw new InvalidOperationException(GetType().Name);
         }
 

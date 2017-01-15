@@ -17,9 +17,8 @@
 		    this.value = value;
 	    }
 
-	    public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
+	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
 			list.Bind(index, obj);
-            return this;
         }
 
         public override LuaObject Negate(StackFrame stackFrame) {

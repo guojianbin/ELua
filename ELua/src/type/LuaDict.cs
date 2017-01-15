@@ -21,8 +21,8 @@ namespace ELua {
 		    this.table = table;
 	    }
 
-	    public LuaObject Bind(LuaObject key, LuaObject value) {
-			return itemsDict[key] = table.vm.GetDictItem(table, this, key, value);
+	    public void Bind(LuaObject key, LuaObject value) {
+			itemsDict[key] = table.vm.GetDictItem(table, this, key, value);
 	    }
 
 		public LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {

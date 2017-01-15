@@ -557,7 +557,7 @@ local #91 = ipairs(arr)
 for i, v in unpack(#91) do
 print(i, v)
 end
-complie 196ms
+complie 180ms
 
 [test2]
 0   Push       5         

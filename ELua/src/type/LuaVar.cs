@@ -15,9 +15,9 @@
 			target = binder.target;
 		}
 
-	    public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
-			binder.Rebind(obj);
-	        return this;
+	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
+            target = obj;
+            binder.Rebind(obj);
 	    }
 
 		public override LuaObject ToObject(StackFrame stackFrame) {

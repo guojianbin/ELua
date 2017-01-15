@@ -17,8 +17,8 @@
 		    this.value = value;
 	    }
 
-	    public override LuaObject Bind(StackFrame stackFrame, LuaObject obj) {
-	        return dict.Bind(key, obj);
+	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
+            dict.Bind(key, obj);
         }
 
 	    public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {

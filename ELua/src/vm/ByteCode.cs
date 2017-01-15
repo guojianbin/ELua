@@ -46,7 +46,8 @@ namespace ELua {
                 case OpCode.Bind: {
 	                var item1 = stackFrame.PopVar();
 	                var item2 = stackFrame.Pop();
-	                stackFrame.Push(item1.Bind(stackFrame, item2));
+			        item1.Bind(stackFrame, item2);
+                    stackFrame.Push(item1);
 	                break;
                 }
 				case OpCode.BindN: {
@@ -54,7 +55,8 @@ namespace ELua {
 					var list1 = stackFrame.TakeVars(len);
 					var list2 = stackFrame.Take(len);
 					for (var i = 0; i < len; i++) {
-						stackFrame.Push(list1[i].Bind(stackFrame, list2[i]));
+					    list1[i].Bind(stackFrame, list2[i]);
+                        stackFrame.Push(list1[i]);
 					}
 					break;
 				}

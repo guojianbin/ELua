@@ -17,7 +17,6 @@ namespace ELua {
 
 		public void Rebind(LuaObject target) {
 			this.target = target;
-			stackFrame.Bind(this);
 		}
 
 	    public override string ToString() {
