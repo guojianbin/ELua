@@ -220,6 +220,10 @@ end
 for i, v in ipairs(arr) do
 print(i, v)
 end
+local a = { "a" = 1 }
+print(a["a"])
+a["a"] = 100
+print(a["a"])
 
 [extract]
 local b = 1
@@ -557,7 +561,12 @@ local #91 = ipairs(arr)
 for i, v in unpack(#91) do
 print(i, v)
 end
-complie 180ms
+local #92 = { "a" = 1 }
+local a = #92
+print(a["a"])
+a["a"] = 100
+print(a["a"])
+complie 209ms
 
 [test2]
 0   Push       5         
@@ -565,7 +574,7 @@ complie 180ms
 2   Return
 3   Clear
 
-[#117]
+[#118]
 0   Var        b         
 1   Var        a         
 2   Plus
@@ -604,32 +613,32 @@ complie 180ms
 35  Return
 36  Clear
 
-[#121]
+[#122]
 0   Push       1         
 1   Var        print     
 2   Call       1         
 3   Clear
 
-[#123]
+[#124]
 0   Push       2         
 1   Var        print     
 2   Call       1         
 3   Clear
 
-[#125]
+[#126]
 0   Push       3         
 1   Var        print     
 2   Call       1         
 3   Clear
 
-[#129]
+[#130]
 0   Push       haha      
 1   Var        print     
 2   Call       1         
 3   Clear
 
 [test3]
-0   Function   #140      
+0   Function   #141      
 1   Var        #66       
 2   Bind
 3   Clear
@@ -646,23 +655,23 @@ complie 180ms
 14  Return
 15  Clear
 
-[#131]
+[#132]
 0   Push       200       
 1   Push       100       
 2   Return
 3   Clear
 
-[#133]
+[#134]
 0   Push       200       
 1   Return
 2   Clear
 
-[#135]
+[#136]
 0   Push       300       
 1   Return
 2   Clear
 
-[#140]
+[#141]
 0   Push       100       
 1   Return
 2   Clear
@@ -675,7 +684,7 @@ complie 180ms
 4   Bind
 5   Clear
 6   Var        #69       
-7   JumpNot    #145:20   
+7   JumpNot    #146:20   
 8   Push       1         
 9   Var        list      
 10  Var        unpack    
@@ -687,8 +696,8 @@ complie 180ms
 16  Unpack
 17  Return
 18  Clear
-19  Jump       #146:58   
-20  Label      #145:20   
+19  Jump       #147:58   
+20  Label      #146:20   
 21  Var        list      
 22  Var        len       
 23  Call       1         
@@ -703,7 +712,7 @@ complie 180ms
 32  Bind
 33  Clear
 34  Var        #72       
-35  JumpNot    #147:56   
+35  JumpNot    #148:56   
 36  Push       1         
 37  Var        i         
 38  Plus
@@ -724,9 +733,9 @@ complie 180ms
 53  Index
 54  Return
 55  Clear
-56  Label      #147:56   
+56  Label      #148:56   
 57  Clear
-58  Label      #146:58   
+58  Label      #147:58   
 59  Clear
 
 [test1]
@@ -754,12 +763,12 @@ complie 180ms
 14  Bind
 15  Clear
 16  Var        v         
-17  JumpNot    #163:22   
+17  JumpNot    #164:22   
 18  Var        v         
 19  Var        i         
 20  Return
 21  Clear
-22  Label      #163:22   
+22  Label      #164:22   
 23  Clear
 
 [ipairs]
@@ -923,12 +932,12 @@ complie 180ms
 150 Bind
 151 Clear
 152 Var        #17       
-153 JumpNot    #92:158   
+153 JumpNot    #93:158   
 154 Var        b         
 155 Var        print     
 156 Call       1         
 157 Clear
-158 Label      #92:158   
+158 Label      #93:158   
 159 Clear
 160 Var        a         
 161 Var        print     
@@ -1117,7 +1126,7 @@ complie 180ms
 344 Bind
 345 Clear
 346 Var        b         
-347 JumpNot    #93:363   
+347 JumpNot    #94:363   
 348 Push       200       
 349 Push       100       
 350 Plus
@@ -1132,8 +1141,8 @@ complie 180ms
 359 Var        print     
 360 Call       1         
 361 Clear
-362 Jump       #94:378   
-363 Label      #93:363   
+362 Jump       #95:378   
+363 Label      #94:363   
 364 Push       400       
 365 Push       200       
 366 Plus
@@ -1148,7 +1157,7 @@ complie 180ms
 375 Var        print     
 376 Call       1         
 377 Clear
-378 Label      #94:378   
+378 Label      #95:378   
 379 Clear
 380 Push       100       
 381 Var        b         
@@ -1163,68 +1172,68 @@ complie 180ms
 390 Bind
 391 Clear
 392 Var        a         
-393 JumpNot    #95:399   
+393 JumpNot    #96:399   
 394 Push       50        
 395 Var        #30       
 396 Bind
 397 Clear
-398 Jump       #96:404   
-399 Label      #95:399   
+398 Jump       #97:404   
+399 Label      #96:399   
 400 Var        a         
 401 Var        #30       
 402 Bind
 403 Clear
-404 Label      #96:404   
+404 Label      #97:404   
 405 Clear
 406 Var        #30       
-407 JumpNot    #97:413   
+407 JumpNot    #98:413   
 408 Var        #30       
 409 Var        #31       
 410 Bind
 411 Clear
-412 Jump       #98:418   
-413 Label      #97:413   
+412 Jump       #99:418   
+413 Label      #98:413   
 414 Push       80        
 415 Var        #31       
 416 Bind
 417 Clear
-418 Label      #98:418   
+418 Label      #99:418   
 419 Clear
 420 Var        #31       
 421 Var        print     
 422 Call       1         
 423 Clear
 424 Var        b         
-425 JumpNot    #99:433   
+425 JumpNot    #100:433  
 426 Push       100       
 427 Var        b         
 428 Plus
 429 Var        #32       
 430 Bind
 431 Clear
-432 Jump       #100:438  
-433 Label      #99:433   
+432 Jump       #101:438  
+433 Label      #100:433  
 434 Var        b         
 435 Var        #32       
 436 Bind
 437 Clear
-438 Label      #100:438  
+438 Label      #101:438  
 439 Clear
 440 Var        #32       
-441 JumpNot    #101:449  
+441 JumpNot    #102:449  
 442 Push       200       
 443 Var        c         
 444 Plus
 445 Var        #33       
 446 Bind
 447 Clear
-448 Jump       #102:454  
-449 Label      #101:449  
+448 Jump       #103:454  
+449 Label      #102:449  
 450 Var        #32       
 451 Var        #33       
 452 Bind
 453 Clear
-454 Label      #102:454  
+454 Label      #103:454  
 455 Clear
 456 Var        #33       
 457 Var        print     
@@ -1235,58 +1244,58 @@ complie 180ms
 462 Bind
 463 Clear
 464 Var        b         
-465 JumpNot    #103:471  
+465 JumpNot    #104:471  
 466 Var        b         
 467 Var        #34       
 468 Bind
 469 Clear
-470 Jump       #104:478  
-471 Label      #103:471  
+470 Jump       #105:478  
+471 Label      #104:471  
 472 Push       100       
 473 Var        a         
 474 Plus
 475 Var        #34       
 476 Bind
 477 Clear
-478 Label      #104:478  
+478 Label      #105:478  
 479 Clear
 480 Var        #34       
-481 JumpNot    #105:511  
+481 JumpNot    #106:511  
 482 Var        b         
-483 JumpNot    #107:489  
+483 JumpNot    #108:489  
 484 Push       1         
 485 Var        print     
 486 Call       1         
 487 Clear
-488 Jump       #108:494  
-489 Label      #107:489  
+488 Jump       #109:494  
+489 Label      #108:489  
 490 Push       5         
 491 Var        print     
 492 Call       1         
 493 Clear
-494 Label      #108:494  
+494 Label      #109:494  
 495 Clear
 496 Var        a         
-497 JumpNot    #109:503  
+497 JumpNot    #110:503  
 498 Push       2         
 499 Var        print     
 500 Call       1         
 501 Clear
-502 Jump       #110:508  
-503 Label      #109:503  
+502 Jump       #111:508  
+503 Label      #110:503  
 504 Push       3         
 505 Var        print     
 506 Call       1         
 507 Clear
-508 Label      #110:508  
+508 Label      #111:508  
 509 Clear
-510 Jump       #106:516  
-511 Label      #105:511  
+510 Jump       #107:516  
+511 Label      #106:511  
 512 Push       4         
 513 Var        print     
 514 Call       1         
 515 Clear
-516 Label      #106:516  
+516 Label      #107:516  
 517 Clear
 518 Push       10        
 519 Var        a         
@@ -1303,7 +1312,7 @@ complie 180ms
 530 Bind
 531 Clear
 532 Var        #35       
-533 JumpNot    #111:544  
+533 JumpNot    #112:544  
 534 Var        b         
 535 Var        a         
 536 Plus
@@ -1314,39 +1323,39 @@ complie 180ms
 541 Var        print     
 542 Call       1         
 543 Clear
-544 Label      #111:544  
+544 Label      #112:544  
 545 Clear
 546 Var        a         
-547 JumpNot    #112:553  
+547 JumpNot    #113:553  
 548 Var        a         
 549 Var        #37       
 550 Bind
 551 Clear
-552 Jump       #113:558  
-553 Label      #112:553  
+552 Jump       #114:558  
+553 Label      #113:553  
 554 Push       100       
 555 Var        #37       
 556 Bind
 557 Clear
-558 Label      #113:558  
+558 Label      #114:558  
 559 Clear
 560 Var        #37       
 561 Var        a         
 562 Bind
 563 Clear
 564 Var        a         
-565 JumpNot    #114:571  
+565 JumpNot    #115:571  
 566 Var        a         
 567 Var        #38       
 568 Bind
 569 Clear
-570 Jump       #115:576  
-571 Label      #114:571  
+570 Jump       #116:576  
+571 Label      #115:571  
 572 Push       200       
 573 Var        #38       
 574 Bind
 575 Clear
-576 Label      #115:576  
+576 Label      #116:576  
 577 Clear
 578 Var        #38       
 579 Var        b         
@@ -1364,7 +1373,7 @@ complie 180ms
 591 Var        test2     
 592 Bind
 593 Clear
-594 Function   #117      
+594 Function   #118      
 595 Var        #45       
 596 Bind
 597 Clear
@@ -1392,12 +1401,12 @@ complie 180ms
 619 Bind
 620 Clear
 621 Var        #46       
-622 JumpNot    #119:627  
+622 JumpNot    #120:627  
 623 Push       haha      
 624 Var        print     
 625 Call       1         
 626 Clear
-627 Label      #119:627  
+627 Label      #120:627  
 628 Clear
 629 Var        test2     
 630 Var        t2        
@@ -1418,22 +1427,22 @@ complie 180ms
 645 Bind
 646 Clear
 647 Var        #47       
-648 JumpNot    #120:653  
+648 JumpNot    #121:653  
 649 Push       test2     
 650 Var        print     
 651 Call       1         
 652 Clear
-653 Label      #120:653  
+653 Label      #121:653  
 654 Clear
-655 Function   #121      
+655 Function   #122      
 656 Var        #48       
 657 Bind
 658 Clear
-659 Function   #123      
+659 Function   #124      
 660 Var        #49       
 661 Bind
 662 Clear
-663 Function   #125      
+663 Function   #126      
 664 Var        #50       
 665 Bind
 666 Clear
@@ -1456,7 +1465,7 @@ complie 180ms
 683 Var        test2     
 684 Call       1         
 685 Clear
-686 Function   #129      
+686 Function   #130      
 687 Var        #54       
 688 Bind
 689 Clear
@@ -1525,11 +1534,11 @@ complie 180ms
 752 Var        i         
 753 Bind
 754 Clear
-755 Label      #138:755  
+755 Label      #139:755  
 756 Push       3         
 757 Var        i         
 758 Greater
-759 JumpIf     #139:779  
+759 JumpIf     #140:779  
 760 Clear
 761 Var        i         
 762 Var        arr       
@@ -1548,8 +1557,8 @@ complie 180ms
 775 Plus
 776 Var        i         
 777 Bind
-778 Jump       #138:755  
-779 Label      #139:779  
+778 Jump       #139:755  
+779 Label      #140:779  
 780 Clear
 781 Function   test3     
 782 Var        test3     
@@ -1590,11 +1599,11 @@ complie 180ms
 817 Var        i         
 818 Bind
 819 Clear
-820 Label      #143:820  
+820 Label      #144:820  
 821 Push       3         
 822 Var        i         
 823 Greater
-824 JumpIf     #144:838  
+824 JumpIf     #145:838  
 825 Clear
 826 Var        i         
 827 Var        arr       
@@ -1607,8 +1616,8 @@ complie 180ms
 834 Plus
 835 Var        i         
 836 Bind
-837 Jump       #143:820  
-838 Label      #144:838  
+837 Jump       #144:820  
+838 Label      #145:838  
 839 Clear
 840 Function   unpack    
 841 Var        unpack    
@@ -1718,13 +1727,13 @@ complie 180ms
 945 Var        i         
 946 Bind
 947 Clear
-948 Label      #153:948  
+948 Label      #154:948  
 949 Var        arr       
 950 Var        len       
 951 Call       1         
 952 Var        i         
 953 Greater
-954 JumpIf     #154:968  
+954 JumpIf     #155:968  
 955 Clear
 956 Var        i         
 957 Var        arr       
@@ -1737,8 +1746,8 @@ complie 180ms
 964 Plus
 965 Var        i         
 966 Bind
-967 Jump       #153:948  
-968 Label      #154:968  
+967 Jump       #154:948  
+968 Label      #155:968  
 969 Clear
 970 Var        b         
 971 Var        a         
@@ -1760,13 +1769,13 @@ complie 180ms
 987 Var        i         
 988 Bind
 989 Clear
-990 Label      #155:990  
+990 Label      #156:990  
 991 Var        arr       
 992 Var        len       
 993 Call       1         
 994 Var        i         
 995 Greater
-996 JumpIf     #156:1010 
+996 JumpIf     #157:1010 
 997 Clear
 998 Var        i         
 999 Var        arr       
@@ -1779,8 +1788,8 @@ complie 180ms
 1006 Plus
 1007 Var        i         
 1008 Bind
-1009 Jump       #155:990  
-1010 Label      #156:1010 
+1009 Jump       #156:990  
+1010 Label      #157:1010 
 1011 Clear
 1012 Push       3         
 1013 Push       2         
@@ -1797,22 +1806,22 @@ complie 180ms
 1024 Var        i         
 1025 Bind
 1026 Clear
-1027 Label      #157:1027 
+1027 Label      #158:1027 
 1028 Var        arr       
 1029 Var        len       
 1030 Call       1         
 1031 Var        i         
 1032 LessEqual
-1033 JumpNot    #158:1103 
+1033 JumpNot    #159:1103 
 1034 Push       1         
 1035 Var        j         
 1036 Bind
 1037 Clear
-1038 Label      #159:1038 
+1038 Label      #160:1038 
 1039 Push       10        
 1040 Var        j         
 1041 Greater
-1042 JumpIf     #160:1072 
+1042 JumpIf     #161:1072 
 1043 Clear
 1044 Push       10        
 1045 Var        j         
@@ -1831,18 +1840,18 @@ complie 180ms
 1058 Bind
 1059 Clear
 1060 Var        #86       
-1061 JumpNot    #161:1064 
-1062 Jump       #160:1072 
+1061 JumpNot    #162:1064 
+1062 Jump       #161:1072 
 1063 Clear
-1064 Label      #161:1064 
+1064 Label      #162:1064 
 1065 Clear
 1066 Push       1         
 1067 Var        j         
 1068 Plus
 1069 Var        j         
 1070 Bind
-1071 Jump       #159:1038 
-1072 Label      #160:1072 
+1071 Jump       #160:1038 
+1072 Label      #161:1072 
 1073 Clear
 1074 Var        i         
 1075 Var        arr       
@@ -1867,13 +1876,13 @@ complie 180ms
 1094 Bind
 1095 Clear
 1096 Var        #88       
-1097 JumpNot    #162:1100 
-1098 Jump       #158:1103 
+1097 JumpNot    #163:1100 
+1098 Jump       #159:1103 
 1099 Clear
-1100 Label      #162:1100 
+1100 Label      #163:1100 
 1101 Clear
-1102 Jump       #157:1027 
-1103 Label      #158:1103 
+1102 Jump       #158:1027 
+1103 Label      #159:1103 
 1104 Clear
 1105 Push       3         
 1106 Push       2         
@@ -1902,16 +1911,16 @@ complie 180ms
 1129 Clear
 1130 Var        #91       
 1131 Unpack
-1132 Var        #168      
-1133 Var        #167      
-1134 Var        #166      
+1132 Var        #169      
+1133 Var        #168      
+1134 Var        #167      
 1135 BindN      3         
-1136 Label      #169:1136 
+1136 Label      #170:1136 
 1137 Push       True      
-1138 JumpNot    #170:1166 
-1139 Var        #168      
-1140 Var        #167      
-1141 Var        #166      
+1138 JumpNot    #171:1166 
+1139 Var        #169      
+1140 Var        #168      
+1141 Var        #167      
 1142 Call       2         
 1143 Unpack
 1144 Var        v         
@@ -1919,25 +1928,53 @@ complie 180ms
 1146 BindN      2         
 1147 Clear
 1148 Var        i         
-1149 Var        #168      
+1149 Var        #169      
 1150 Bind
 1151 Clear
 1152 Push       nil       
-1153 Var        #168      
+1153 Var        #169      
 1154 Equal
-1155 JumpNot    #171:1158 
-1156 Jump       #170:1166 
+1155 JumpNot    #172:1158 
+1156 Jump       #171:1166 
 1157 Clear
-1158 Label      #171:1158 
+1158 Label      #172:1158 
 1159 Clear
 1160 Var        v         
 1161 Var        i         
 1162 Var        print     
 1163 Call       2         
 1164 Clear
-1165 Jump       #169:1136 
-1166 Label      #170:1166 
+1165 Jump       #170:1136 
+1166 Label      #171:1166 
 1167 Clear
+1168 Push       1         
+1169 Push       a         
+1170 Table      2         
+1171 Var        #92       
+1172 Bind
+1173 Clear
+1174 Var        #92       
+1175 Var        a         
+1176 Bind
+1177 Clear
+1178 Push       a         
+1179 Var        a         
+1180 Property
+1181 Var        print     
+1182 Call       1         
+1183 Clear
+1184 Push       100       
+1185 Push       a         
+1186 Var        a         
+1187 Property
+1188 Bind
+1189 Clear
+1190 Push       a         
+1191 Var        a         
+1192 Property
+1193 Var        print     
+1194 Call       1         
+1195 Clear
 
 [output]
 3
@@ -1970,7 +2007,7 @@ nil
 30
 hello world
 200
-trace:#117;test.lua;
+trace:#118;test.lua;
 haha
 11
 hello world
@@ -2502,3 +2539,5 @@ nil
 1, 1
 2, 2
 3, 3
+1
+100

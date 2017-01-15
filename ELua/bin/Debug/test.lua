@@ -328,3 +328,9 @@ for i, v in ipairs(arr) do
 	print(i,v)
 end
 
+
+----------------------------
+local a = {a=1}
+print(a.a)
+a.a = 100
+print(a.a)
