@@ -50,20 +50,26 @@ namespace ELua {
             return new StringExpression(temp.value, temp.debugInfo);
         }
 
-        public static Expression Extract(SyntaxContext context, Expression expression) {
+		public static Expression Extract(SyntaxContext context, Expression expression) {
 			if (expression.IsFinally) {
-                return expression;
-            }
-            expression.Extract(context);
-	        if (context.IsCutting) {
-		        context.IsCutting = false;
-		        return context.cuttingExp;
-			} else {
+				return expression;
+			}
+			expression.Extract(context);
+			if (context.IsCutting) {
+				context.IsCutting = false;
+				return context.cuttingExp;
+			} else if (expression.IsRightValue && !expression.IsLeftValue) {
 				var ret = Wrapper(expression, context.NewUID());
 				context.Add(ret.Value);
-			    return ret.Key;
+				if (expression.type == Expression.Type.Call) {
+					return new UnpackExpression(ret.Key);
+				} else {
+					return ret.Key;
+				}
+			} else {
+				return expression;
 			}
-        }
+		}
 
 		public static KeyValuePair<WordExpression, DefineExpression> Wrapper(Expression expression, string name) {
 			var itemKey = new WordExpression(name, expression.debugInfo);

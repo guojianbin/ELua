@@ -6,14 +6,16 @@ namespace ELua {
 	public class LuaFunction : LuaObject {
 
 		public Module module;
+		public StackFrame stackFrame;
 
-		public LuaFunction(LVM vm, Module module) : base(vm) {
+		public LuaFunction(LVM vm, Module module, StackFrame stackFrame) : base(vm) {
 			this.module = module;
-            uid = vm.NewUID();
+			this.stackFrame = stackFrame;
+			uid = vm.NewUID();
         }
 
 		public override void Call(StackFrame stackFrame, LuaObject[] args) {
-			module.Call(stackFrame, module.context.argsList, args);
+			module.Call(stackFrame, this.stackFrame, module.context.argsList, args);
 		}
 
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {

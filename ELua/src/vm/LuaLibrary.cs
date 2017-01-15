@@ -31,10 +31,11 @@ namespace ELua {
 		public void Trace(StackFrame stackFrame, LuaObject[] args) {
 			var sb = new StringBuilder();
 			sb.Append("trace:");
-			while (stackFrame.module != null) {
-				sb.Append(stackFrame.module.name);
+			var currentFrame = stackFrame;
+			while (currentFrame.module != null) {
+				sb.Append(currentFrame.module.name);
 				sb.Append(';');
-				stackFrame = stackFrame.parent;
+				currentFrame = currentFrame.parent;
 			}
 			stackFrame.Push(vm.GetString(sb.ToString()));
 		}

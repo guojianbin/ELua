@@ -28,7 +28,7 @@
 
 	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             if (!IsInit) {
-                return stackFrame.nil;
+                return vm.nil;
             } else {
                 return dict.GetProperty(stackFrame, obj);
             }
@@ -36,7 +36,7 @@
 
         public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
             if (!IsInit) {
-                return stackFrame.nil;
+                return vm.nil;
             } else if (IsList) {
                 return list.GetIndex(stackFrame, obj);
             } else {
@@ -48,7 +48,7 @@
 			IsInit = true;
 			IsList = true;
 			if (list == null) {
-				list = new LuaList(this);
+				list = new LuaList(vm, this);
 			} else {
 				list.Clear();
 			}
@@ -58,7 +58,7 @@
 			IsInit = true;
 			IsList = false;
 			if (dict == null) {
-				dict = new LuaDict(this);
+				dict = new LuaDict(vm, this);
 			} else {
 				dict.Clear();
 			}

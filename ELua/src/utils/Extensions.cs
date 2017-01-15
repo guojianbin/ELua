@@ -39,16 +39,16 @@ namespace ELua {
 			vm.luaPools.PutString(item);
 		}
 
-		public static LuaVar GetVar(this LVM vm, string value) {
-			return vm.luaPools.GetVar(value);
+		public static LuaVar GetVar(this LVM vm, string value, LuaBinder binder) {
+			return vm.luaPools.GetVar(value, binder);
 		}
 
 		public static void PutVar(this LVM vm, LuaVar item) {
 			vm.luaPools.PutVar(item);
         }
 
-        public static LuaFunction GetFunction(this LVM vm, Module value) {
-            return vm.luaPools.GetFunction(value);
+		public static LuaFunction GetFunction(this LVM vm, Module value, StackFrame stackFrame) {
+            return vm.luaPools.GetFunction(value, stackFrame);
         }
 
         public static void PuFunction(this LVM vm, LuaFunction item) {
@@ -88,7 +88,8 @@ namespace ELua {
 		}
 
 		public static void ClearAll<T>(this Stack<T> stack) {
-			while (stack.Count > 0) {
+			var len = stack.Count;
+			for (var i = 0; i < len; i++) {
 				stack.Pop();
 			}
 		}

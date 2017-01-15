@@ -11,11 +11,11 @@ namespace ELua {
 		public static readonly LuaObject[] emptyList = new LuaObject[0];
 		public string uid;
 		public Executor executor;
-		public LuaObject nil;
 		public LVM vm;
 		public Module module;
 		public List<ByteCode> codesList;
 		public StackFrame parent;
+		public StackFrame upvalue;
 		public Dictionary<string, LuaBinder> context;
 		public Stack<LuaObject> stack;
 		public int level;
@@ -27,18 +27,17 @@ namespace ELua {
 	    }
 
 	    public StackFrame(LVM vm) {
-	        this.vm = vm;
-		    nil = vm.nil;
+			this.vm = vm;
+			uid = vm.NewUID();
             context = new Dictionary<string, LuaBinder>();
             stack = new Stack<LuaObject>();
         }
 
-		public StackFrame(StackFrame parent, Module module, string uid) {
+		public StackFrame(Module module, StackFrame parent) {
 			this.parent = parent;
-		    this.module = module;
-		    this.uid = uid;
+			this.module = module;
 			vm = parent.vm;
-			nil = vm.nil;
+		    uid = vm.NewUID();
 		    codesList = module.codesList;
             context = new Dictionary<string, LuaBinder>();
 			stack = new Stack<LuaObject>();
@@ -47,13 +46,27 @@ namespace ELua {
 			iterator = Execute();
 	    }
 
+		public StackFrame(Module module, StackFrame parent, StackFrame upvalue) {
+			this.parent = parent;
+			this.upvalue = upvalue;
+			this.module = module;
+			vm = parent.vm;
+			uid = vm.NewUID();
+			codesList = module.codesList;
+			context = new Dictionary<string, LuaBinder>();
+			stack = new Stack<LuaObject>();
+			level = parent.level + 1;
+			executor = parent.executor;
+			iterator = Execute();
+		}
+
 		public void Push(LuaObject obj) {
 			stack.Push(obj);
 		}
 
-		public LuaObject PopRaw() {
+		public LuaObject PopVar() {
 			if (stackLen == 0) {
-				return nil;
+				return vm.nil;
 			} else {
 				return stack.Pop();
 			}
@@ -61,7 +74,7 @@ namespace ELua {
 
 		public LuaObject Pop() {
 			if (stackLen == 0) {
-				return nil;
+				return vm.nil;
 			} else {
 				return stack.Pop().ToObject(this);
 			}
@@ -70,10 +83,6 @@ namespace ELua {
 	    public void Clear() {
 	        stack.ClearAll();
 	    }
-
-		public LuaObject[] TakeAll() {
-			return Take(stackLen);
-		}
 
 		public LuaObject[] Take(int len) {
 			if (len == 0) {
@@ -87,39 +96,49 @@ namespace ELua {
 			}
 		}
 
-		public LuaObject[] TakeRaw(int len) {
+		public LuaObject[] TakeVars(int len) {
 			if (len == 0) {
 				return emptyList;
 			} else {
 				var list = new LuaObject[len];
 				for (var i = 0; i < len; i++) {
-					list[i] = PopRaw();
+					list[i] = PopVar();
 				}
 				return list;
 			}
 		}
 
-		public void Bind(string name, LuaObject obj) {
-			context[name] = new LuaBinder(this, name, obj);
+		public LuaBinder Bind(string name, LuaObject obj) {
+			return Bind(new LuaBinder(this, name, obj));
 		}
 
-		public LuaObject Find(string name) {
+		public LuaBinder Bind(LuaBinder binder) {
+			return context[binder.name] = binder;
+		}
+
+		public LuaBinder Find(string name) {
 			LuaBinder value;
 			if (context.TryGetValue(name, out value)) {
-				return value.obj;
+				return value;
+			}
+			value = FindUpvalue(name);
+			if (value != null) {
+				return Bind(value);
+			}
+			value = FindParent(name);
+			if (value != null) {
+				return Bind(value);
 			} else {
-				var obj = FindParent(name);
-				Bind(name, obj);
-				return obj;
+				return Bind(name, vm.nil);
 			}
 		}
 
-		public LuaObject FindParent(string name) {
-			if (parent == null) {
-				return nil;
-			} else {
-				return parent.Find(name);
-			}
+		public LuaBinder FindUpvalue(string name) {
+			return upvalue == null ? null : upvalue.Find(name);
+		}
+
+		public LuaBinder FindParent(string name) {
+			return parent == null ? null : parent.Find(name);
 		}
 
 		public void Jump(LuaLabel label) {
@@ -147,7 +166,7 @@ namespace ELua {
 			if (len == 1) {
 				parent.Push(Pop());
 			} else if (len > 1) {
-				parent.Push(vm.GetTuple(TakeAll()));
+				parent.Push(vm.GetTuple(Take(len)));
 			}
 		}
 

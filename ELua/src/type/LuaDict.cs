@@ -8,6 +8,7 @@ namespace ELua {
     /// </summary>
     public class LuaDict {
 
+	    public LVM vm;
         public LuaTable table;
 		public Dictionary<LuaObject, LuaDictItem> itemsDict = new Dictionary<LuaObject, LuaDictItem>();
 
@@ -15,7 +16,8 @@ namespace ELua {
 			get { return itemsDict.Count; }
 		}
 
-	    public LuaDict(LuaTable table) {
+		public LuaDict(LVM vm, LuaTable table) {
+			this.vm = vm;
 		    this.table = table;
 	    }
 
@@ -30,7 +32,7 @@ namespace ELua {
         public LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
 	        LuaDictItem value;
 	        if (!itemsDict.TryGetValue(obj, out value)) {
-		        return stackFrame.nil;
+		        return vm.nil;
 	        } else {
 		        return value;
 	        }

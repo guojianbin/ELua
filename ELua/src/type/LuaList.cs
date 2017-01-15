@@ -9,6 +9,7 @@ namespace ELua {
     /// </summary>
     public class LuaList {
 
+	    public LVM vm;
         public LuaTable table;
 		public List<LuaListItem> itemsList = new List<LuaListItem>();
 
@@ -16,7 +17,8 @@ namespace ELua {
 		    get { return itemsList.Count; }
 	    }
 
-	    public LuaList(LuaTable table) {
+	    public LuaList(LVM vm, LuaTable table) {
+		    this.vm = vm;
 		    this.table = table;
 	    }
 
@@ -36,7 +38,7 @@ namespace ELua {
             var index = (int)obj.ToNumber(stackFrame).value - 1;
 		    var value = IndexOf(index);
 		    if (value == null) {
-			    return stackFrame.nil;
+			    return vm.nil;
 			} else {
 				return value;
 		    }

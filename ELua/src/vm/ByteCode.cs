@@ -18,7 +18,7 @@ namespace ELua {
             Negate, Multiply, Division, Mod, Plus, Subtract,
             Not, And, Or,
             Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual,
-			Property, Index, Call, Function,
+			Property, Index, Call, Function, Var,
             Table, List,
 			Return,
 
@@ -44,14 +44,14 @@ namespace ELua {
 	                break;
                 }
                 case OpCode.Bind: {
-	                var item1 = stackFrame.PopRaw();
+	                var item1 = stackFrame.PopVar();
 	                var item2 = stackFrame.Pop();
 	                stackFrame.Push(item1.Bind(stackFrame, item2));
 	                break;
                 }
 				case OpCode.BindN: {
 					var len = ((LuaInteger)opArg1).value;
-					var list1 = stackFrame.TakeRaw(len);
+					var list1 = stackFrame.TakeVars(len);
 					var list2 = stackFrame.Take(len);
 					for (var i = 0; i < len; i++) {
 						stackFrame.Push(list1[i].Bind(stackFrame, list2[i]));
@@ -181,9 +181,15 @@ namespace ELua {
 					item.Call(stackFrame, list);
 					break;
 				}
+				case OpCode.Var: {
+					var item = (LuaString)opArg1;
+					var binder = stackFrame.Find(item.value);
+			        stackFrame.Push(stackFrame.vm.GetVar(item.value, binder));
+					break;
+				}
 				case OpCode.Function: {
 					var item = (LuaModule)opArg1;
-			        stackFrame.Push(stackFrame.vm.GetFunction(item.value));
+			        stackFrame.Push(stackFrame.vm.GetFunction(item.value, stackFrame));
 					break;
 				}
 				case OpCode.Return: {

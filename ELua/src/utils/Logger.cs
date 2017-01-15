@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace ELua {
@@ -7,6 +8,21 @@ namespace ELua {
 	/// @author Easily
 	/// </summary>
 	public class Logger {
+
+	    /// <summary>
+	    /// @author Easily
+	    /// </summary>
+	    public struct Message {
+
+	        public string content;
+	        public Type type;
+
+	        public Message(string content, Type type) {
+	            this.content = content;
+	            this.type = type;
+	        }
+
+	    }
 
 		/// <summary>
 		/// @author Easily
@@ -18,29 +34,38 @@ namespace ELua {
 		}
 
 		public StreamWriter logWriter;
+	    public Queue<Message> msgQueue = new Queue<Message>();
 
 		public Logger(string file) {
 			logWriter = new StreamWriter(file);
 		}
 
 		public void WriteLine(string msg, Type type = Type.All) {
-			switch (type) {
-				case Type.Console:
-					Console.WriteLine(msg);
-					break;
-				case Type.File:
-					logWriter.WriteLine(msg);
-					logWriter.Flush();
-					break;
-				case Type.All:
-					Console.WriteLine(msg);
-					logWriter.WriteLine(msg);
-					logWriter.Flush();
-					break;
-				default:
-					throw new ArgumentOutOfRangeException("type");
-			}
+            msgQueue.Enqueue(new Message(msg, type));
 		}
+
+	    public void Flush() {
+	        Write();
+	        logWriter.Flush();
+	    }
+
+	    public void Write() {
+	        while (msgQueue.Count > 0) {
+	            var msg = msgQueue.Dequeue();
+	            switch (msg.type) {
+	                case Type.Console:
+	                    Console.WriteLine(msg.content);
+	                    break;
+	                case Type.File:
+	                    logWriter.WriteLine(msg.content);
+	                    break;
+	                case Type.All:
+	                    Console.WriteLine(msg.content);
+	                    logWriter.WriteLine(msg.content);
+	                    break;
+	            }
+	        }
+	    }
 
 	}
 

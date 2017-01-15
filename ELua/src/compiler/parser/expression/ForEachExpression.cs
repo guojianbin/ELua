@@ -23,6 +23,9 @@ namespace ELua {
 		}
 
 		public override void Extract(SyntaxContext context) {
+			for (var i = 0; i < items2List.Count; i++) {
+				items2List[i] = ParserHelper.Extract(context, items2List[i]);
+			}
 			moduleExp.Extract(context);
 		}
 
@@ -33,7 +36,7 @@ namespace ELua {
 			var initExp = new DefineNExpression(new List<Expression> { funcExp, statExp, varExp }, items2List);
 			initExp.Generate(context);
 			var whileExp = new WhileExpression(new BooleanExpression(true, debugInfo), moduleExp);
-			var callExp = new CallNExpression(funcExp, new List<Expression> { statExp, varExp });
+			var callExp = new UnpackExpression(new CallNExpression(funcExp, new List<Expression> { statExp, varExp }));
 			var nextExp = new DefineNExpression(items1List, new List<Expression> { callExp });
             var rebindExp  = new BindExpression(varExp, items1List[0]);
 			var breakExp = new BreakExpression();

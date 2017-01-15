@@ -35,7 +35,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("{0}.{1}", item1Exp, item2Exp);
+			return string.Format("{0}[{1}]", item1Exp, item2Exp);
 		}
 
 	}

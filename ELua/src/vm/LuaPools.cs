@@ -65,12 +65,13 @@ namespace ELua {
 			stringPool.Enqueue(item);
         }
 
-        public LuaFunction GetFunction(Module value) {
+		public LuaFunction GetFunction(Module module, StackFrame stackFrame) {
             if (functionPool.Count == 0) {
-                return new LuaFunction(vm, value);
+                return new LuaFunction(vm, module, stackFrame);
             } else {
                 var item = functionPool.Dequeue();
-                item.module = value;
+                item.module = module;
+                item.stackFrame = stackFrame;
                 return item;
             }
         }
@@ -79,12 +80,13 @@ namespace ELua {
             functionPool.Enqueue(item);
         }
 
-        public LuaVar GetVar(string name) {
+		public LuaVar GetVar(string name, LuaBinder binder) {
 			if (varPool.Count == 0) {
-				return new LuaVar(vm, name);
+				return new LuaVar(vm, name, binder);
 			} else {
 				var item = varPool.Dequeue();
 				item.name = name;
+				item.binder = binder;
 				return item;
 			}
 		}
