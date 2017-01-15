@@ -36,7 +36,11 @@ namespace ELua {
 		public StreamWriter logWriter;
 	    public Queue<Message> msgQueue = new Queue<Message>();
 
-		public Logger(string file) {
+	    public Logger() {
+            // ignored
+	    }
+
+	    public Logger(string file) {
 			logWriter = new StreamWriter(file);
 		}
 

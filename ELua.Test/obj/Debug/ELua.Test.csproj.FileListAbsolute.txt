@@ -5,3 +5,5 @@ C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\bin\Debug\n
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\obj\Debug\ELua.Test.csprojResolveAssemblyReference.cache
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\obj\Debug\ELua.Test.dll
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\obj\Debug\ELua.Test.pdb
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\bin\Debug\ELua.exe
+C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\bin\Debug\ELua.pdb

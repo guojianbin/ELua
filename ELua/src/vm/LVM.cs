@@ -37,9 +37,10 @@ namespace ELua {
 		    modulesDict[module.name] = module;
 	    }
 
-	    public void Call(string name) {
+	    public LuaObject Call(string name) {
 			modulesDict[name].Call(stackFrame);
-		}
+	        return stackFrame.PopResult();
+	    }
 
 		public void Execute(Executor executor) {
 			executorDict.Add(executor.uid, executor);
@@ -48,7 +49,6 @@ namespace ELua {
 
 		public void Remove(Executor executor) {
 			executorDict.Remove(executor.uid);
-			stackFrame.Clear();
 		}
 
 	    public void Dispose() {

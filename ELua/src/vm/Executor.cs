@@ -40,7 +40,6 @@ namespace ELua {
 				} else {
 					if (callStack.Count == 0) {
 						IsExecuting = false;
-						stackFrame.Clear();
 						vm.Remove(this);
 						break;
 					} else {

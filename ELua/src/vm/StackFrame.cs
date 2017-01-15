@@ -162,13 +162,19 @@ namespace ELua {
 				codesList[position].Execute(this);
 				yield return null;
 			}
-			var len = stackLen;
-			if (len == 1) {
-				parent.Push(Pop());
-			} else if (len > 1) {
-				parent.Push(vm.GetTuple(Take(len)));
-			}
+            parent.Push(PopResult());
 		}
+
+	    public LuaObject PopResult() {
+            var len = stackLen;
+            if (len == 0) {
+                return vm.nil;
+            } else if (len == 1) {
+                return Pop();
+            } else {
+                return vm.GetTuple(Take(len));
+            }
+        }
 
 		public override string ToString() {
 			return string.Format("{0}:{1}", module.name, level);
