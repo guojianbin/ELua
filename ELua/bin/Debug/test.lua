@@ -334,21 +334,40 @@
 -- 	print(i,v)
 -- end
 
-function values(tb)
-     local i = 0
-     return function ()
-          i = i + 1
-          return tb[i]
-     end
-end
+-- function values(tb)
+--      local i = 0
+--      return function ()
+--           i = i + 1
+--           return tb[i]
+--      end
+-- end
 
-local testTb = {10, 20, 30}
-for value in values(testTb) do
-     print(value)
-end
+-- local testTb = {10, 20, 30}
+-- for value in values(testTb) do
+--      print(value)
+-- end
+
+-- testTb[1] = 100
+-- testTb[2] = 200
+-- testTb[3] = 300
+
+-- for value in values(testTb) do
+--      print(value)
+-- end
 
 -- ----------------------------
 -- local a = {a=1}
 -- print(a.a)
 -- a.a = 100
 -- print(a.a)
+
+
+
+
+
+local t = {1,2,3}
+t[1] = 100
+t[-1] = 200
+print(t[1])
+print(t[-1])
+

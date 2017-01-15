@@ -32,7 +32,9 @@ namespace ELua {
         public LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
 	        LuaDictItem value;
 	        if (!itemsDict.TryGetValue(obj, out value)) {
-		        return vm.nil;
+                value = table.vm.GetDictItem(table, this, obj, vm.nil);
+	            itemsDict[obj] = value;
+                return value;
 	        } else {
 		        return value;
 	        }

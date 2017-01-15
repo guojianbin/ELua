@@ -38,7 +38,8 @@ namespace ELua {
             var index = (int)obj.ToNumber(stackFrame).value - 1;
 		    var value = IndexOf(index);
 		    if (value == null) {
-			    return vm.nil;
+                table.List2Dict();
+			    return table.GetProperty(stackFrame, obj);
 			} else {
 				return value;
 		    }

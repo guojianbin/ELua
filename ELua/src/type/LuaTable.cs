@@ -24,11 +24,14 @@
 
 	    public LuaTable(LVM vm, string uid) : base(vm) {
 		    this.uid = uid;
-	    }
+            list = new LuaList(vm, this);
+            dict = new LuaDict(vm, this);
+        }
 
 	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             if (!IsInit) {
-                return vm.nil;
+                InitDict();
+                return dict.GetProperty(stackFrame, obj);
             } else {
                 return dict.GetProperty(stackFrame, obj);
             }
@@ -36,7 +39,8 @@
 
         public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
             if (!IsInit) {
-                return vm.nil;
+                InitDict();
+                return dict.GetIndex(stackFrame, obj);
             } else if (IsList) {
                 return list.GetIndex(stackFrame, obj);
             } else {
@@ -47,35 +51,23 @@
 		public void InitList() {
 			IsInit = true;
 			IsList = true;
-			if (list == null) {
-				list = new LuaList(vm, this);
-			} else {
-				list.Clear();
-			}
+			list.Clear();
 	    }
 
 		public void InitDict() {
 			IsInit = true;
 			IsList = false;
-			if (dict == null) {
-				dict = new LuaDict(vm, this);
-			} else {
-				dict.Clear();
-			}
+			dict.Clear();
 		}
 
 	    public void ClearList() {
 		    IsList = false;
-			if (list != null) {
-			    list.Clear();
-		    }
+			list.Clear();
 	    }
 
 	    public void ClearDict() {
 		    IsList = true;
-			if (dict != null) {
-				dict.Clear();
-		    }
+			dict.Clear();
 	    }
 
 	    public void ClearAll() {
@@ -91,11 +83,7 @@
 			} else if (IsList) {
 				list.Add(value);
 			} else {
-				ClearDict();
-				InitList();
-				foreach (var item in dict.itemsDict.Values) {
-					list.Add(item.value);
-				}
+                Dict2List();
 				list.Add(value);
 			}
 		}
@@ -107,14 +95,26 @@
 			} else if (!IsList) {
 				dict.Bind(key, value);
 			} else {
-				ClearList();
-				InitDict();
-				for (var i = 0; i < list.Count; i++) {
-					dict.Bind(vm.GetNumber(i), list.IndexOf(i).value);
-				}
+                List2Dict();
 				dict.Bind(key, value);
 			}
 		}
+
+        public void List2Dict() {
+            InitDict();
+            for (var i = 0; i < list.Count; i++) {
+                dict.Bind(vm.GetNumber(i), list.IndexOf(i).value);
+            }
+            ClearList();
+        }
+
+        public void Dict2List() {
+            InitList();
+            foreach (var item in dict.itemsDict.Values) {
+                list.Add(item.value);
+            }
+            ClearDict();
+        }
 
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
 			return vm.GetBoolean(Equals(obj));

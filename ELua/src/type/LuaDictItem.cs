@@ -18,7 +18,7 @@
 	    }
 
 	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
-            dict.Bind(key, obj);
+	        value = obj;
         }
 
 	    public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
@@ -94,7 +94,7 @@
 		}
 
 		public override string ToString() {
-			return value.ToString();
+			return string.Format("[\"{0}\"]={1}", key, value);
 		}
 
     }

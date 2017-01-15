@@ -18,8 +18,8 @@
 	    }
 
 	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
-			list.Bind(index, obj);
-        }
+	        value = obj;
+	    }
 
         public override LuaObject Negate(StackFrame stackFrame) {
             return value.Negate(stackFrame);
@@ -44,14 +44,6 @@
         public override LuaObject Subtract(StackFrame stackFrame, LuaObject obj) {
             return value.Subtract(stackFrame, obj);
         }
-
-		public override LuaObject ToObject(StackFrame stackFrame) {
-			return value;
-		}
-
-	    public override string ToString() {
-		    return value.ToString();
-	    }
 
 	    public override bool ToBoolean(StackFrame stackFrame) {
 			return value.ToBoolean(stackFrame);
@@ -95,6 +87,14 @@
 
         public override LuaNumber ToNumber(StackFrame stackFrame) {
             return value.ToNumber(stackFrame);
+        }
+
+        public override LuaObject ToObject(StackFrame stackFrame) {
+            return value;
+        }
+
+        public override string ToString() {
+            return string.Format("[{0}]={1}", index, value);
         }
 
     }
