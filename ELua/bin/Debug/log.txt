@@ -16,6 +16,9 @@ t[4] = 400
 for i, v in ipairs(t) do
 print(i, v)
 end
+function ipairs()
+
+end
 
 [extract]
 a = 100
@@ -39,7 +42,13 @@ local #13 = ipairs(t)
 for i, v in unpack(#13) do
 print(i, v)
 end
-complie 90ms
+function ipairs()
+
+end
+complie 83ms
+
+[ipairs]
+
 
 [test.lua]
 0   Push       100       
@@ -217,6 +226,10 @@ complie 90ms
 172 Jump       #43:143   
 173 Label      #46:173   
 174 Clear
+175 Function   ipairs    
+176 Var        ipairs    
+177 Bind
+178 Clear
 
 [output]
 1, 100

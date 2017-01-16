@@ -10,6 +10,7 @@ namespace ELua {
 
 		public LVM vm;
 		public StackFrame stackFrame;
+
 		public LuaNative lenFunc;
 		public LuaNative nextFunc;
 		public LuaNative iterFunc;

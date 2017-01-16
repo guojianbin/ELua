@@ -19,3 +19,6 @@ for i,v in ipairs(t) do
 	print(i,v)
 end
 
+function ipairs()
+	-- ignored
+end
