@@ -108,6 +108,10 @@ namespace ELua {
 			}
 		}
 
+	    public LuaBinder Local(string name) {
+	        return Bind(name, vm.nil);
+	    }
+
 		public LuaBinder Bind(string name, LuaObject obj) {
 			return Bind(new LuaBinder(this, name, obj));
 		}
@@ -129,7 +133,7 @@ namespace ELua {
 			if (value != null) {
 				return Bind(value);
 			} else {
-				return Bind(name, vm.nil);
+				return Local(name);
 			}
 		}
 

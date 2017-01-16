@@ -13,7 +13,7 @@ namespace ELua {
 		public enum OpCode {
 
 			Undef,
-			Push, Pop, Bind, BindN, Clear, Unpack, Concat,
+			Push, Pop, Bind, BindN, Clear, Unpack, Concat, Local,
             Jump, JumpIf, JumpNot, Label, 
             Negate, Multiply, Division, Mod, Plus, Subtract,
             Not, And, Or,
@@ -187,6 +187,12 @@ namespace ELua {
 					var item = stackFrame.Pop();
 			        var list = stackFrame.Take(((LuaInteger)opArg1).value);
 					item.Call(stackFrame, list);
+					break;
+				}
+				case OpCode.Local: {
+					var item = (LuaString)opArg1;
+					var binder = stackFrame.Local(item.value);
+			        stackFrame.Push(stackFrame.vm.GetVar(item.value, binder));
 					break;
 				}
 				case OpCode.Var: {

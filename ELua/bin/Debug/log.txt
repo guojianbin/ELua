@@ -2,14 +2,22 @@
 a = 100
 b = 200
 local c = 300
-print(a, b, c)
+local t = { a, b, c }
+for i, v in ipairs(t) do
+print(i, v)
+end
 
 [extract]
 a = 100
 b = 200
 local c = 300
-print(a, b, c)
-complie 74ms
+local #10 = { a, b, c }
+local t = #10
+local #11 = ipairs(t)
+for i, v in unpack(#11) do
+print(i, v)
+end
+complie 83ms
 
 [test.lua]
 0   Push       100       
@@ -21,15 +29,66 @@ complie 74ms
 6   Bind
 7   Clear
 8   Push       300       
-9   Var        c         
+9   Local      c         
 10  Bind
 11  Clear
 12  Var        c         
 13  Var        b         
 14  Var        a         
-15  Var        print     
-16  Call       3         
-17  Clear
+15  List       3         
+16  Local      #10       
+17  Bind
+18  Clear
+19  Var        #10       
+20  Local      t         
+21  Bind
+22  Clear
+23  Var        t         
+24  Var        ipairs    
+25  Call       1         
+26  Local      #11       
+27  Bind
+28  Clear
+29  Var        #11       
+30  Unpack
+31  Local      #14       
+32  Local      #13       
+33  Local      #12       
+34  BindN      3         
+35  Label      #15:35    
+36  Push       True      
+37  JumpNot    #18:65    
+38  Var        #14       
+39  Var        #13       
+40  Var        #12       
+41  Call       2         
+42  Unpack
+43  Local      v         
+44  Local      i         
+45  BindN      2         
+46  Clear
+47  Var        i         
+48  Var        #14       
+49  Bind
+50  Clear
+51  Push       nil       
+52  Var        #14       
+53  Equal
+54  JumpNot    #20:57    
+55  Jump       #18:65    
+56  Clear
+57  Label      #20:57    
+58  Clear
+59  Var        v         
+60  Var        i         
+61  Var        print     
+62  Call       2         
+63  Clear
+64  Jump       #15:35    
+65  Label      #18:65    
+66  Clear
 
 [output]
-100, 200, 300
+1, 100
+2, 200
+3, 300

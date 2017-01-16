@@ -15,7 +15,7 @@ namespace ELua {
 			IsStatement = true;
 			type = Type.Define;
 			debugInfo = list[position].debugInfo;
-			items1List = list.Skip(position + 1).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.type == Type.Word).ToList();
+			items1List = list.Skip(position + 1).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.type == Type.Word).Select(t => new LocalExpression(t)).Cast<Expression>().ToList();
 			items2List = list.Skip(position + items1List.Count * 2).Take(len - items1List.Count * 2).Where(t => t.IsRightValue).ToList();
 		}
 
@@ -23,7 +23,7 @@ namespace ELua {
 			IsStatement = true;
 			type = Type.Define;
 			debugInfo = items1List[0].debugInfo;
-			this.items1List = items1List;
+			this.items1List = items1List.Select(t => new LocalExpression(t)).Cast<Expression>().ToList();
 			this.items2List = items2List;
 		}
 
@@ -38,8 +38,8 @@ namespace ELua {
 				items2List[i].Generate(context);
 			}
 			for (var i = items1List.Count - 1; i >= 0; i--) {
-				items1List[i].Generate(context);
-			}
+                items1List[i].Generate(context);
+            }
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.BindN, opArg1 = new LuaInteger(context.vm, items1List.Count) });
 		}
 

@@ -76,6 +76,7 @@
     <Compile Include="src\compiler\parser\expression\EOSExpression.cs" />
     <Compile Include="src\compiler\parser\expression\Expression.cs" />
     <Compile Include="src\compiler\parser\expression\IndexExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\LocalExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ModExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ModuleExpression.cs" />
     <Compile Include="src\compiler\parser\expression\MultiplyExpression.cs" />

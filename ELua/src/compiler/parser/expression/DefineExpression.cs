@@ -14,7 +14,7 @@ namespace ELua {
 			IsStatement = true;
 			type = Type.Define;
 			debugInfo = list[position].debugInfo;
-			item1Exp = list[position + 1];
+			item1Exp = new LocalExpression(list[position + 1]);
 			item2Exp = list[position + 3];
 		}
 
@@ -22,7 +22,7 @@ namespace ELua {
 			IsStatement = true;
             type = Type.Define;
 		    debugInfo = item1Exp.debugInfo;
-            this.item1Exp = item1Exp;
+            this.item1Exp = new LocalExpression(item1Exp);
 			this.item2Exp = item2Exp;
         }
 
