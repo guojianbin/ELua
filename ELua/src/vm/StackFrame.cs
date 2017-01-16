@@ -108,7 +108,7 @@ namespace ELua {
 			}
 		}
 
-	    public LuaBinder Local(string name) {
+	    public LuaBinder Define(string name) {
 	        return Bind(name, vm.nil);
 	    }
 
@@ -133,7 +133,7 @@ namespace ELua {
 			if (value != null) {
 				return Bind(value);
 			} else {
-				return Local(name);
+				return Define(name);
 			}
 		}
 
