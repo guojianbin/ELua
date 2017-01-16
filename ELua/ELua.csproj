@@ -180,7 +180,6 @@
     <Compile Include="src\vm\LVM.cs" />
     <Compile Include="src\vm\Module.cs" />
     <Compile Include="src\vm\ModuleContext.cs" />
-    <Compile Include="src\vm\ModuleHelper.cs" />
     <Compile Include="src\vm\StackFrame.cs" />
   </ItemGroup>
   <ItemGroup>

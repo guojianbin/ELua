@@ -45,7 +45,7 @@ end
 function ipairs()
 
 end
-complie 83ms
+complie 101ms
 
 [ipairs]
 
