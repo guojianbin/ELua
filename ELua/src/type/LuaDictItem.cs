@@ -15,6 +15,7 @@
 		    this.dict = dict;
 		    this.key = key;
 		    this.value = value;
+	        uid = vm.NewUID();
 	    }
 
 	    public override void Bind(StackFrame stackFrame, LuaObject obj) {

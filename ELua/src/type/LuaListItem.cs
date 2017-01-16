@@ -16,6 +16,7 @@
 		    this.list = list;
 		    this.index = index;
 		    this.value = value;
+	        uid = vm.NewUID();
 		    lindex = vm.GetNumber(index + 1);
 	    }
 

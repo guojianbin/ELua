@@ -89,6 +89,7 @@ namespace ELua {
 				item.name = name;
 				item.binder = binder;
 				item.target = binder.target;
+			    item.uid = vm.NewUID();
 				return item;
 			}
 		}
@@ -99,9 +100,10 @@ namespace ELua {
 
 		public LuaTable GetTable() {
 			if (tablePool.Count == 0) {
-				return new LuaTable(vm, vm.NewUID());
+				return new LuaTable(vm);
 			} else {
 				var item = tablePool.Dequeue();
+			    item.uid = vm.NewUID();
 				return item;
 			}
 		}
@@ -151,6 +153,7 @@ namespace ELua {
 				item.list = list;
 				item.index = index;
 				item.value = value;
+			    item.uid = vm.NewUID();
 				item.lindex = vm.GetNumber(index + 1);
 				return item;
 			}
@@ -169,7 +172,8 @@ namespace ELua {
 				item.dict = dict;
 				item.key = key;
 				item.value = value;
-				return item;
+                item.uid = vm.NewUID();
+                return item;
 			}
 		}
 

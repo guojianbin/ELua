@@ -13,6 +13,7 @@
 			this.name = name;
 			this.binder = binder;
 			target = binder.target;
+		    uid = vm.NewUID();
 		}
 
 	    public override void Bind(StackFrame stackFrame, LuaObject obj) {

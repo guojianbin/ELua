@@ -25,8 +25,8 @@ namespace ELua {
 		    }
 	    }
 
-	    public LuaTable(LVM vm, string uid) : base(vm) {
-			this.uid = uid;
+	    public LuaTable(LVM vm) : base(vm) {
+			uid = vm.NewUID();
             list = new LuaList(vm, this);
             dict = new LuaDict(vm, this);
 	    }
