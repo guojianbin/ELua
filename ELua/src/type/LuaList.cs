@@ -22,30 +22,22 @@ namespace ELua {
 		    this.table = table;
 	    }
 
-	    public void Bind(int index, LuaObject value) {
-			itemsList[index] = vm.GetListItem(table, this, index, value);
-	    }
-
         public void Add(LuaObject value) {
             itemsList.Add(vm.GetListItem(table, this, Count, value));
         }
 
-	    public LuaListItem IndexOf(int index) {
-			return itemsList.ElementAtOrDefault(index);
-	    }
-
-	    public LuaObject GetIndex(LuaObject obj) {
+        public LuaObject GetIndex(LuaObject obj) {
             var index = (int)obj.ToNumber().value - 1;
 	        if (index < 0) {
 	            return table.GetProperty(obj);
 	        } else if (index < Count) {
-	            return IndexOf(index);
+	            return itemsList[index];
 	        } else {
                 var len = index - Count + 1;
                 for (var i = 0; i < len; i++) {
                     Add(vm.nil);
                 }
-                return IndexOf(index);
+                return itemsList[index];
             }
         }
 
