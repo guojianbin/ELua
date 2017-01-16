@@ -31,6 +31,7 @@ namespace ELua {
         public static Queue<IndexParser> IndexParserPool = new Queue<IndexParser>();
         public static Queue<CallParser> CallParserPool = new Queue<CallParser>();
         public static Queue<CallNParser> CallNParserPool = new Queue<CallNParser>();
+        public static Queue<ConcatParser> ConcatParserPool = new Queue<ConcatParser>();
         public static Queue<NegateParser> NegateParserPool = new Queue<NegateParser>();
         public static Queue<NotParser> NotParserPool = new Queue<NotParser>();
         public static Queue<MultiplyParser> MultiplyParserPool = new Queue<MultiplyParser>();
@@ -48,8 +49,8 @@ namespace ELua {
         public static Queue<OrParser> OrParserPool = new Queue<OrParser>();
         public static Queue<ListParser> ListParserPool = new Queue<ListParser>();
         public static Queue<ListNParser> ListNParserPool = new Queue<ListNParser>();
-        public static Queue<TableParser> TableParserPool = new Queue<TableParser>();
         public static Queue<TableNParser> TableNParserPool = new Queue<TableNParser>();
+        public static Queue<TableN2Parser> TableN2ParserPool = new Queue<TableN2Parser>();
 
         public static ModuleParser GetModuleParser() {
             if (ModuleParserPool.Count == 0) {
@@ -235,6 +236,14 @@ namespace ELua {
             }
         }
 
+        public static ConcatParser GetConcatParser() {
+            if (ConcatParserPool.Count == 0) {
+                return new ConcatParser();
+            } else {
+                return ConcatParserPool.Dequeue();
+            }
+        }
+
         public static NegateParser GetNegateParser() {
             if (NegateParserPool.Count == 0) {
                 return new NegateParser();
@@ -371,19 +380,19 @@ namespace ELua {
             }
         }
 
-        public static TableParser GetTableParser() {
-            if (TableParserPool.Count == 0) {
-                return new TableParser();
-            } else {
-                return TableParserPool.Dequeue();
-            }
-        }
-
         public static TableNParser GetTableNParser() {
             if (TableNParserPool.Count == 0) {
                 return new TableNParser();
             } else {
                 return TableNParserPool.Dequeue();
+            }
+        }
+
+        public static TableN2Parser GetTableN2Parser() {
+            if (TableN2ParserPool.Count == 0) {
+                return new TableN2Parser();
+            } else {
+                return TableN2ParserPool.Dequeue();
             }
         }
 
@@ -480,6 +489,10 @@ namespace ELua {
             CallNParserPool.Enqueue((CallNParser)parser);
         }
 
+        public static void PutConcatParser(IParser parser) {
+            ConcatParserPool.Enqueue((ConcatParser)parser);
+        }
+
         public static void PutNegateParser(IParser parser) {
             NegateParserPool.Enqueue((NegateParser)parser);
         }
@@ -548,12 +561,12 @@ namespace ELua {
             ListNParserPool.Enqueue((ListNParser)parser);
         }
 
-        public static void PutTableParser(IParser parser) {
-            TableParserPool.Enqueue((TableParser)parser);
-        }
-
         public static void PutTableNParser(IParser parser) {
             TableNParserPool.Enqueue((TableNParser)parser);
+        }
+
+        public static void PutTableN2Parser(IParser parser) {
+            TableN2ParserPool.Enqueue((TableN2Parser)parser);
         }
 
 

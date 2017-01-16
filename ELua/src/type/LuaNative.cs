@@ -1,29 +1,19 @@
+﻿using System;
+
 namespace ELua {
 
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class LuaFunction : LuaObject {
+	public class LuaNative : LuaObject {
 
-		public Module module;
-		public StackFrame stackFrame;
+		public string name;
+		public Action<StackFrame, LuaObject[]> func;
 
-		public LuaFunction(LVM vm, Module module, StackFrame stackFrame) : base(vm) {
-			this.module = module;
-			this.stackFrame = stackFrame;
+		public LuaNative(LVM vm, string name, Action<StackFrame, LuaObject[]> func) : base(vm) {
+			this.name = name;
+			this.func = func;
 			uid = vm.NewUID();
-        }
-
-		public override void Call(StackFrame stackFrame, LuaObject[] args) {
-			module.Call(stackFrame, this.stackFrame, module.context.argsList, args);
-		}
-
-		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
-			return vm.GetBoolean(Equals(obj));
-		}
-
-		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
-			return vm.GetBoolean(!Equals(obj));
 		}
 
 		public override bool ToBoolean() {
@@ -34,8 +24,20 @@ namespace ELua {
 			return this;
 		}
 
+		public override void Call(StackFrame stackFrame, LuaObject[] args) {
+			func(stackFrame, args);
+		}
+
+		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+			return vm.GetBoolean(Equals(obj));
+		}
+
+		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+			return vm.GetBoolean(!Equals(obj));
+		}
+
 		public override string ToString() {
-			return string.Format("function {0}", module.name);
+			return name;
 		}
 
 		public override int GetHashCode() {

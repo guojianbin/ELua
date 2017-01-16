@@ -48,6 +48,7 @@
     <Compile Include="src\compiler\parser\expression\BindNExpression.cs" />
     <Compile Include="src\compiler\parser\expression\BooleanExpression.cs" />
     <Compile Include="src\compiler\parser\expression\BreakExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\ConcatExpression.cs" />
     <Compile Include="src\compiler\parser\expression\DefineNExpression.cs" />
     <Compile Include="src\compiler\parser\expression\EqualExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ForEachExpression.cs" />
@@ -92,8 +93,8 @@
     <Compile Include="src\compiler\parser\expression\ReturnNExpression.cs" />
     <Compile Include="src\compiler\parser\expression\StringExpression.cs" />
     <Compile Include="src\compiler\parser\expression\SubtractExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\TableN2Expression.cs" />
     <Compile Include="src\compiler\parser\expression\TableNExpression.cs" />
-    <Compile Include="src\compiler\parser\expression\TableExpression.cs" />
     <Compile Include="src\compiler\parser\expression\UnpackExpression.cs" />
     <Compile Include="src\compiler\parser\expression\WhileExpression.cs" />
     <Compile Include="src\compiler\parser\expression\WordExpression.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="src\compiler\parser\syntax\BreakParser.cs" />
     <Compile Include="src\compiler\parser\syntax\CallNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\CallParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\ConcatParser.cs" />
     <Compile Include="src\compiler\parser\syntax\DefineNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\DefineParser.cs" />
     <Compile Include="src\compiler\parser\syntax\DivisionParser.cs" />
@@ -141,8 +143,8 @@
     <Compile Include="src\compiler\parser\syntax\ReturnNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ReturnParser.cs" />
     <Compile Include="src\compiler\parser\syntax\SubtractParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\TableN2Parser.cs" />
     <Compile Include="src\compiler\parser\syntax\TableNParser.cs" />
-    <Compile Include="src\compiler\parser\syntax\TableParser.cs" />
     <Compile Include="src\compiler\parser\syntax\WhileParser.cs" />
     <Compile Include="src\compiler\scanner\Scanner.cs" />
     <Compile Include="src\compiler\scanner\Token.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="src\type\LuaList.cs" />
     <Compile Include="src\type\LuaListItem.cs" />
     <Compile Include="src\type\LuaModule.cs" />
+    <Compile Include="src\type\LuaNative.cs" />
     <Compile Include="src\type\LuaNil.cs" />
     <Compile Include="src\type\LuaNumber.cs" />
     <Compile Include="src\type\LuaObject.cs" />
@@ -164,7 +167,7 @@
     <Compile Include="src\type\LuaTuple.cs" />
     <Compile Include="src\type\LuaUserdata.cs" />
     <Compile Include="src\type\LuaVar.cs" />
-    <Compile Include="src\type\TypeHelper.cs" />
+    <Compile Include="src\type\TableHelper.cs" />
     <Compile Include="src\utils\Extensions.cs" />
     <Compile Include="src\utils\Logger.cs" />
     <Compile Include="src\vm\ByteCode.cs" />

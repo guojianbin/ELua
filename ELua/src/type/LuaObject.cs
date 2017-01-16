@@ -35,15 +35,15 @@ namespace ELua {
         }
 
         public LuaObject Not(StackFrame stackFrame) {
-			return vm.GetBoolean(!ToBoolean(stackFrame));
+			return vm.GetBoolean(!ToBoolean());
         }
 
         public LuaObject And(StackFrame stackFrame, LuaObject obj) {
-	        return ToBoolean(stackFrame) ? obj : this;
+	        return ToBoolean() ? obj : this;
         }
 
 		public LuaObject Or(StackFrame stackFrame, LuaObject obj) {
-			return ToBoolean(stackFrame) ? this : obj;
+			return ToBoolean() ? this : obj;
         }
 
         public virtual LuaObject Negate(StackFrame stackFrame) {
@@ -94,15 +94,15 @@ namespace ELua {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-	    public virtual LuaNumber ToNumber(StackFrame stackFrame) {
+	    public virtual LuaNumber ToNumber() {
             throw new InvalidOperationException(GetType().Name);
         }
 
-		public virtual LuaObject ToObject(StackFrame stackFrame) {
+		public virtual LuaObject ToObject() {
 			throw new InvalidOperationException(GetType().Name);
 		}
 
-		public virtual bool ToBoolean(StackFrame stackFrame) {
+		public virtual bool ToBoolean() {
 			throw new InvalidOperationException(GetType().Name);
         }
 

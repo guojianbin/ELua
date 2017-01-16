@@ -25,11 +25,11 @@ namespace ELua {
 			itemsDict[key] = table.vm.GetDictItem(table, this, key, value);
 	    }
 
-		public LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
-			return GetProperty(stackFrame, obj);
+		public LuaObject GetIndex(LuaObject obj) {
+			return GetProperty(obj);
 		}
 
-        public LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
+        public LuaObject GetProperty(LuaObject obj) {
 	        LuaDictItem value;
 	        if (!itemsDict.TryGetValue(obj, out value)) {
                 value = table.vm.GetDictItem(table, this, obj, vm.nil);
@@ -42,6 +42,10 @@ namespace ELua {
 
 		public void Clear() {
 			itemsDict.Clear();
+		}
+
+		public IEnumerator<LuaDictItem> GetEnumerator() {
+			return itemsDict.Values.GetEnumerator();
 		}
 
 	    public override string ToString() {

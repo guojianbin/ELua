@@ -38,11 +38,11 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 			while (true) {
-			parser = new ParenParser();
-			while (parser.Parse(context, index));
 			parser = new FunctionAParser();
 			while (parser.Parse(context, index));
 			parser = new FunctionANParser();
+			while (parser.Parse(context, index));
+			parser = new ParenParser();
 			while (parser.Parse(context, index));
 			parser = new PropertyParser();
 			while (parser.Parse(context, index));
@@ -51,6 +51,8 @@ namespace ELua {
 			parser = new CallParser();
 			while (parser.Parse(context, index));
 			parser = new CallNParser();
+			while (parser.Parse(context, index));
+			parser = new ConcatParser();
 			while (parser.Parse(context, index));
 			parser = new NegateParser();
 			while (parser.Parse(context, index));
@@ -86,9 +88,9 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new ListNParser();
 			while (parser.Parse(context, index));
-			parser = new TableParser();
-			while (parser.Parse(context, index));
 			parser = new TableNParser();
+			while (parser.Parse(context, index));
+			parser = new TableN2Parser();
 			while (parser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;

@@ -11,8 +11,8 @@ namespace ELua {
 		public Dictionary<string, Executor> executorDict = new Dictionary<string, Executor>();
 		public StackFrame stackFrame;
 		public LuaPools luaPools;
-		public LuaLibrary library;
-		public LuaObject nil;
+		public LuaLibrary luaLibrary;
+		public LuaNil nil;
 		public ulong uid;
 		public Logger logger;
 	    public bool IsDisposed;
@@ -22,7 +22,7 @@ namespace ELua {
             nil = new LuaNil(this, NewUID());
             luaPools = new LuaPools(this);
             stackFrame = new StackFrame(this);
-			library = new LuaLibrary(this);
+			luaLibrary = new LuaLibrary(this);
 		}
 
 		public string NewUID() {

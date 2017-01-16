@@ -9,56 +9,56 @@ namespace ELua {
 
 		public object value;
 
-		public LuaUserdata(LVM vm, string uid, object value) : base(vm) {
-			this.uid = uid;
+		public LuaUserdata(LVM vm, object value) : base(vm) {
 			this.value = value;
+			uid = vm.NewUID();
 		}
 
 		public override LuaObject Division(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).Division(stackFrame, obj);
+			return ToNumber().Division(stackFrame, obj);
 		}
 
 		public override LuaObject Greater(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).Greater(stackFrame, obj);
+			return ToNumber().Greater(stackFrame, obj);
 		}
 
 		public override LuaObject GreaterEqual(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).GreaterEqual(stackFrame, obj);
+			return ToNumber().GreaterEqual(stackFrame, obj);
 		}
 
 		public override LuaObject Less(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).Less(stackFrame, obj);
+			return ToNumber().Less(stackFrame, obj);
 		}
 
 		public override LuaObject LessEqual(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).LessEqual(stackFrame, obj);
+			return ToNumber().LessEqual(stackFrame, obj);
 		}
 
 		public override LuaObject Mod(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).Mod(stackFrame, obj);
+			return ToNumber().Mod(stackFrame, obj);
 		}
 
 		public override LuaObject Multiply(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).Multiply(stackFrame, obj);
+			return ToNumber().Multiply(stackFrame, obj);
 		}
 
 		public override LuaObject Negate(StackFrame stackFrame) {
-			return ToNumber(stackFrame).Negate(stackFrame);
+			return ToNumber().Negate(stackFrame);
 		}
 
 		public override LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).Plus(stackFrame, obj);
+			return ToNumber().Plus(stackFrame, obj);
 		}
 
 		public override LuaObject Subtract(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber(stackFrame).Subtract(stackFrame, obj);
+			return ToNumber().Subtract(stackFrame, obj);
 		}
 
-		public override bool ToBoolean(StackFrame stackFrame) {
+		public override bool ToBoolean() {
 			return Convert.ToBoolean(value);
 		}
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
+		public override LuaObject ToObject() {
 			return this;
 		}
 

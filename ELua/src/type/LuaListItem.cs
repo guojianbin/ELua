@@ -8,6 +8,7 @@
         public LuaTable table;
         public LuaList list;
         public int index;
+        public LuaObject lindex;
         public LuaObject value;
 
 	    public LuaListItem(LVM vm, LuaTable table, LuaList list, int index, LuaObject value) : base(vm) {
@@ -15,6 +16,7 @@
 		    this.list = list;
 		    this.index = index;
 		    this.value = value;
+		    lindex = vm.GetNumber(index + 1);
 	    }
 
 	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
@@ -45,8 +47,8 @@
             return value.Subtract(stackFrame, obj);
         }
 
-	    public override bool ToBoolean(StackFrame stackFrame) {
-			return value.ToBoolean(stackFrame);
+	    public override bool ToBoolean() {
+			return value.ToBoolean();
 	    }
 
 	    public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
@@ -85,16 +87,16 @@
 			value.Call(stackFrame, args);
 		}
 
-        public override LuaNumber ToNumber(StackFrame stackFrame) {
-            return value.ToNumber(stackFrame);
+        public override LuaNumber ToNumber() {
+            return value.ToNumber();
         }
 
-        public override LuaObject ToObject(StackFrame stackFrame) {
+        public override LuaObject ToObject() {
             return value;
         }
 
         public override string ToString() {
-            return string.Format("[{0}]={1}", index, value);
+            return string.Format("[{0}]={1}", lindex, value);
         }
 
     }

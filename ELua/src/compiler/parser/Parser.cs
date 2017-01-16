@@ -10,6 +10,7 @@ namespace ELua {
 
 		public LVM vm;
 		public Expression ast;
+		public List<Expression> errorList;
 		public string file;
 
 		public Parser(LVM vm, string file, List<Expression> list) {
@@ -26,13 +27,13 @@ namespace ELua {
 			parser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
 			ast = list[0];
-			var errList = list.Where(t => !t.IsModule).ToArray();
+			errorList = list.Where(t => !t.IsModule).ToList();
 
 			vm.WriteLine("[source]");
 			vm.WriteLine(ast.ToString());
-			if (errList.Length > 0) {
+			if (errorList.Count > 0) {
 				vm.WriteLine(string.Empty);
-				vm.WriteLine(string.Join("\n", errList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t))));
+				vm.WriteLine(string.Join("\n", errorList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t))));
 			}
 		}
 

@@ -16,39 +16,39 @@
         }
 
         public override LuaObject Multiply(StackFrame stackFrame, LuaObject obj) {
-            return vm.GetNumber(value * obj.ToNumber(stackFrame).value);
+            return vm.GetNumber(value * obj.ToNumber().value);
         }
 
         public override LuaObject Division(StackFrame stackFrame, LuaObject obj) {
-            return vm.GetNumber(value / obj.ToNumber(stackFrame).value);
+            return vm.GetNumber(value / obj.ToNumber().value);
         }
 
         public override LuaObject Mod(StackFrame stackFrame, LuaObject obj) {
-            return vm.GetNumber(value % obj.ToNumber(stackFrame).value);
+            return vm.GetNumber(value % obj.ToNumber().value);
         }
 
         public override LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
-            return vm.GetNumber(value + obj.ToNumber(stackFrame).value);
+            return vm.GetNumber(value + obj.ToNumber().value);
         }
 
         public override LuaObject Subtract(StackFrame stackFrame, LuaObject obj) {
-            return vm.GetNumber(value - obj.ToNumber(stackFrame).value);
+            return vm.GetNumber(value - obj.ToNumber().value);
         }
 
         public override LuaObject Less(StackFrame stackFrame, LuaObject obj) {
-			return vm.GetBoolean(value < obj.ToNumber(stackFrame).value);
+			return vm.GetBoolean(value < obj.ToNumber().value);
         }
 
         public override LuaObject Greater(StackFrame stackFrame, LuaObject obj) {
-			return vm.GetBoolean(value > obj.ToNumber(stackFrame).value);
+			return vm.GetBoolean(value > obj.ToNumber().value);
         }
 
         public override LuaObject LessEqual(StackFrame stackFrame, LuaObject obj) {
-			return vm.GetBoolean(value <= obj.ToNumber(stackFrame).value);
+			return vm.GetBoolean(value <= obj.ToNumber().value);
         }
 
         public override LuaObject GreaterEqual(StackFrame stackFrame, LuaObject obj) {
-			return vm.GetBoolean(value >= obj.ToNumber(stackFrame).value);
+			return vm.GetBoolean(value >= obj.ToNumber().value);
 		}
 
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
@@ -59,15 +59,15 @@
 			return vm.GetBoolean(!Equals(obj));
 		}
 
-        public override LuaNumber ToNumber(StackFrame stackFrame) {
+        public override LuaNumber ToNumber() {
             return this;
         }
 
-        public override bool ToBoolean(StackFrame stackFrame) {
+        public override bool ToBoolean() {
             return true;
         }
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
+		public override LuaObject ToObject() {
 			return this;
 		}
 

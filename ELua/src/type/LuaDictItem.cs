@@ -53,8 +53,8 @@
 			return value.NotEqual(stackFrame, obj);
 	    }
 
-	    public override bool ToBoolean(StackFrame stackFrame) {
-			return value.ToBoolean(stackFrame);
+	    public override bool ToBoolean() {
+			return value.ToBoolean();
 	    }
 
 	    public override LuaObject Negate(StackFrame stackFrame) {
@@ -85,11 +85,11 @@
 		    value.Call(stackFrame, args);
 	    }
 
-	    public override LuaNumber ToNumber(StackFrame stackFrame) {
-            return value.ToNumber(stackFrame);
+	    public override LuaNumber ToNumber() {
+            return value.ToNumber();
         }
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
+		public override LuaObject ToObject() {
 			return value;
 		}
 

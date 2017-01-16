@@ -20,7 +20,7 @@
             binder.Rebind(obj);
 	    }
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
+		public override LuaObject ToObject() {
 			return target;
 		}
 

@@ -1,14 +1,17 @@
-﻿namespace ELua {
+﻿using System.Collections;
+
+namespace ELua {
 
     /// <summary>
     /// @author Easily
     /// </summary>
     public class LuaTable : LuaObject {
 
+		public bool IsInit;
+		public bool IsList;
+		public LuaList list;
         public LuaDict dict;
-        public LuaList list;
-        public bool IsList;
-        public bool IsInit;
+	    public IEnumerator iterator;
 
 	    public int Count {
 		    get {
@@ -23,28 +26,28 @@
 	    }
 
 	    public LuaTable(LVM vm, string uid) : base(vm) {
-		    this.uid = uid;
+			this.uid = uid;
             list = new LuaList(vm, this);
             dict = new LuaDict(vm, this);
-        }
+	    }
 
 	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
             if (!IsInit) {
                 InitDict();
-                return dict.GetProperty(stackFrame, obj);
+                return dict.GetProperty(obj);
             } else {
-                return dict.GetProperty(stackFrame, obj);
+                return dict.GetProperty(obj);
             }
         }
 
         public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
             if (!IsInit) {
                 InitDict();
-                return dict.GetIndex(stackFrame, obj);
+                return dict.GetIndex(obj);
             } else if (IsList) {
-                return list.GetIndex(stackFrame, obj);
+                return list.GetIndex(obj);
             } else {
-                return dict.GetIndex(stackFrame, obj);
+                return dict.GetIndex(obj);
             }
 		}
 
@@ -102,9 +105,9 @@
 
         public void List2Dict() {
             InitDict();
-            for (var i = 0; i < list.Count; i++) {
-                dict.Bind(vm.GetNumber(i), list.IndexOf(i).value);
-            }
+	        foreach (var item in list.itemsList) {
+				dict.Bind(item.lindex, item.value);
+	        }
             ClearList();
         }
 
@@ -116,6 +119,16 @@
             ClearDict();
         }
 
+		public IEnumerator GetEnumerator() {
+			if (!IsInit) {
+				return list.GetEnumerator();
+			} else if (IsList) {
+				return list.GetEnumerator();
+			} else {
+				return dict.GetEnumerator();
+			}
+		}
+
 		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
 			return vm.GetBoolean(Equals(obj));
 		}
@@ -124,11 +137,11 @@
 			return vm.GetBoolean(!Equals(obj));
 		}
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
+		public override LuaObject ToObject() {
 			return this;
 		}
 
-		public override bool ToBoolean(StackFrame stackFrame) {
+		public override bool ToBoolean() {
 			return true;
 		}
 

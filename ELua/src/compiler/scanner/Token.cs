@@ -10,7 +10,7 @@
 		/// </summary>
 		public enum Type {
 
-			Undefine,
+			Undef,
 			Word,			// e.g. var
 			Keyword,		// e.g. for,if,else,end...
 			Number,		// e.g. 0.1,11...

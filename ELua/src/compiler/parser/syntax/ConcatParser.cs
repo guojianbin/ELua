@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class GreaterEqualParser : IParser {
+	public class ConcatParser : IParser {
 
 		public bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -22,33 +22,17 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new CallNParser();
 			while (parser.Parse(context, index));
-			parser = new ConcatParser();
-			while (parser.Parse(context, index));
-			parser = new NegateParser();
-			while (parser.Parse(context, index));
-			parser = new NotParser();
-			while (parser.Parse(context, index));
-			parser = new MultiplyParser();
-			while (parser.Parse(context, index));
-			parser = new DivisionParser();
-			while (parser.Parse(context, index));
-			parser = new ModParser();
-			while (parser.Parse(context, index));
-			parser = new PlusParser();
-			while (parser.Parse(context, index));
-			parser = new SubtractParser();
-			while (parser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], ">")) {
+			if (!ParserHelper.IsOperator(list[index], ".")) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], "=")) {
+			if (!ParserHelper.IsOperator(list[index], ".")) {
 				return false;
 			}
 			offset += 1;
@@ -63,29 +47,13 @@ namespace ELua {
 			while (parser.Parse(context, index));
 			parser = new CallNParser();
 			while (parser.Parse(context, index));
-			parser = new ConcatParser();
-			while (parser.Parse(context, index));
-			parser = new NegateParser();
-			while (parser.Parse(context, index));
-			parser = new NotParser();
-			while (parser.Parse(context, index));
-			parser = new MultiplyParser();
-			while (parser.Parse(context, index));
-			parser = new DivisionParser();
-			while (parser.Parse(context, index));
-			parser = new ModParser();
-			while (parser.Parse(context, index));
-			parser = new PlusParser();
-			while (parser.Parse(context, index));
-			parser = new SubtractParser();
-			while (parser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new GreaterEqualExpression(list, position, offset));
+			context.Insert(position, new ConcatExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

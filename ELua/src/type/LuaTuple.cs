@@ -10,8 +10,8 @@ namespace ELua {
 
 		public List<LuaObject> list = new List<LuaObject>();
 
-		public LuaTuple(LVM vm, string uid, IEnumerable<LuaObject> list) : base(vm) {
-			this.uid = uid;
+		public LuaTuple(LVM vm, IEnumerable<LuaObject> list) : base(vm) {
+			uid = vm.NewUID();
 			AddRange(list);
 		}
 
@@ -33,7 +33,7 @@ namespace ELua {
 			list.Clear();
 		}
 
-		public override LuaObject ToObject(StackFrame stackFrame) {
+		public override LuaObject ToObject() {
 			return this;
 		}
 

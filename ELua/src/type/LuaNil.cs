@@ -21,11 +21,11 @@
 			return vm.GetBoolean(!Equals(obj));
 		}
 
-        public override LuaObject ToObject(StackFrame stackFrame) {
+        public override LuaObject ToObject() {
 			return this;
 		}
 
-		public override bool ToBoolean(StackFrame stackFrame) {
+		public override bool ToBoolean() {
 			return false;
 		}
 

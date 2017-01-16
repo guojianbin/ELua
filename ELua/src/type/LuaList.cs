@@ -23,30 +23,33 @@ namespace ELua {
 	    }
 
 	    public void Bind(int index, LuaObject value) {
-			itemsList[index] = table.vm.GetListItem(table, this, index, value);
+			itemsList[index] = vm.GetListItem(table, this, index, value);
 	    }
 
         public void Add(LuaObject value) {
-            itemsList.Add(table.vm.GetListItem(table, this, Count, value));
+            itemsList.Add(vm.GetListItem(table, this, Count, value));
         }
 
 	    public LuaListItem IndexOf(int index) {
 			return itemsList.ElementAtOrDefault(index);
 	    }
 
-	    public LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
-            var index = (int)obj.ToNumber(stackFrame).value - 1;
+	    public LuaObject GetIndex(LuaObject obj) {
+            var index = (int)obj.ToNumber().value - 1;
 		    var value = IndexOf(index);
 		    if (value == null) {
-                table.List2Dict();
-			    return table.GetProperty(stackFrame, obj);
-			} else {
+			    return vm.GetListItem(table, this, index, vm.nil);
+		    } else {
 				return value;
 		    }
         }
 
 	    public void Clear() {
 		    itemsList.Clear();
+	    }
+
+	    public IEnumerator<LuaListItem> GetEnumerator() {
+		    return itemsList.GetEnumerator();
 	    }
 
 		public override string ToString() {

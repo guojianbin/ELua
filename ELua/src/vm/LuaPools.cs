@@ -72,6 +72,7 @@ namespace ELua {
                 var item = functionPool.Dequeue();
                 item.module = module;
                 item.stackFrame = stackFrame;
+	            item.uid = vm.NewUID();
                 return item;
             }
         }
@@ -87,6 +88,7 @@ namespace ELua {
 				var item = varPool.Dequeue();
 				item.name = name;
 				item.binder = binder;
+				item.target = binder.target;
 				return item;
 			}
 		}
@@ -111,10 +113,11 @@ namespace ELua {
 
 		public LuaUserdata GetUserdata(object value) {
 			if (userdataPool.Count == 0) {
-				return new LuaUserdata(vm, vm.NewUID(), value);
+				return new LuaUserdata(vm, value);
 			} else {
 				var item = userdataPool.Dequeue();
 				item.value = value;
+				item.uid = vm.NewUID();
 				return item;
 			}
 		}
@@ -125,9 +128,10 @@ namespace ELua {
 
 		public LuaTuple GetTuple(IEnumerable<LuaObject> list) {
 			if (tuplePool.Count == 0) {
-				return new LuaTuple(vm, vm.NewUID(), list);
+				return new LuaTuple(vm, list);
 			} else {
 				var item = tuplePool.Dequeue();
+				item.uid = vm.NewUID();
 				item.AddRange(list);
 				return item;
 			}
@@ -147,6 +151,7 @@ namespace ELua {
 				item.list = list;
 				item.index = index;
 				item.value = value;
+				item.lindex = vm.GetNumber(index + 1);
 				return item;
 			}
 		}

@@ -12,7 +12,7 @@ namespace ELua {
 		/// </summary>
 		public enum Type {
 
-			UnDefine,
+			Undef,
 			Word, // var
 			Keyword, // for,if,else,end...
 			Number, // 0.1,11...
@@ -54,6 +54,7 @@ namespace ELua {
             IfElse, // if else end
 			Define, // local x = y
 			Bind, // x = y
+			Concat, // x .. y
 			Return, // return x
 			Function, // function x() end
 			Unpack, // unpack(x) -> x,y,z

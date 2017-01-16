@@ -76,7 +76,7 @@ namespace ELua {
 			if (stackLen == 0) {
 				return vm.nil;
 			} else {
-				return stack.Pop().ToObject(this);
+				return stack.Pop().ToObject();
 			}
 		}
 

@@ -11,14 +11,19 @@
 		public LuaLabel(LVM vm, string value, int index) : base(vm) {
 			this.value = value;
 			this.index = index;
+			uid = vm.NewUID();
 		}
 
 		public override string ToString() {
 			return string.Format("{0}:{1}", value, index);
 		}
 
-		protected bool Equals(LuaLabel other) {
-			return string.Equals(value, other.value) && index == other.index;
+		public override int GetHashCode() {
+			return (uid != null ? uid.GetHashCode() : 0);
+		}
+
+		protected bool Equals(LuaFunction other) {
+			return string.Equals(uid, other.uid);
 		}
 
 		public override bool Equals(object obj) {
@@ -29,12 +34,8 @@
 			} else if (obj.GetType() != GetType()) {
 				return false;
 			} else {
-				return Equals((LuaLabel)obj);
+				return Equals((LuaFunction)obj);
 			}
-		}
-
-		public override int GetHashCode() {
-			unchecked { return ((value != null ? value.GetHashCode() : 0) * 397) ^ index; }
 		}
 
 	}

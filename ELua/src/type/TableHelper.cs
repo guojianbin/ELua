@@ -3,7 +3,7 @@
     /// <summary>
     /// @author Easily
     /// </summary>
-    public static class TypeHelper {
+    public static class TableHelper {
 
         public static LuaTable CreateList(StackFrame stackFrame, LuaObject[] args) {
 	        if (args.Length == 0) {

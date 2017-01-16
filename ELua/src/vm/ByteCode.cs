@@ -12,8 +12,8 @@ namespace ELua {
 		/// </summary>
 		public enum OpCode {
 
-			Undefine,
-			Push, Pop, Bind, BindN, Clear, Unpack,
+			Undef,
+			Push, Pop, Bind, BindN, Clear, Unpack, Concat,
             Jump, JumpIf, JumpNot, Label, 
             Negate, Multiply, Division, Mod, Plus, Subtract,
             Not, And, Or,
@@ -164,17 +164,23 @@ namespace ELua {
 					var item2 = stackFrame.Pop();
 					stackFrame.Push(item1.GetIndex(stackFrame, item2));
 	                break;
-                }
+					}
+				case OpCode.Concat: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(stackFrame.vm.GetString(string.Concat(item1.ToString(), item2.ToString())));
+					break;
+				}
                 case OpCode.List: {
 	                var len = ((LuaInteger)opArg1).value;
 	                var list = stackFrame.Take(len);
-	                stackFrame.Push(TypeHelper.CreateList(stackFrame, list));
+	                stackFrame.Push(TableHelper.CreateList(stackFrame, list));
 	                break;
                 }
                 case OpCode.Table: {
 	                var len = ((LuaInteger)opArg1).value;
 	                var list = stackFrame.Take(len);
-	                stackFrame.Push(TypeHelper.CreateTable(stackFrame, list));
+	                stackFrame.Push(TableHelper.CreateTable(stackFrame, list));
 	                break;
                 }
 				case OpCode.Call: {
@@ -203,13 +209,13 @@ namespace ELua {
 					break;
 				}
 				case OpCode.JumpIf: {
-					if (stackFrame.Pop().ToBoolean(stackFrame)) {
+					if (stackFrame.Pop().ToBoolean()) {
 						stackFrame.Jump((LuaLabel)opArg1);
 					}
 					break;
 				}
 				case OpCode.JumpNot: {
-					if (!stackFrame.Pop().ToBoolean(stackFrame)) {
+					if (!stackFrame.Pop().ToBoolean()) {
 						stackFrame.Jump((LuaLabel)opArg1);
 					}
 					break;

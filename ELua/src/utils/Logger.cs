@@ -29,7 +29,7 @@ namespace ELua {
 		/// </summary>
 		public enum Type {
 
-			Undefine, Console, File, All
+			Undef, Console, File, All
 
 		}
 
@@ -48,28 +48,27 @@ namespace ELua {
             msgQueue.Enqueue(new Message(msg, type));
 		}
 
-	    public void Flush() {
-	        Write();
+		public void Flush() {
+			while (msgQueue.Count > 0) {
+				Write(msgQueue.Dequeue());
+			}
 	        logWriter.Flush();
 	    }
 
-	    public void Write() {
-	        while (msgQueue.Count > 0) {
-	            var msg = msgQueue.Dequeue();
-	            switch (msg.type) {
-	                case Type.Console:
-	                    Console.WriteLine(msg.content);
-	                    break;
-	                case Type.File:
-	                    logWriter.WriteLine(msg.content);
-	                    break;
-	                case Type.All:
-	                    Console.WriteLine(msg.content);
-	                    logWriter.WriteLine(msg.content);
-	                    break;
-	            }
-	        }
-	    }
+		public void Write(Message msg) {
+			switch (msg.type) {
+				case Type.Console:
+					Console.WriteLine(msg.content);
+					break;
+				case Type.File:
+					logWriter.WriteLine(msg.content);
+					break;
+				case Type.All:
+					Console.WriteLine(msg.content);
+					logWriter.WriteLine(msg.content);
+					break;
+			}
+		}
 
 	}
 
