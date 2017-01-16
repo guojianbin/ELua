@@ -21,8 +21,8 @@ namespace ELua {
 		    this.table = table;
 	    }
 
-	    public void Bind(LuaObject key, LuaObject value) {
-			itemsDict[key] = table.vm.GetDictItem(table, this, key, value);
+	    public LuaObject Bind(LuaObject key, LuaObject value) {
+			return itemsDict[key] = table.vm.GetDictItem(table, this, key, value);
 	    }
 
 		public LuaObject GetIndex(LuaObject obj) {
@@ -32,9 +32,7 @@ namespace ELua {
         public LuaObject GetProperty(LuaObject obj) {
 	        LuaDictItem value;
 	        if (!itemsDict.TryGetValue(obj, out value)) {
-                value = table.vm.GetDictItem(table, this, obj, vm.nil);
-	            itemsDict[obj] = value;
-                return value;
+                return Bind(obj, vm.nil);
 	        } else {
 		        return value;
 	        }

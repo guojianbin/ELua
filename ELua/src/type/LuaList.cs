@@ -36,12 +36,17 @@ namespace ELua {
 
 	    public LuaObject GetIndex(LuaObject obj) {
             var index = (int)obj.ToNumber().value - 1;
-		    var value = IndexOf(index);
-		    if (value == null) {
-			    return vm.GetListItem(table, this, index, vm.nil);
-		    } else {
-				return value;
-		    }
+	        if (index < 0) {
+	            return table.GetProperty(obj);
+	        } else if (index < Count) {
+	            return IndexOf(index);
+	        } else {
+                var len = index - Count + 1;
+                for (var i = 0; i < len; i++) {
+                    Add(vm.nil);
+                }
+                return IndexOf(index);
+            }
         }
 
 	    public void Clear() {

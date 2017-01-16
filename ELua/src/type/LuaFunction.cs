@@ -35,7 +35,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("function {0}", module.name);
+			return string.Format("function:{0}", module.name);
 		}
 
 		public override int GetHashCode() {

@@ -72,12 +72,12 @@
 			return value.Greater(stackFrame, obj);
 	    }
 
-	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
-			return value.GetProperty(stackFrame, obj);
+	    public override LuaObject GetProperty(LuaObject obj) {
+			return value.GetProperty(obj);
 	    }
 
-	    public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
-			return value.GetIndex(stackFrame, obj);
+	    public override LuaObject GetIndex(LuaObject obj) {
+			return value.GetIndex(obj);
 	    }
 
 	    public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {

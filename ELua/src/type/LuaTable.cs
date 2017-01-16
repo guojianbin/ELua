@@ -31,16 +31,19 @@ namespace ELua {
             dict = new LuaDict(vm, this);
 	    }
 
-	    public override LuaObject GetProperty(StackFrame stackFrame, LuaObject obj) {
+	    public override LuaObject GetProperty(LuaObject obj) {
             if (!IsInit) {
                 InitDict();
+                return dict.GetProperty(obj);
+            } else if (IsList) {
+                List2Dict();
                 return dict.GetProperty(obj);
             } else {
                 return dict.GetProperty(obj);
             }
         }
 
-        public override LuaObject GetIndex(StackFrame stackFrame, LuaObject obj) {
+        public override LuaObject GetIndex(LuaObject obj) {
             if (!IsInit) {
                 InitDict();
                 return dict.GetIndex(obj);

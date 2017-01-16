@@ -80,7 +80,7 @@ namespace ELua {
 						stackFrame.Push(vm.nil);
 					} else {
 						index = vm.GetNumber(index.value + 1);
-						var item = (LuaListItem)table.GetIndex(stackFrame, index);
+						var item = (LuaListItem)table.GetIndex(index);
 						var value = item.value;
 						if (value.Equals(vm.nil)) {
 							stackFrame.Push(vm.nil);

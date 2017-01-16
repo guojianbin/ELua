@@ -37,8 +37,8 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return name;
-		}
+            return string.Format("native:{0}", name);
+        }
 
 		public override int GetHashCode() {
 			return (uid != null ? uid.GetHashCode() : 0);

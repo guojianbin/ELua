@@ -156,13 +156,13 @@ namespace ELua {
 				case OpCode.Property: {
 					var item1 = stackFrame.Pop();
 					var item2 = stackFrame.Pop();
-					stackFrame.Push(item1.GetProperty(stackFrame, item2));
+					stackFrame.Push(item1.GetProperty(item2));
 					break;
 				}
 				case OpCode.Index: {
 					var item1 = stackFrame.Pop();
 					var item2 = stackFrame.Pop();
-					stackFrame.Push(item1.GetIndex(stackFrame, item2));
+					stackFrame.Push(item1.GetIndex(item2));
 	                break;
 					}
 				case OpCode.Concat: {
