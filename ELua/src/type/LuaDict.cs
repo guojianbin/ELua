@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ELua {
 
@@ -31,14 +31,16 @@ namespace ELua {
 
         public LuaObject GetProperty(LuaObject obj) {
 	        LuaDictItem value;
-	        if (!itemsDict.TryGetValue(obj, out value)) {
-                return Bind(obj, vm.nil);
-	        } else {
+	        if (itemsDict.TryGetValue(obj, out value)) {
 		        return value;
+			} else if (table.metatable == null) {
+				return Bind(obj, vm.nil);
+	        } else {
+		        return Bind(obj, vm.nil);
 	        }
         }
 
-		public void Clear() {
+	    public void Clear() {
 			itemsDict.Clear();
 		}
 
@@ -47,17 +49,7 @@ namespace ELua {
 		}
 
 	    public override string ToString() {
-			var sb = new StringBuilder();
-			sb.Append('{');
-			foreach (var item in itemsDict.Values) {
-				sb.Append(item.key);
-				sb.Append(':');
-				sb.Append(item.value);
-				sb.Append(',');
-			}
-			sb.Remove(sb.Length - 1, 1);
-			sb.Append('}');
-			return sb.ToString();
+		    return string.Format("{{ {0} }}", itemsDict.Values.Select(t => string.Format("{0} = {1}", t.key, t.value)).FormatListString(", "));
         }
 
     }

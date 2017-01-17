@@ -15,7 +15,7 @@
 		}
 
 		public override string ToString() {
-			return string.Format("{0}:{1}", value, index);
+			return string.Format("{0}->{1}", value, index);
 		}
 
 		public override int GetHashCode() {

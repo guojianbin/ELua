@@ -16,7 +16,7 @@
 		    uid = vm.NewUID();
 		}
 
-	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
+	    public override void Bind(LuaObject obj) {
             target = obj;
             binder.Rebind(obj);
 	    }

@@ -18,12 +18,12 @@
 	        uid = vm.NewUID();
 	    }
 
-	    public override void Bind(StackFrame stackFrame, LuaObject obj) {
+	    public override void Bind(LuaObject obj) {
 	        value = obj;
         }
 
-	    public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
-			return value.Equal(stackFrame, obj);
+	    public override LuaObject Equal(LuaObject obj) {
+			return value.Equal(obj);
 	    }
 
 	    public override LuaObject GetIndex(LuaObject obj) {
@@ -50,8 +50,8 @@
 			return value.LessEqual(stackFrame, obj);
 	    }
 
-	    public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
-			return value.NotEqual(stackFrame, obj);
+	    public override LuaObject NotEqual(LuaObject obj) {
+			return value.NotEqual(obj);
 	    }
 
 	    public override bool ToBoolean() {

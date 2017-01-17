@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace ELua {
 
@@ -18,29 +17,76 @@ namespace ELua {
 		public LuaNative printFunc;
 		public LuaNative pairsFunc;
 		public LuaNative ipairsFunc;
+		public LuaNative setmetaFunc;
+		public LuaNative getmetaFunc;
 
 		public LuaLibrary(LVM vm) {
 			this.vm = vm;
 			stackFrame = vm.stackFrame;
 			Add(traceFunc = new LuaNative(vm, "trace", Trace));
 			Add(printFunc = new LuaNative(vm, "print", Print));
-			Add(lenFunc = new LuaNative(vm, "len", Len));
+			Add(lenFunc = new LuaNative(vm, "len", Length));
 			Add(pairsFunc = new LuaNative(vm, "pairs", Pairs));
 			Add(nextFunc = new LuaNative(vm, "next", Next));
 			Add(ipairsFunc = new LuaNative(vm, "ipairs", IPairs));
 			Add(iterFunc = new LuaNative(vm, "#iter", Iterator));
+			Add(setmetaFunc = new LuaNative(vm, "setmetatable", SetMetatable));
+			Add(getmetaFunc = new LuaNative(vm, "getmetatable", GetMetatable));
 		}
 
 		public void Add(LuaNative native) {
 			stackFrame.Bind(native.name, native);
 		}
 
-		public void Len(StackFrame stackFrame, LuaObject[] args) {
-			stackFrame.Push(vm.GetNumber(((LuaTable)args[0]).Count));
+		public void SetMetatable(StackFrame stackFrame, LuaObject[] args) {
+			if (args.Length < 2) {
+				stackFrame.Push(vm.nil);
+			} else {
+				var table = args[0] as LuaTable;
+				if (table == null) {
+					stackFrame.Push(vm.nil);
+				} else {
+					var metatable = args[1] as LuaTable;
+					if (metatable == null) {
+						stackFrame.Push(vm.nil);
+					} else {
+						table.metatable = metatable;
+						stackFrame.Push(metatable);
+					}
+				}
+			}
+		}
+
+		public void GetMetatable(StackFrame stackFrame, LuaObject[] args) {
+			if (args.Length < 1) {
+				stackFrame.Push(vm.nil);
+			} else {
+				var table = args[0] as LuaTable;
+				if (table == null) {
+					stackFrame.Push(vm.nil);
+				} else if (table.metatable == null) {
+					stackFrame.Push(vm.nil);
+				} else {
+					stackFrame.Push(table.metatable);
+				}
+			}
+		}
+
+		public void Length(StackFrame stackFrame, LuaObject[] args) {
+			if (args.Length == 0) {
+				stackFrame.Push(vm.GetNumber(0));
+			} else {
+				var table = args[0] as LuaTable;
+				if (table == null) {
+					stackFrame.Push(vm.GetNumber(0));
+				} else {
+					stackFrame.Push(vm.GetNumber(table.Count));
+				}
+			}
 		}
 
 		public void Print(StackFrame stackFrame, LuaObject[] args) {
-			vm.WriteLine(string.Join(", ", args.Select(t => t.ToString())));
+			vm.WriteLine(args.FormatListString());
 		}
 
 		public void IPairs(StackFrame stackFrame, LuaObject[] args) {
@@ -50,11 +96,9 @@ namespace ELua {
 				var table = args[0] as LuaTable;
 				if (table == null) {
 					stackFrame.Push(vm.GetTuple(new[] { iterFunc }));
-				} else if (!table.IsInit) {
+				} else if (table.status != LuaTable.Status.List) {
 					stackFrame.Push(vm.GetTuple(new[] { iterFunc }));
 				} else if (table.Count == 0) {
-					stackFrame.Push(vm.GetTuple(new[] { iterFunc }));
-				} else if (!table.IsList) {
 					stackFrame.Push(vm.GetTuple(new[] { iterFunc }));
 				} else {
 					stackFrame.Push(vm.GetTuple(new[] { iterFunc, args[0], vm.GetNumber(0) }));
@@ -69,24 +113,26 @@ namespace ELua {
 				var table = args[0] as LuaTable;
 				if (table == null) {
 					stackFrame.Push(vm.nil);
-				} else if (!table.IsInit) {
+				} else if (table.status != LuaTable.Status.List) {
 					stackFrame.Push(vm.nil);
 				} else if (table.Count == 0) {
 					stackFrame.Push(vm.nil);
-				} else if (!table.IsList) {
-					stackFrame.Push(vm.nil);
 				} else {
-					var index = args[1] as LuaNumber;
-					if (index == null) {
+					var lindex = args[1] as LuaNumber;
+					if (lindex == null) {
 						stackFrame.Push(vm.nil);
 					} else {
-						index = vm.GetNumber(index.value + 1);
-						var item = (LuaListItem)table.GetIndex(index);
-						var value = item.value;
-						if (value.Equals(vm.nil)) {
+						lindex = vm.GetNumber(lindex.value + 1);
+						if (lindex.value > table.Count) {
 							stackFrame.Push(vm.nil);
 						} else {
-							stackFrame.Push(vm.GetTuple(new[] { index, value }));
+							var item = (LuaListItem)table.GetIndex(lindex);
+							var value = item.value;
+							if (value.Equals(vm.nil)) {
+								stackFrame.Push(vm.nil);
+							} else {
+								stackFrame.Push(vm.GetTuple(new[] { lindex, value }));
+							}
 						}
 					}
 				}
@@ -100,7 +146,7 @@ namespace ELua {
 				var table = args[0] as LuaTable;
 				if (table == null) {
 					stackFrame.Push(vm.GetTuple(new[] { nextFunc }));
-				} else if (!table.IsInit) {
+				} else if (table.status == LuaTable.Status.Uninit) {
 					stackFrame.Push(vm.GetTuple(new[] { nextFunc }));
 				} else if (table.Count == 0) {
 					stackFrame.Push(vm.GetTuple(new[] { nextFunc }));
@@ -117,7 +163,7 @@ namespace ELua {
 				var table = args[0] as LuaTable;
 				if (table == null) {
 					stackFrame.Push(vm.nil);
-				} else if (!table.IsInit) {
+				} else if (table.status == LuaTable.Status.Uninit) {
 					stackFrame.Push(vm.nil);
 				} else if (table.Count == 0) {
 					stackFrame.Push(vm.nil);
@@ -128,12 +174,12 @@ namespace ELua {
 				var table = args[0] as LuaTable;
 				if (table == null) {
 					stackFrame.Push(vm.nil);
-				} else if (!table.IsInit) {
+				} else if (table.status == LuaTable.Status.Uninit) {
 					stackFrame.Push(vm.nil);
 				} else if (table.Count == 0) {
 					stackFrame.Push(vm.nil);
 				} else if (Equals(args[1], vm.nil)) {
-					if (table.IsList) {
+					if (table.status == LuaTable.Status.List) {
 						table.iterator = table.GetEnumerator();
 						var iterator = table.iterator;
 						iterator.MoveNext();
@@ -147,7 +193,7 @@ namespace ELua {
 						stackFrame.Push(vm.GetTuple(new[] { item.key, item.value }));
 					}
 				} else {
-					if (table.IsList) {
+					if (table.status==LuaTable.Status.List) {
 						var iterator = table.iterator;
 						if (!iterator.MoveNext()) {
 							stackFrame.Push(vm.nil);

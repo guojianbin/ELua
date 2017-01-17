@@ -64,6 +64,7 @@
     <Compile Include="src\compiler\parser\expression\IfElseExpression.cs" />
     <Compile Include="src\compiler\parser\expression\KeywordExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LabelExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\LengthExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LessEqualExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LessExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ListExpression.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="src\compiler\parser\expression\Expression.cs" />
     <Compile Include="src\compiler\parser\expression\IndexExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LocalExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\LoopExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ModExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ModuleExpression.cs" />
     <Compile Include="src\compiler\parser\expression\MultiplyExpression.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="src\compiler\parser\syntax\IfParser.cs" />
     <Compile Include="src\compiler\parser\syntax\IfElseParser.cs" />
     <Compile Include="src\compiler\parser\syntax\IndexParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\LengthParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessEqualParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ListNParser.cs" />

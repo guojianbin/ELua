@@ -5,16 +5,15 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class CallExpression : Expression {
+	public class LengthExpression : Expression {
 
 		public Expression targetExp;
 
-		public CallExpression(List<Expression> list, int position, int len) {
+		public LengthExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
-			IsStatement = true;
-			type = Type.Call;
+			type = Type.Length;
 			debugInfo = list[position].debugInfo;
-			targetExp = list[position];
+			targetExp = list[position + 1];
 		}
 
 		public override void Extract(SyntaxContext context) {
@@ -23,15 +22,16 @@ namespace ELua {
 
 		public override void Generate(ModuleContext context) {
 			targetExp.Generate(context);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaInteger(context.vm, 0)});
-        }
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = context.vm.luaLibrary.lenFunc });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaInteger(context.vm, 1) });
+		}
 
 		public override string GetDebugInfo() {
 			return DebugInfo.ToString(targetExp);
 		}
 
 		public override string ToString() {
-			return string.Format("{0}()", targetExp);
+			return string.Format("#{0}", targetExp);
 		}
 
 	}

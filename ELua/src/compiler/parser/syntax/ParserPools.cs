@@ -31,14 +31,15 @@ namespace ELua {
         public static Queue<IndexParser> IndexParserPool = new Queue<IndexParser>();
         public static Queue<CallParser> CallParserPool = new Queue<CallParser>();
         public static Queue<CallNParser> CallNParserPool = new Queue<CallNParser>();
-        public static Queue<ConcatParser> ConcatParserPool = new Queue<ConcatParser>();
-        public static Queue<NegateParser> NegateParserPool = new Queue<NegateParser>();
         public static Queue<NotParser> NotParserPool = new Queue<NotParser>();
+        public static Queue<LengthParser> LengthParserPool = new Queue<LengthParser>();
+        public static Queue<NegateParser> NegateParserPool = new Queue<NegateParser>();
         public static Queue<MultiplyParser> MultiplyParserPool = new Queue<MultiplyParser>();
         public static Queue<DivisionParser> DivisionParserPool = new Queue<DivisionParser>();
         public static Queue<ModParser> ModParserPool = new Queue<ModParser>();
         public static Queue<PlusParser> PlusParserPool = new Queue<PlusParser>();
         public static Queue<SubtractParser> SubtractParserPool = new Queue<SubtractParser>();
+        public static Queue<ConcatParser> ConcatParserPool = new Queue<ConcatParser>();
         public static Queue<LessParser> LessParserPool = new Queue<LessParser>();
         public static Queue<GreaterParser> GreaterParserPool = new Queue<GreaterParser>();
         public static Queue<LessEqualParser> LessEqualParserPool = new Queue<LessEqualParser>();
@@ -236,11 +237,19 @@ namespace ELua {
             }
         }
 
-        public static ConcatParser GetConcatParser() {
-            if (ConcatParserPool.Count == 0) {
-                return new ConcatParser();
+        public static NotParser GetNotParser() {
+            if (NotParserPool.Count == 0) {
+                return new NotParser();
             } else {
-                return ConcatParserPool.Dequeue();
+                return NotParserPool.Dequeue();
+            }
+        }
+
+        public static LengthParser GetLengthParser() {
+            if (LengthParserPool.Count == 0) {
+                return new LengthParser();
+            } else {
+                return LengthParserPool.Dequeue();
             }
         }
 
@@ -249,14 +258,6 @@ namespace ELua {
                 return new NegateParser();
             } else {
                 return NegateParserPool.Dequeue();
-            }
-        }
-
-        public static NotParser GetNotParser() {
-            if (NotParserPool.Count == 0) {
-                return new NotParser();
-            } else {
-                return NotParserPool.Dequeue();
             }
         }
 
@@ -297,6 +298,14 @@ namespace ELua {
                 return new SubtractParser();
             } else {
                 return SubtractParserPool.Dequeue();
+            }
+        }
+
+        public static ConcatParser GetConcatParser() {
+            if (ConcatParserPool.Count == 0) {
+                return new ConcatParser();
+            } else {
+                return ConcatParserPool.Dequeue();
             }
         }
 
@@ -489,16 +498,16 @@ namespace ELua {
             CallNParserPool.Enqueue((CallNParser)parser);
         }
 
-        public static void PutConcatParser(IParser parser) {
-            ConcatParserPool.Enqueue((ConcatParser)parser);
+        public static void PutNotParser(IParser parser) {
+            NotParserPool.Enqueue((NotParser)parser);
+        }
+
+        public static void PutLengthParser(IParser parser) {
+            LengthParserPool.Enqueue((LengthParser)parser);
         }
 
         public static void PutNegateParser(IParser parser) {
             NegateParserPool.Enqueue((NegateParser)parser);
-        }
-
-        public static void PutNotParser(IParser parser) {
-            NotParserPool.Enqueue((NotParser)parser);
         }
 
         public static void PutMultiplyParser(IParser parser) {
@@ -519,6 +528,10 @@ namespace ELua {
 
         public static void PutSubtractParser(IParser parser) {
             SubtractParserPool.Enqueue((SubtractParser)parser);
+        }
+
+        public static void PutConcatParser(IParser parser) {
+            ConcatParserPool.Enqueue((ConcatParser)parser);
         }
 
         public static void PutLessParser(IParser parser) {

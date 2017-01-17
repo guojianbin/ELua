@@ -50,7 +50,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Join("\n", itemsList.Select(t => t.ToString()));
+			return itemsList.FormatListString("\n");
 		}
 
 	}

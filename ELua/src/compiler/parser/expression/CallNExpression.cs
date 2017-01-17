@@ -45,7 +45,7 @@ namespace ELua {
 		        itemsList[i].Generate(context);
 		    }
 			targetExp.Generate(context);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg1 = new LuaInteger(context.vm, itemsList.Count) });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaInteger(context.vm, itemsList.Count) });
         }
 
 		public override string GetDebugInfo() {
@@ -53,7 +53,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("{0}({1})", targetExp, string.Join(", ", itemsList.Select(t => t.ToString())));
+			return string.Format("{0}({1})", targetExp, itemsList.FormatListString());
 		}
 
 	}

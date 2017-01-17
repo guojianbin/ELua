@@ -25,6 +25,7 @@ a(1,2,3)
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
             parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
         }
 
 		/// <summary>
@@ -43,7 +44,8 @@ return a
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
             parser.Generate();
-            Assert.IsTrue(((LuaNumber)vm.Call(file)).value == 3);
+			Assert.IsTrue(((LuaNumber)vm.Call(file)).value == 3);
+			Assert.IsTrue(parser.errorList.Count == 0);
         }
 
 		/// <summary>
@@ -62,8 +64,9 @@ print(""hello world"")
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
-            vm.Call(file);
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
+			vm.Call(file);
         }
 
 		/// <summary>
@@ -85,7 +88,8 @@ print(2 + 100)
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -106,7 +110,8 @@ print(a)
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -145,7 +150,8 @@ print(a.a)
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -164,7 +170,8 @@ print(c)
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -219,7 +226,8 @@ print(a)
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -265,7 +273,8 @@ end
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -301,7 +310,8 @@ b.b.b.b.b.b()
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -350,7 +360,8 @@ end
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -386,7 +397,8 @@ print(test2())
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -409,7 +421,8 @@ print(a,b,c,d,e)
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -437,7 +450,8 @@ end
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -463,7 +477,8 @@ end
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -475,12 +490,6 @@ end
             var file = "test.lua";
             var script = @"
 local arr = {11,22,33}
-
-function next(t, v)
-	if v == nil then
-		return t[]
-	end
-end
 
 function iter(arr, i)
 	i = i + 1
@@ -522,7 +531,8 @@ end
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -556,7 +566,8 @@ print(k,v)
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
             vm.Call(file);
         }
 
@@ -574,7 +585,8 @@ return a .. b
             var vm = new LVM(new Logger());
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
-            parser.Generate();
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
 			Assert.IsTrue(vm.Call(file).ToString() == "1223");
         }
 
@@ -611,6 +623,7 @@ end
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
 			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
 			vm.Call(file);
         }
 
@@ -646,7 +659,97 @@ end
             var scanner = new Scanner(file, script);
             var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
 			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
 			vm.Call(file);
+        }
+
+		/// <summary>
+		/// test len(t)
+		/// </summary>
+        [Test]
+        public void TestCase20() {
+            var file = "test.lua";
+            var script = @"
+a = 100
+b = 200
+local c = 300
+
+local t = {a,b,c}
+for i,v in ipairs(t) do
+	print(i,v)
+end
+
+print(""----------------------"")
+t[5] = 500
+for i,v in ipairs(t) do
+	print(i,v)
+end
+
+print(""----------------------"")
+t[4] = 400
+for i,v in ipairs(t) do
+	print(i,v)
+end
+
+print(""----------------------"")
+for k, v in pairs(t) do
+	print(k,v)
+end
+
+print(""t.len = "" .. #t)
+return #t
+";
+            var vm = new LVM(new Logger());
+            var scanner = new Scanner(file, script);
+            var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
+			Assert.AreEqual(vm.Call(file).ToString(), "5");
+        }
+
+		/// <summary>
+		/// test fab
+		/// </summary>
+        [Test]
+        public void TestCase21() {
+            var file = "test.lua";
+            var script = @"
+function fab(n)
+	if n <= 1 then
+		return n
+	else
+		return n + fab(n - 1)
+	end
+end
+
+return fab(10000)
+";
+            var vm = new LVM(new Logger());
+            var scanner = new Scanner(file, script);
+            var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
+			Assert.AreEqual(vm.Call(file).ToString(), "5.00029E+07");
+        }
+
+		/// <summary>
+		/// test metatable
+		/// </summary>
+        [Test]
+        public void TestCase22() {
+            var file = "test.lua";
+            var script = @"
+local t = {}
+local mt = { 1,2,3 }
+setmetatable(t, mt)
+return getmetatable(t)
+";
+            var vm = new LVM(new Logger());
+            var scanner = new Scanner(file, script);
+            var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
+			Assert.AreEqual(vm.Call(file).ToString(), "{ 1, 2, 3 }");
         }
 
     }

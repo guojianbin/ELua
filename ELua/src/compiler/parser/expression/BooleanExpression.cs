@@ -24,7 +24,7 @@ namespace ELua {
 	    }
 
 	    public override void Generate(ModuleContext context) {
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg1 = context.vm.GetBoolean(value) });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = context.vm.GetBoolean(value) });
         }
 
         public override string ToString() {

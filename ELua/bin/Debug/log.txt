@@ -1,247 +1,55 @@
 [source]
-a = 100
-b = 200
-local c = 300
-local t = { a, b, c }
-for i, v in ipairs(t) do
-print(i, v)
-end
-print("----------------------")
-t[5] = 500
-for i, v in ipairs(t) do
-print(i, v)
-end
-print("----------------------")
-t[4] = 400
-for i, v in ipairs(t) do
-print(i, v)
-end
-function ipairs()
-
-end
+local t = { }
+local mt = { 1, 2, 3 }
+setmetatable(t, mt)
+print(getmetatable(t))
 
 [extract]
-a = 100
-b = 200
-local c = 300
-local #10 = { a, b, c }
-local t = #10
-local #11 = ipairs(t)
-for i, v in unpack(#11) do
-print(i, v)
-end
-print("----------------------")
-t[5] = 500
-local #12 = ipairs(t)
-for i, v in unpack(#12) do
-print(i, v)
-end
-print("----------------------")
-t[4] = 400
-local #13 = ipairs(t)
-for i, v in unpack(#13) do
-print(i, v)
-end
-function ipairs()
-
-end
-complie 87ms
-
-[ipairs]
-
+local #12 = { }
+local t = #12
+local #13 = { 1, 2, 3 }
+local mt = #13
+setmetatable(t, mt)
+local #14 = getmetatable(t)
+print(unpack(#14))
+complie 94ms
 
 [test.lua]
-0   Push       100       
-1   Var        a         
+0   List       0         
+1   Define     #12       
 2   Bind
 3   Clear
-4   Push       200       
-5   Var        b         
+4   Var        #12       
+5   Define     t         
 6   Bind
 7   Clear
-8   Push       300       
-9   Define     c         
-10  Bind
-11  Clear
-12  Var        c         
-13  Var        b         
-14  Var        a         
-15  List       3         
-16  Define     #10       
+8   Push       3         
+9   Push       2         
+10  Push       1         
+11  List       3         
+12  Define     #13       
+13  Bind
+14  Clear
+15  Var        #13       
+16  Define     mt        
 17  Bind
 18  Clear
-19  Var        #10       
-20  Define     t         
-21  Bind
-22  Clear
-23  Var        t         
-24  Var        ipairs    
-25  Call       1         
-26  Define     #11       
-27  Bind
-28  Clear
-29  Var        #11       
-30  Unpack
-31  Define     #16       
-32  Define     #15       
-33  Define     #14       
-34  BindN      3         
-35  Label      #17:35    
-36  Push       True      
-37  JumpNot    #20:65    
-38  Var        #16       
-39  Var        #15       
-40  Var        #14       
-41  Call       2         
-42  Unpack
-43  Define     v         
-44  Define     i         
-45  BindN      2         
-46  Clear
-47  Var        i         
-48  Var        #16       
-49  Bind
-50  Clear
-51  Push       nil       
-52  Var        #16       
-53  Equal
-54  JumpNot    #22:57    
-55  Jump       #20:65    
-56  Clear
-57  Label      #22:57    
-58  Clear
-59  Var        v         
-60  Var        i         
-61  Var        print     
-62  Call       2         
-63  Clear
-64  Jump       #17:35    
-65  Label      #20:65    
-66  Clear
-67  Push       ----------------------
-68  Var        print     
-69  Call       1         
-70  Clear
-71  Push       500       
-72  Push       5         
-73  Var        t         
-74  Index
-75  Bind
-76  Clear
-77  Var        t         
-78  Var        ipairs    
-79  Call       1         
-80  Define     #12       
-81  Bind
-82  Clear
-83  Var        #12       
-84  Unpack
-85  Define     #29       
-86  Define     #28       
-87  Define     #27       
-88  BindN      3         
-89  Label      #30:89    
-90  Push       True      
-91  JumpNot    #33:119   
-92  Var        #29       
-93  Var        #28       
-94  Var        #27       
-95  Call       2         
-96  Unpack
-97  Define     v         
-98  Define     i         
-99  BindN      2         
-100 Clear
-101 Var        i         
-102 Var        #29       
-103 Bind
-104 Clear
-105 Push       nil       
-106 Var        #29       
-107 Equal
-108 JumpNot    #35:111   
-109 Jump       #33:119   
-110 Clear
-111 Label      #35:111   
-112 Clear
-113 Var        v         
-114 Var        i         
-115 Var        print     
-116 Call       2         
-117 Clear
-118 Jump       #30:89    
-119 Label      #33:119   
-120 Clear
-121 Push       ----------------------
-122 Var        print     
-123 Call       1         
-124 Clear
-125 Push       400       
-126 Push       4         
-127 Var        t         
-128 Index
-129 Bind
-130 Clear
-131 Var        t         
-132 Var        ipairs    
-133 Call       1         
-134 Define     #13       
-135 Bind
-136 Clear
-137 Var        #13       
-138 Unpack
-139 Define     #42       
-140 Define     #41       
-141 Define     #40       
-142 BindN      3         
-143 Label      #43:143   
-144 Push       True      
-145 JumpNot    #46:173   
-146 Var        #42       
-147 Var        #41       
-148 Var        #40       
-149 Call       2         
-150 Unpack
-151 Define     v         
-152 Define     i         
-153 BindN      2         
-154 Clear
-155 Var        i         
-156 Var        #42       
-157 Bind
-158 Clear
-159 Push       nil       
-160 Var        #42       
-161 Equal
-162 JumpNot    #48:165   
-163 Jump       #46:173   
-164 Clear
-165 Label      #48:165   
-166 Clear
-167 Var        v         
-168 Var        i         
-169 Var        print     
-170 Call       2         
-171 Clear
-172 Jump       #43:143   
-173 Label      #46:173   
-174 Clear
-175 Function   ipairs    
-176 Var        ipairs    
-177 Bind
-178 Clear
+19  Var        mt        
+20  Var        t         
+21  Var        setmetatable
+22  Call       2         
+23  Clear
+24  Var        t         
+25  Var        getmetatable
+26  Call       1         
+27  Define     #14       
+28  Bind
+29  Clear
+30  Var        #14       
+31  Unpack
+32  Var        print     
+33  Call       1         
+34  Clear
 
 [output]
-1, 100
-2, 200
-3, 300
-----------------------
-1, 100
-2, 200
-3, 300
-----------------------
-1, 100
-2, 200
-3, 300
-4, 400
-5, 500
+{ 1, 2, 3 }

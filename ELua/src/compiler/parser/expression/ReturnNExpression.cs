@@ -35,7 +35,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("return {0}", string.Join(", ", itemsList.Select(t => t.ToString())));
+			return string.Format("return {0}", itemsList.FormatListString());
 		}
 
 	}

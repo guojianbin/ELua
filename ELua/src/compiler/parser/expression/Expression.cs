@@ -25,6 +25,7 @@ namespace ELua {
 
 			Paren, // (x)
 			Negate, // -x
+			Length, // #x
 			Multiply, // x * y
 			Division, // x / y
 			Plus, // x + y
@@ -50,6 +51,7 @@ namespace ELua {
 			For, // for i=x,y,z do ... end
 			ForEach, // for x,y in list do ... end
             While, // while do
+            Loop, // while true 
             If, // if end
             IfElse, // if else end
 			Define, // local x = y

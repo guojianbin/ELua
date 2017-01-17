@@ -18,11 +18,11 @@ namespace ELua {
 			module.Call(stackFrame, this.stackFrame, module.context.argsList, args);
 		}
 
-		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+		public override LuaObject Equal(LuaObject obj) {
 			return vm.GetBoolean(Equals(obj));
 		}
 
-		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+		public override LuaObject NotEqual(LuaObject obj) {
 			return vm.GetBoolean(!Equals(obj));
 		}
 

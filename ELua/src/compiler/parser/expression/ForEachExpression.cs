@@ -35,7 +35,7 @@ namespace ELua {
 			var varExp = new WordExpression(context.NewUID(), debugInfo);
 			var initExp = new DefineNExpression(new List<Expression> { funcExp, statExp, varExp }, items2List);
 			initExp.Generate(context);
-			var whileExp = new WhileExpression(new BooleanExpression(true, debugInfo), moduleExp);
+			var whileExp = new LoopExpression(moduleExp);
 			var callExp = new UnpackExpression(new CallNExpression(funcExp, new List<Expression> { statExp, varExp }));
 			var nextExp = new DefineNExpression(items1List, new List<Expression> { callExp });
             var rebindExp  = new BindExpression(varExp, items1List[0]);
@@ -50,7 +50,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("for {0} in {1} do\n{2}\nend", string.Join(", ", items1List.Select(t => t.ToString())), string.Join(", ", items2List.Select(t => t.ToString())), moduleExp);
+			return string.Format("for {0} in {1} do\n{2}\nend", items1List.FormatListString(), items2List.FormatListString(), moduleExp);
 		}
 
 	}

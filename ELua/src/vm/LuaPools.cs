@@ -18,6 +18,7 @@ namespace ELua {
 		public Queue<LuaFunction> functionPool = new Queue<LuaFunction>();
 		public Queue<LuaListItem> listItemPool = new Queue<LuaListItem>();
 		public Queue<LuaDictItem> dictItemPool = new Queue<LuaDictItem>();
+		public Queue<StackFrame> stackFramePool = new Queue<StackFrame>();
 
         public LuaPools(LVM vm) {
             this.vm = vm;
@@ -27,14 +28,18 @@ namespace ELua {
 			if (numberPool.Count == 0) {
 				return new LuaNumber(vm, value);
             } else {
-                var item = numberPool.Dequeue();
-                item.value = value;
-                return item;
+				lock (numberPool) {
+					var item = numberPool.Dequeue();
+					item.value = value;
+					return item;
+				}
             }
         }
 
         public void PutNumber(LuaNumber item) {
-            numberPool.Enqueue(item);
+			lock (numberPool) {
+				numberPool.Enqueue(item);
+	        }
         }
 
         public LuaBoolean GetBoolean(bool value) {
@@ -180,6 +185,50 @@ namespace ELua {
 		public void PutDictItem(LuaDictItem item) {
 			dictItemPool.Enqueue(item);
 		}
+
+		public StackFrame GetStackFrame(Module module, StackFrame parent) {
+			if (stackFramePool.Count == 0) {
+				return new StackFrame(module, parent);
+			} else {
+				lock (stackFramePool) {
+					var item = stackFramePool.Dequeue();
+					item.module = module;
+					item.parent = parent;
+					item.uid = vm.NewUID();
+					item.codesList = module.codesList;
+					item.level = parent.level + 1;
+					item.executor = parent.executor;
+					item.iterator = item.Execute();
+					return item;
+				}
+			}
+	    }
+
+		public StackFrame GetStackFrame(Module module, StackFrame parent, StackFrame upvalue) {
+			if (stackFramePool.Count == 0) {
+				return new StackFrame(module, parent, upvalue);
+			} else {
+				lock (stackFramePool) {
+					var item = stackFramePool.Dequeue();
+					item.module = module;
+					item.parent = parent;
+					item.upvalue = upvalue;
+					item.uid = vm.NewUID();
+					item.codesList = module.codesList;
+					item.level = parent.level + 1;
+					item.executor = parent.executor;
+					item.iterator = item.Execute();
+					return item;
+				}
+			}
+		}
+
+	    public void PutStackFrame(StackFrame item) {
+			lock (stackFramePool) {
+				item.ClearAll();
+				stackFramePool.Enqueue(item);
+		    }
+	    }
 
     }
 

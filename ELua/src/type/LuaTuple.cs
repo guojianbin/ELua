@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -38,7 +37,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Join(", ", list.Select(t => t.ToString()));
+			return list.FormatListString();
 		}
 
 	}

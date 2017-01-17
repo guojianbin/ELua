@@ -48,11 +48,11 @@ namespace ELua {
             condExp.Generate(context);
             var endLabel = new LabelExpression(context.NewUID(), indexExp.debugInfo);
 			var jumpEnd = new LuaLabel(context.vm, endLabel.value, endLabel.index);
-            context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpIf, opArg1 = jumpEnd });
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpIf, opArg = jumpEnd });
             context.Add(new ByteCode { opCode = ByteCode.OpCode.Clear });
             moduleExp.Generate(context);
             changeExp.Generate(context);
-            context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg1 = jumpBegin });
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg = jumpBegin });
             endLabel.Generate(context);
 			jumpEnd.index = endLabel.index;
             context.EndLoop(jumpEnd);

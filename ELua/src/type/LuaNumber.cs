@@ -1,4 +1,6 @@
-﻿namespace ELua {
+﻿using System;
+
+namespace ELua {
 
     /// <summary>
     /// @author Easily
@@ -51,11 +53,11 @@
 			return vm.GetBoolean(value >= obj.ToNumber().value);
 		}
 
-		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+		public override LuaObject Equal(LuaObject obj) {
 			return vm.GetBoolean(Equals(obj));
 		}
 
-		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+		public override LuaObject NotEqual(LuaObject obj) {
 			return vm.GetBoolean(!Equals(obj));
 		}
 
@@ -94,6 +96,13 @@
                 return Equals((LuaNumber)obj);
             }
         }
+
+	    ~LuaNumber() {
+		    if (!vm.IsDisposed) {
+			    GC.ReRegisterForFinalize(this);
+				vm.PutNumber(this);
+		    }
+	    }
 
     }
 

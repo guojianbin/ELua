@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace ELua {
 
@@ -7,20 +8,28 @@ namespace ELua {
     /// </summary>
     public class LuaTable : LuaObject {
 
-		public bool IsInit;
-		public bool IsList;
+	    /// <summary>
+	    /// @author Easily
+	    /// </summary>
+	    public enum Status : byte { Uninit, List, Dict, }
+
+	    public Status status = Status.Uninit;
 		public LuaList list;
-        public LuaDict dict;
-	    public IEnumerator iterator;
+		public LuaDict dict;
+		public IEnumerator iterator;
+		public LuaTable metatable;
 
 	    public int Count {
 		    get {
-			    if (!IsInit) {
-				    return 0;
-			    } else if (IsList) {
-				    return list.Count;
-			    } else {
-				    return dict.Count;
+			    switch (status) {
+				    case Status.Uninit:
+					    return 0;
+				    case Status.List:
+					    return list.Count;
+				    case Status.Dict:
+					    return dict.Count;
+				    default:
+					    throw new ArgumentOutOfRangeException(ToString());
 			    }
 		    }
 	    }
@@ -32,77 +41,92 @@ namespace ELua {
 	    }
 
 	    public override LuaObject GetProperty(LuaObject obj) {
-            if (!IsInit) {
-                InitDict();
-                return dict.GetProperty(obj);
-            } else if (IsList) {
-                List2Dict();
-                return dict.GetProperty(obj);
-            } else {
-                return dict.GetProperty(obj);
-            }
+		    switch (status) {
+				case Status.Uninit:
+					InitDict();
+					return dict.GetProperty(obj);
+				case Status.List:
+					List2Dict();
+					return dict.GetProperty(obj);
+				case Status.Dict:
+					return dict.GetProperty(obj);
+			    default:
+				    throw new ArgumentOutOfRangeException(ToString());
+		    }
         }
 
         public override LuaObject GetIndex(LuaObject obj) {
-            if (!IsInit) {
-                InitDict();
-                return dict.GetIndex(obj);
-            } else if (IsList) {
-                return list.GetIndex(obj);
-            } else {
-                return dict.GetIndex(obj);
-            }
+	        switch (status) {
+				case Status.Uninit:
+					InitDict();
+					return dict.GetIndex(obj);
+				case Status.List:
+					return list.GetIndex(obj);
+				case Status.Dict:
+					return dict.GetIndex(obj);
+		        default:
+			        throw new ArgumentOutOfRangeException(ToString());
+	        }
 		}
 
 		public void InitList() {
-			IsInit = true;
-			IsList = true;
+			status = Status.List;
 			list.Clear();
 	    }
 
 		public void InitDict() {
-			IsInit = true;
-			IsList = false;
+			status = Status.Dict;
 			dict.Clear();
 		}
 
 	    public void ClearList() {
-		    IsList = false;
 			list.Clear();
 	    }
 
 	    public void ClearDict() {
-		    IsList = true;
 			dict.Clear();
 	    }
 
-	    public void ClearAll() {
-		    IsInit = false;
+		public void ClearAll() {
+			status = Status.Uninit;
+			metatable = null;
 		    ClearList();
 			ClearDict();
-	    }
+		}
 
 		public void Add(LuaObject value) {
-			if (!IsInit) {
-				InitList();
-				list.Add(value);
-			} else if (IsList) {
-				list.Add(value);
-			} else {
-                Dict2List();
-				list.Add(value);
+			switch (status) {
+				case Status.Uninit:
+					InitList();
+					list.Add(value);
+					break;
+				case Status.List:
+					list.Add(value);
+					break;
+				case Status.Dict:
+					Dict2List();
+					list.Add(value);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(ToString());
 			}
 		}
 
 		public void Bind(LuaObject key, LuaObject value) {
-			if (!IsInit) {
-				InitDict();
-				dict.Bind(key, value);
-			} else if (!IsList) {
-				dict.Bind(key, value);
-			} else {
-                List2Dict();
-				dict.Bind(key, value);
+			switch (status) {
+				case Status.Uninit:
+					InitDict();
+					dict.Bind(key, value);
+					break;
+				case Status.List:
+					List2Dict();
+					dict.Bind(key, value);
+					break;
+				case Status.Dict:
+					dict.Bind(key, value);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(ToString());
 			}
 		}
 
@@ -123,20 +147,23 @@ namespace ELua {
         }
 
 		public IEnumerator GetEnumerator() {
-			if (!IsInit) {
-				return list.GetEnumerator();
-			} else if (IsList) {
-				return list.GetEnumerator();
-			} else {
-				return dict.GetEnumerator();
+			switch (status) {
+				case Status.Uninit:
+					return list.GetEnumerator();
+				case Status.List:
+					return list.GetEnumerator();
+				case Status.Dict:
+					return dict.GetEnumerator();
+				default:
+					throw new ArgumentOutOfRangeException(ToString());
 			}
 		}
 
-		public override LuaObject Equal(StackFrame stackFrame, LuaObject obj) {
+		public override LuaObject Equal(LuaObject obj) {
 			return vm.GetBoolean(Equals(obj));
 		}
 
-		public override LuaObject NotEqual(StackFrame stackFrame, LuaObject obj) {
+		public override LuaObject NotEqual(LuaObject obj) {
 			return vm.GetBoolean(!Equals(obj));
 		}
 
@@ -169,12 +196,15 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			if (!IsInit) {
-				return "{ }";
-			} else if (IsList) {
-				return list.ToString();
-			} else {
-				return dict.ToString();
+			switch (status) {
+				case Status.Uninit:
+					return "{ }";
+				case Status.List:
+					return list.ToString();
+				case Status.Dict:
+					return dict.ToString();
+				default:
+					throw new ArgumentOutOfRangeException(ToString());
 			}
 		}
 

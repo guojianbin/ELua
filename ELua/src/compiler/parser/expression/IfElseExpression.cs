@@ -43,10 +43,10 @@ namespace ELua {
             var elseLabel = new LabelExpression(context.NewUID(), condExp.debugInfo);
             var endLabel = new LabelExpression(context.NewUID(), condExp.debugInfo);
 	        var jumpElse = new LuaLabel(context.vm, elseLabel.value, elseLabel.index);
-	        context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpNot, opArg1 = jumpElse });
+	        context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpNot, opArg = jumpElse });
 			module1Exp.Generate(context);
 			var jumpEnd = new LuaLabel(context.vm, endLabel.value, endLabel.index);
-	        context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg1 = jumpEnd });
+	        context.Add(new ByteCode { opCode = ByteCode.OpCode.Jump, opArg = jumpEnd });
             elseLabel.Generate(context);
 	        jumpElse.index = elseLabel.index;
 			module2Exp.Generate(context);

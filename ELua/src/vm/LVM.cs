@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ELua {
 
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class LVM {
+	public class LVM : IDisposable {
 
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
 		public Dictionary<string, Executor> executorDict = new Dictionary<string, Executor>();

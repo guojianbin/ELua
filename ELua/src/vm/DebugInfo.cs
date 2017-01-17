@@ -29,7 +29,7 @@ namespace ELua {
 			foreach (var item in list) {
 				hashList.Add(item.line);
 			}
-			return string.Format("Line: {0}", string.Join(", ", hashList.Select(t => t.ToString())));
+			return string.Format("Line: {0}", hashList.FormatListString());
 		}
 
 		public override string ToString() {

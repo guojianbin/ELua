@@ -50,16 +50,8 @@ namespace ELua {
 	    }
 
 		public override string ToString() {
-			var sb = new StringBuilder();
-			sb.Append('{');
-			foreach (var item in itemsList) {
-				sb.Append(item.value);
-				sb.Append(',');
-			}
-			sb.Remove(sb.Length - 1, 1);
-			sb.Append('}');
-			return sb.ToString();
-        }
+			return string.Format("{{ {0} }}", itemsList.Select(t => t.value.ToString()).FormatListString());
+		}
 
     }
 

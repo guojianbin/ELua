@@ -37,7 +37,7 @@ namespace ELua {
             condExp.Generate(context);
             var endLabel = new LabelExpression(context.NewUID(), condExp.debugInfo);
 			var jumpEnd = new LuaLabel(context.vm, endLabel.value, endLabel.index);
-	        context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpNot, opArg1 = jumpEnd });
+	        context.Add(new ByteCode { opCode = ByteCode.OpCode.JumpNot, opArg = jumpEnd });
 			moduleExp.Generate(context);
             endLabel.Generate(context);
 	        jumpEnd.index = endLabel.index;

@@ -33,7 +33,7 @@ namespace ELua {
 			vm.WriteLine(ast.ToString());
 			if (errorList.Count > 0) {
 				vm.WriteLine(string.Empty);
-				vm.WriteLine(string.Join("\n", errorList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t))));
+				vm.WriteLine(errorList.Select(t => string.Format("[ERROR -->> {0}] {1}", t.GetDebugInfo(), t)).FormatListString("\n"));
 			}
 		}
 

@@ -40,7 +40,7 @@ namespace ELua {
 			for (var i = items1List.Count - 1; i >= 0; i--) {
                 items1List[i].Generate(context);
             }
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.BindN, opArg1 = new LuaInteger(context.vm, items1List.Count) });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.BindN, opArg = new LuaInteger(context.vm, items1List.Count) });
 		}
 
 		public override string GetDebugInfo() {
@@ -48,7 +48,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("local {0} = {1}", string.Join(", ", items1List.Select(t => t.ToString())), string.Join(", ", items2List.Select(t => t.ToString())));
+			return string.Format("local {0} = {1}", items1List.FormatListString(), items2List.FormatListString());
 		}
 
 	}

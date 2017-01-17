@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ELua {
 
@@ -85,6 +86,26 @@ namespace ELua {
 
 		public static void PutDictItem(this LVM vm, LuaDictItem item) {
 			vm.luaPools.PutDictItem(item);
+		}
+
+		public static StackFrame GetStackFrame(this LVM vm, Module module, StackFrame parent) {
+			return vm.luaPools.GetStackFrame(module, parent);
+		}
+
+		public static StackFrame GetStackFrame(this LVM vm, Module module, StackFrame parent, StackFrame upvalue) {
+			return vm.luaPools.GetStackFrame(module, parent, upvalue);
+		}
+
+		public static void PutStackFrame(this LVM vm, StackFrame item) {
+			vm.luaPools.PutStackFrame(item);
+		}
+
+		public static string FormatListString<T>(this IEnumerable<T> list) {
+			return string.Join(", ", list.Select(t => t.ToString()));
+		}
+
+		public static string FormatListString<T>(this IEnumerable<T> list, string sep) {
+			return string.Join(sep, list.Select(t => t.ToString()));
 		}
 
 		public static void ClearAll<T>(this Stack<T> stack) {
