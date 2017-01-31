@@ -23,8 +23,7 @@ namespace ELua {
 		private void Parse(List<Expression> list) {
 			list.Add(new EOSExpression());
 			var context = new SyntaxContext(this, list);
-			var parser = new ModuleParser();
-			parser.Parse(context, 0);
+            ModuleParser.Parse(context, 0);
 			list.RemoveAt(list.Count - 1);
 			ast = list[0];
 			errorList = list.Where(t => !t.IsModule).ToList();

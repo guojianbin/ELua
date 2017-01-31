@@ -4,30 +4,25 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class DivisionParser : IParser {
+	public static class DivisionParser {
 
-		public bool Parse(SyntaxContext context, int position) {
+		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
 			var offset = 0;
 			var index = position;
-			IParser parser;
 
-			parser = new ParenParser();
-			while (parser.Parse(context, index));
-			parser = new PropertyParser();
-			while (parser.Parse(context, index));
-			parser = new IndexParser();
-			while (parser.Parse(context, index));
-			parser = new CallParser();
-			while (parser.Parse(context, index));
-			parser = new CallNParser();
-			while (parser.Parse(context, index));
-			parser = new NotParser();
-			while (parser.Parse(context, index));
-			parser = new LengthParser();
-			while (parser.Parse(context, index));
-			parser = new NegateParser();
-			while (parser.Parse(context, index));
+			while (ParenParser.Parse(context, index));
+			while (ListParser.Parse(context, index));
+			while (ListNParser.Parse(context, index));
+			while (TableSNParser.Parse(context, index));
+			while (TableINParser.Parse(context, index));
+			while (PropertyParser.Parse(context, index));
+			while (IndexParser.Parse(context, index));
+			while (CallParser.Parse(context, index));
+			while (CallNParser.Parse(context, index));
+			while (NotParser.Parse(context, index));
+			while (LengthParser.Parse(context, index));
+			while (NegateParser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;
 			}
@@ -38,22 +33,18 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			parser = new ParenParser();
-			while (parser.Parse(context, index));
-			parser = new PropertyParser();
-			while (parser.Parse(context, index));
-			parser = new IndexParser();
-			while (parser.Parse(context, index));
-			parser = new CallParser();
-			while (parser.Parse(context, index));
-			parser = new CallNParser();
-			while (parser.Parse(context, index));
-			parser = new NotParser();
-			while (parser.Parse(context, index));
-			parser = new LengthParser();
-			while (parser.Parse(context, index));
-			parser = new NegateParser();
-			while (parser.Parse(context, index));
+			while (ParenParser.Parse(context, index));
+			while (ListParser.Parse(context, index));
+			while (ListNParser.Parse(context, index));
+			while (TableSNParser.Parse(context, index));
+			while (TableINParser.Parse(context, index));
+			while (PropertyParser.Parse(context, index));
+			while (IndexParser.Parse(context, index));
+			while (CallParser.Parse(context, index));
+			while (CallNParser.Parse(context, index));
+			while (NotParser.Parse(context, index));
+			while (LengthParser.Parse(context, index));
+			while (NegateParser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;
 			}

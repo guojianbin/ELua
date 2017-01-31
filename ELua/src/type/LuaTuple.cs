@@ -9,7 +9,7 @@ namespace ELua {
 
 		public List<LuaObject> list = new List<LuaObject>();
 
-		public LuaTuple(LVM vm, IEnumerable<LuaObject> list) : base(vm) {
+		public LuaTuple(LVM vm, IEnumerable<LuaObject> list) : base(vm, Type.Tuple) {
 			uid = vm.NewUID();
 			AddRange(list);
 		}

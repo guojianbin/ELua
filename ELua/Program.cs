@@ -23,7 +23,7 @@ namespace ELua {
 			parser.Generate();
 		    logger.WriteLine(string.Format("complie {0}ms", sw.ElapsedMilliseconds));
 
-			foreach (var module in vm.modulesDict.Values) {
+			foreach (var module in vm.modulesList) {
 				logger.WriteLine(string.Empty, Logger.Type.File);
 				logger.WriteLine(string.Format("[{0}]", module.name), Logger.Type.File);
 				logger.WriteLine(module.codesList.Select(t => t.ToString()).FormatListString("\n"), Logger.Type.File);

@@ -8,14 +8,14 @@
 		public string value;
 		public int index;
 
-		public LuaLabel(LVM vm, string value, int index) : base(vm) {
+		public LuaLabel(LVM vm, string value, int index) : base(vm, Type.Label) {
 			this.value = value;
 			this.index = index;
 			uid = vm.NewUID();
 		}
 
 		public override string ToString() {
-			return string.Format("{0}->{1}", value, index);
+			return string.Format("{0}:{1}", value, index);
 		}
 
 		public override int GetHashCode() {

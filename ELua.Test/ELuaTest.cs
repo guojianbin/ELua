@@ -752,6 +752,75 @@ return getmetatable(t)
 			Assert.AreEqual(vm.Call(file).ToString(), "{ 1, 2, 3 }");
         }
 
+		/// <summary>
+		/// test table static function
+		/// </summary>
+		[Test]
+		public void TestCase23() {
+			var file = "test.lua";
+			var script = @"
+local t = {}
+
+function t.test()
+	print(100)
+end
+
+function t.test2(i)
+	print(i)
+end
+
+t.test()
+t.test2(200)
+";
+			var vm = new LVM(new Logger());
+			var scanner = new Scanner(file, script);
+			var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
+			vm.Call(file);
+		}
+
+		/// <summary>
+		/// test metatable __add
+		/// </summary>
+		[Test]
+		public void TestCase24() {
+			var file = "test.lua";
+			var script = @"
+
+local t1 = {1,2,3}
+table.insert(t1, 2, 10)
+local t2 = {4,5,6}
+
+local mt = {}
+mt.__add = function(t1, t2)
+	local t = {}
+	for i, v in ipairs(t1) do
+		table.insert(t, v)
+	end
+	for i, v in ipairs(t2) do
+		table.insert(t, v)
+	end
+	return t
+end
+
+setmetatable(t1, mt)
+setmetatable(t2, mt)
+
+local t = t1 + t2
+print(#t)
+for i, v in ipairs(t) do
+	print(i,v)
+end
+";
+			var vm = new LVM(new Logger());
+			var scanner = new Scanner(file, script);
+			var parser = new Parser(vm, file, ParserHelper.ToExpressionList(scanner.Tokens));
+			parser.Generate();
+			Assert.IsTrue(parser.errorList.Count == 0);
+			vm.Call(file);
+		}
+
     }
 
 }

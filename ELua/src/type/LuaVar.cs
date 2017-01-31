@@ -9,7 +9,7 @@
 		public LuaBinder binder;
 		public LuaObject target;
 
-		public LuaVar(LVM vm, string name, LuaBinder binder) : base(vm) {
+		public LuaVar(LVM vm, string name, LuaBinder binder) : base(vm, Type.Var) {
 			this.name = name;
 			this.binder = binder;
 			target = binder.target;

@@ -19,6 +19,7 @@ namespace ELua {
 		public LuaNative ipairsFunc;
 		public LuaNative setmetaFunc;
 		public LuaNative getmetaFunc;
+		public LuaTable table;
 
 		public LuaLibrary(LVM vm) {
 			this.vm = vm;
@@ -29,13 +30,42 @@ namespace ELua {
 			Add(pairsFunc = new LuaNative(vm, "pairs", Pairs));
 			Add(nextFunc = new LuaNative(vm, "next", Next));
 			Add(ipairsFunc = new LuaNative(vm, "ipairs", IPairs));
-			Add(iterFunc = new LuaNative(vm, "#iter", Iterator));
+			Add(iterFunc = new LuaNative(vm, vm.NewUID(), Iterator));
 			Add(setmetaFunc = new LuaNative(vm, "setmetatable", SetMetatable));
 			Add(getmetaFunc = new LuaNative(vm, "getmetatable", GetMetatable));
+
+			Add("table", table = vm.GetTable());
+			table.Bind(vm.GetString("insert"), new LuaNative(vm, "insert", Insert));
 		}
 
 		public void Add(LuaNative native) {
 			stackFrame.Bind(native.name, native);
+		}
+
+		public void Add(string name, LuaTable table) {
+			stackFrame.Bind(name, table);
+		}
+
+		public void Insert(StackFrame stackFrame, LuaObject[] args) {
+			if (args.Length < 2) {
+				stackFrame.Push(vm.nil);
+			} else {
+				var table = args[0] as LuaTable;
+				if (table == null) {
+					stackFrame.Push(vm.nil);
+				} else {
+					if (args.Length == 2) {
+						table.Add(args[1]);
+					} else {
+						var index = args[1] as LuaNumber;
+						if (index == null) {
+							stackFrame.Push(vm.nil);
+						} else {
+							table.Insert(index, args[2]);
+						}
+					}
+				}
+			}
 		}
 
 		public void SetMetatable(StackFrame stackFrame, LuaObject[] args) {
@@ -195,7 +225,9 @@ namespace ELua {
 				} else {
 					if (table.status==LuaTable.Status.List) {
 						var iterator = table.iterator;
-						if (!iterator.MoveNext()) {
+						if (iterator == null) {
+							stackFrame.Push(vm.nil);
+						} else if (!iterator.MoveNext()) {
 							stackFrame.Push(vm.nil);
 						} else {
 							var item = (LuaListItem)iterator.Current;
@@ -203,7 +235,9 @@ namespace ELua {
 						}
 					} else {
 						var iterator = table.iterator;
-						if (!iterator.MoveNext()) {
+						if (iterator == null) {
+							stackFrame.Push(vm.nil);
+						} else if (!iterator.MoveNext()) {
 							stackFrame.Push(vm.nil);
 						} else {
 							var item = (LuaDictItem)iterator.Current;

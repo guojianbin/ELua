@@ -8,7 +8,7 @@ namespace ELua {
 		public Module module;
 		public StackFrame stackFrame;
 
-		public LuaFunction(LVM vm, Module module, StackFrame stackFrame) : base(vm) {
+		public LuaFunction(LVM vm, Module module, StackFrame stackFrame) : base(vm, Type.Function) {
 			this.module = module;
 			this.stackFrame = stackFrame;
 			uid = vm.NewUID();

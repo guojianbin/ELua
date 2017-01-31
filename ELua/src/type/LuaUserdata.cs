@@ -9,7 +9,7 @@ namespace ELua {
 
 		public object value;
 
-		public LuaUserdata(LVM vm, object value) : base(vm) {
+		public LuaUserdata(LVM vm, object value) : base(vm, Type.Userdata) {
 			this.value = value;
 			uid = vm.NewUID();
 		}

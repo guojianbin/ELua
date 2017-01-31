@@ -10,7 +10,7 @@ namespace ELua {
 		public string name;
 		public Action<StackFrame, LuaObject[]> func;
 
-		public LuaNative(LVM vm, string name, Action<StackFrame, LuaObject[]> func) : base(vm) {
+		public LuaNative(LVM vm, string name, Action<StackFrame, LuaObject[]> func) : base(vm, Type.Native) {
 			this.name = name;
 			this.func = func;
 			uid = vm.NewUID();

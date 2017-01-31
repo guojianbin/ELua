@@ -19,6 +19,15 @@ namespace ELua {
 			item2Exp = ParserHelper.Word2String(list[position + 2]);
 		}
 
+		public PropertyExpression(Expression item1Exp, Expression item2Exp) {
+			IsLeftValue = true;
+			IsRightValue = true;
+			type = Type.Property;
+			debugInfo = item1Exp.debugInfo;
+			this.item1Exp = item1Exp;
+			this.item2Exp = item2Exp;
+		}
+
 		public override void Extract(SyntaxContext context) {
 			item1Exp = ParserHelper.Extract(context, item1Exp);
 			item2Exp = ParserHelper.Extract(context, item2Exp);

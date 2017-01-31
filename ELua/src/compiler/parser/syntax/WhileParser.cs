@@ -4,75 +4,46 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class WhileParser : IParser {
+	public static class WhileParser {
 
-		public bool Parse(SyntaxContext context, int position) {
+		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
 			var offset = 0;
 			var index = position;
-			IParser parser;
 
 			if (!ParserHelper.IsKeyword(list[index], "while")) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
-			parser = new FunctionAParser();
-			while (parser.Parse(context, index));
-			parser = new FunctionANParser();
-			while (parser.Parse(context, index));
-			parser = new ParenParser();
-			while (parser.Parse(context, index));
-			parser = new PropertyParser();
-			while (parser.Parse(context, index));
-			parser = new IndexParser();
-			while (parser.Parse(context, index));
-			parser = new CallParser();
-			while (parser.Parse(context, index));
-			parser = new CallNParser();
-			while (parser.Parse(context, index));
-			parser = new NotParser();
-			while (parser.Parse(context, index));
-			parser = new LengthParser();
-			while (parser.Parse(context, index));
-			parser = new NegateParser();
-			while (parser.Parse(context, index));
-			parser = new MultiplyParser();
-			while (parser.Parse(context, index));
-			parser = new DivisionParser();
-			while (parser.Parse(context, index));
-			parser = new ModParser();
-			while (parser.Parse(context, index));
-			parser = new PlusParser();
-			while (parser.Parse(context, index));
-			parser = new SubtractParser();
-			while (parser.Parse(context, index));
-			parser = new ConcatParser();
-			while (parser.Parse(context, index));
-			parser = new LessParser();
-			while (parser.Parse(context, index));
-			parser = new GreaterParser();
-			while (parser.Parse(context, index));
-			parser = new LessEqualParser();
-			while (parser.Parse(context, index));
-			parser = new GreaterEqualParser();
-			while (parser.Parse(context, index));
-			parser = new EqualParser();
-			while (parser.Parse(context, index));
-			parser = new NotEqualParser();
-			while (parser.Parse(context, index));
-			parser = new AndParser();
-			while (parser.Parse(context, index));
-			parser = new OrParser();
-			while (parser.Parse(context, index));
-			parser = new ListParser();
-			while (parser.Parse(context, index));
-			parser = new ListNParser();
-			while (parser.Parse(context, index));
-			parser = new TableNParser();
-			while (parser.Parse(context, index));
-			parser = new TableN2Parser();
-			while (parser.Parse(context, index));
+			while (FunctionAParser.Parse(context, index));
+			while (FunctionANParser.Parse(context, index));
+			while (ParenParser.Parse(context, index));
+			while (ListParser.Parse(context, index));
+			while (ListNParser.Parse(context, index));
+			while (TableSNParser.Parse(context, index));
+			while (TableINParser.Parse(context, index));
+			while (PropertyParser.Parse(context, index));
+			while (IndexParser.Parse(context, index));
+			while (CallParser.Parse(context, index));
+			while (CallNParser.Parse(context, index));
+			while (NotParser.Parse(context, index));
+			while (LengthParser.Parse(context, index));
+			while (NegateParser.Parse(context, index));
+			while (MultiplyParser.Parse(context, index));
+			while (DivisionParser.Parse(context, index));
+			while (ModParser.Parse(context, index));
+			while (PlusParser.Parse(context, index));
+			while (SubtractParser.Parse(context, index));
+			while (ConcatParser.Parse(context, index));
+			while (LessParser.Parse(context, index));
+			while (GreaterParser.Parse(context, index));
+			while (LessEqualParser.Parse(context, index));
+			while (GreaterEqualParser.Parse(context, index));
+			while (EqualParser.Parse(context, index));
+			while (NotEqualParser.Parse(context, index));
+			while (AndParser.Parse(context, index));
+			while (OrParser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;
 			}
@@ -84,40 +55,25 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 			while (true) {
-			parser = new ReturnNParser();
-			while (parser.Parse(context, index));
-			parser = new ReturnParser();
-			while (parser.Parse(context, index));
-			parser = new BreakParser();
-			while (parser.Parse(context, index));
-			parser = new WhileParser();
-			while (parser.Parse(context, index));
-			parser = new ForNParser();
-			while (parser.Parse(context, index));
-			parser = new ForParser();
-			while (parser.Parse(context, index));
-			parser = new ForEachParser();
-			while (parser.Parse(context, index));
-			parser = new FunctionParser();
-			while (parser.Parse(context, index));
-			parser = new FunctionNParser();
-			while (parser.Parse(context, index));
-			parser = new IfParser();
-			while (parser.Parse(context, index));
-			parser = new IfElseParser();
-			while (parser.Parse(context, index));
-			parser = new DefineParser();
-			while (parser.Parse(context, index));
-			parser = new DefineNParser();
-			while (parser.Parse(context, index));
-			parser = new BindParser();
-			while (parser.Parse(context, index));
-			parser = new BindNParser();
-			while (parser.Parse(context, index));
-			parser = new CallParser();
-			while (parser.Parse(context, index));
-			parser = new CallNParser();
-			while (parser.Parse(context, index));
+			while (ReturnNParser.Parse(context, index));
+			while (ReturnParser.Parse(context, index));
+			while (BreakParser.Parse(context, index));
+			while (WhileParser.Parse(context, index));
+			while (ForNParser.Parse(context, index));
+			while (ForParser.Parse(context, index));
+			while (ForEachParser.Parse(context, index));
+			while (FunctionNParser.Parse(context, index));
+			while (FunctionNNParser.Parse(context, index));
+			while (FunctionSParser.Parse(context, index));
+			while (FunctionSNParser.Parse(context, index));
+			while (IfParser.Parse(context, index));
+			while (IfElseParser.Parse(context, index));
+			while (DefineParser.Parse(context, index));
+			while (DefineNParser.Parse(context, index));
+			while (BindParser.Parse(context, index));
+			while (BindNParser.Parse(context, index));
+			while (CallParser.Parse(context, index));
+			while (CallNParser.Parse(context, index));
 			if (!list[index].IsStatement) {
 				break;
 			}

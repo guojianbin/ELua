@@ -7,7 +7,7 @@
 
         public Module value;
 
-        public LuaModule(LVM vm, Module value) : base(vm) {
+        public LuaModule(LVM vm, Module value) : base(vm, Type.Module) {
             this.value = value;
             uid = vm.NewUID();
         }

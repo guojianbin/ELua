@@ -10,7 +10,7 @@ namespace ELua {
 		/// <summary>
 		/// @author Easily
 		/// </summary>
-		public enum OpCode {
+		public enum OpCode : byte {
 
 			Undef,
 			Push, Pop, Bind, BindN, Clear, Unpack, Concat, Define,
@@ -171,8 +171,7 @@ namespace ELua {
 					break;
 				}
                 case OpCode.List: {
-	                var len = ((LuaInteger)opArg).value;
-	                var list = stackFrame.Take(len);
+	                var list = stackFrame.TakeAll();
 	                stackFrame.Push(TableHelper.CreateList(stackFrame, list));
 	                break;
                 }
@@ -184,7 +183,7 @@ namespace ELua {
                 }
 				case OpCode.Call: {
 					var item = stackFrame.Pop();
-			        var list = stackFrame.Take(((LuaInteger)opArg).value);
+			        var list = stackFrame.TakeAll();
 					item.Call(stackFrame, list);
 					break;
 				}

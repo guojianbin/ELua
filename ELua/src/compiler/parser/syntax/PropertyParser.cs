@@ -4,16 +4,18 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class PropertyParser : IParser {
+	public static class PropertyParser {
 
-		public bool Parse(SyntaxContext context, int position) {
+		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
 			var offset = 0;
 			var index = position;
-			IParser parser;
 
-			parser = new ParenParser();
-			while (parser.Parse(context, index));
+			while (ParenParser.Parse(context, index));
+			while (ListParser.Parse(context, index));
+			while (ListNParser.Parse(context, index));
+			while (TableSNParser.Parse(context, index));
+			while (TableINParser.Parse(context, index));
 			if (!list[index].IsRightValue) {
 				return false;
 			}

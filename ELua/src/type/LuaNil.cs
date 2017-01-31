@@ -5,7 +5,7 @@
 	/// </summary>
 	public class LuaNil : LuaObject {
 
-		public LuaNil(LVM vm, string uid) : base(vm) {
+		public LuaNil(LVM vm, string uid) : base(vm, Type.Nil) {
 			this.uid = uid;
 		}
 

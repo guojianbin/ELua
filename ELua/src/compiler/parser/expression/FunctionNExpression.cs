@@ -8,7 +8,6 @@ namespace ELua {
 	/// </summary>
 	public class FunctionNExpression : Expression {
 
-		public string[] argsList;
 		public WordExpression nameExp;
 		public Expression moduleExp;
 
@@ -17,9 +16,7 @@ namespace ELua {
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			nameExp = (WordExpression)list[position + 1];
-			var wordList = list.Skip(position + 3).TakeWhile(t => !ParserHelper.IsOperator(t, ")")).Where(t => t.type == Type.Word);
-			argsList = wordList.Cast<WordExpression>().Select(t => t.value).ToArray();
-			var itemsList = list.Skip(position + 3 + argsList.Length * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
+			var itemsList = list.Skip(position + 4).Take(len - 5).ToList();
 			moduleExp = new ModuleExpression(itemsList);
 		}
 
@@ -28,7 +25,7 @@ namespace ELua {
 		}
 
 		public override void Generate(ModuleContext context) {
-			var module = new Module(new ModuleContext(context.vm, nameExp.value, context.level + 1) { argsList = argsList });
+			var module = new Module(new ModuleContext(context.vm, nameExp.value, context.level + 1));
 			context.vm.Add(module);
 			moduleExp.Generate(context.Bind(nameExp.value, module.context));
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg = new LuaModule(context.vm, module) });

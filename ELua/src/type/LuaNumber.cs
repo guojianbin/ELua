@@ -9,7 +9,7 @@ namespace ELua {
 
         public float value;
 
-	    public LuaNumber(LVM vm, float value) : base(vm) {
+	    public LuaNumber(LVM vm, float value) : base(vm, Type.Number) {
 		    this.value = value;
 	    }
 
@@ -96,13 +96,6 @@ namespace ELua {
                 return Equals((LuaNumber)obj);
             }
         }
-
-	    ~LuaNumber() {
-		    if (!vm.IsDisposed) {
-			    GC.ReRegisterForFinalize(this);
-				vm.PutNumber(this);
-		    }
-	    }
 
     }
 

@@ -11,7 +11,13 @@ namespace ELua {
 	    /// <summary>
 	    /// @author Easily
 	    /// </summary>
-	    public enum Status : byte { Uninit, List, Dict, }
+	    public enum Status : byte {
+
+		    Uninit, 
+			List, 
+			Dict,
+
+	    }
 
 	    public Status status = Status.Uninit;
 		public LuaList list;
@@ -34,7 +40,7 @@ namespace ELua {
 		    }
 	    }
 
-	    public LuaTable(LVM vm) : base(vm) {
+	    public LuaTable(LVM vm) : base(vm, Type.Table) {
 			uid = vm.NewUID();
             list = new LuaList(vm, this);
             dict = new LuaDict(vm, this);
@@ -112,6 +118,24 @@ namespace ELua {
 			}
 		}
 
+		public void Insert(LuaObject index, LuaObject value) {
+		    switch (status) {
+			    case Status.Uninit:
+					InitList();
+					list.Insert(index, value);
+				    break;
+			    case Status.List:
+					list.Insert(index, value);
+				    break;
+			    case Status.Dict:
+					Dict2List();
+					list.Insert(index, value);
+				    break;
+			    default:
+				    throw new ArgumentOutOfRangeException();
+		    }
+	    }
+
 		public void Bind(LuaObject key, LuaObject value) {
 			switch (status) {
 				case Status.Uninit:
@@ -130,7 +154,35 @@ namespace ELua {
 			}
 		}
 
-        public void List2Dict() {
+	    public override LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
+		    if (metatable == null) {
+			    return vm.nil;
+			} else if (metatable.status != Status.Dict) {
+				return vm.nil;
+			} else if (metatable.Count == 0) {
+				return vm.nil;
+			} else {
+			    var table = obj as LuaTable;
+			    if (table == null) {
+				    return vm.nil;
+			    } else {
+				    var add = (LuaDictItem)metatable.GetProperty(vm.GetString("__add"));
+				    if (Equals(add.value, vm.nil)) {
+					    return vm.nil;
+				    } else {
+					    var func = add.value as LuaFunction;
+					    if (func == null) {
+						    return vm.nil;
+					    } else {
+							func.Call(stackFrame, new LuaObject[] { this, table });
+						    return stackFrame.PopResult();
+					    }
+				    }
+			    }
+		    }
+	    }
+
+	    public void List2Dict() {
             InitDict();
 	        foreach (var item in list.itemsList) {
 				dict.Bind(item.lindex, item.value);

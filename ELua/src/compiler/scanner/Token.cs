@@ -8,7 +8,7 @@
 		/// <summary>
 		/// @author Easily
 		/// </summary>
-		public enum Type {
+		public enum Type : byte {
 
 			Undef,
 			Word,			// e.g. var
@@ -22,7 +22,6 @@
 		public Type type;
 		public string value;
 		public int index;
-
 		public DebugInfo debugInfo;
 
 		public override string ToString() {

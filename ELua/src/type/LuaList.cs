@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ELua {
 
@@ -25,6 +24,21 @@ namespace ELua {
         public void Add(LuaObject value) {
             itemsList.Add(vm.GetListItem(table, this, Count, value));
         }
+
+		public void Insert(LuaObject obj, LuaObject value) {
+			var index = (int)obj.ToNumber().value - 1;
+			if (index < 0) {
+				table.Bind(obj, value);
+			} else if (index < Count) {
+				itemsList.Insert(index, vm.GetListItem(table, this, index, value));
+			} else {
+				var len = index - Count + 1;
+				for (var i = 0; i < len; i++) {
+					Add(vm.nil);
+				}
+				itemsList.Insert(index, vm.GetListItem(table, this, index, value));
+			}
+	    }
 
         public LuaObject GetIndex(LuaObject obj) {
             var index = (int)obj.ToNumber().value - 1;

@@ -6,17 +6,20 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class FunctionExpression : Expression {
+	public class FunctionNNExpression : Expression {
 
+		public string[] argsList;
 		public WordExpression nameExp;
 		public Expression moduleExp;
 
-		public FunctionExpression(List<Expression> list, int position, int len) {
+		public FunctionNNExpression(List<Expression> list, int position, int len) {
 			IsStatement = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			nameExp = (WordExpression)list[position + 1];
-			var itemsList = list.Skip(position + 4).Take(len - 5).ToList();
+			var wordList = list.Skip(position + 3).TakeWhile(t => !ParserHelper.IsOperator(t, ")")).Where(t => t.type == Type.Word);
+			argsList = wordList.Cast<WordExpression>().Select(t => t.value).ToArray();
+			var itemsList = list.Skip(position + 3 + argsList.Length * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
 			moduleExp = new ModuleExpression(itemsList);
 		}
 
@@ -25,7 +28,7 @@ namespace ELua {
 		}
 
 		public override void Generate(ModuleContext context) {
-			var module = new Module(new ModuleContext(context.vm, nameExp.value, context.level + 1));
+			var module = new Module(new ModuleContext(context.vm, nameExp.value, context.level + 1) { argsList = argsList });
 			context.vm.Add(module);
 			moduleExp.Generate(context.Bind(nameExp.value, module.context));
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg = new LuaModule(context.vm, module) });
@@ -38,7 +41,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("function {0}()\n{1}\nend", nameExp, moduleExp);
+			return string.Format("function {0}({1})\n{2}\nend", nameExp, argsList.FormatListString(), moduleExp);
 		}
 
 	}

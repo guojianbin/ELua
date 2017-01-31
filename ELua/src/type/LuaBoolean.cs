@@ -7,7 +7,7 @@
 
 		public bool value;
 
-		public LuaBoolean(LVM vm, bool value) : base(vm) {
+		public LuaBoolean(LVM vm, bool value) : base(vm, Type.Boolean) {
 			this.value = value;
 		}
 

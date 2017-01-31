@@ -34,7 +34,6 @@ namespace ELua {
 			var statExp = new WordExpression(context.NewUID(), debugInfo);
 			var varExp = new WordExpression(context.NewUID(), debugInfo);
 			var initExp = new DefineNExpression(new List<Expression> { funcExp, statExp, varExp }, items2List);
-			initExp.Generate(context);
 			var whileExp = new LoopExpression(moduleExp);
 			var callExp = new UnpackExpression(new CallNExpression(funcExp, new List<Expression> { statExp, varExp }));
 			var nextExp = new DefineNExpression(items1List, new List<Expression> { callExp });
@@ -42,6 +41,7 @@ namespace ELua {
 			var breakExp = new BreakExpression();
 			var exitExp = new IfExpression(new EqualExpression(varExp, new NilExpression()), new ModuleExpression(new List<Expression> { breakExp }));
 			moduleExp.itemsList.InsertRange(0, new Expression[] { nextExp, rebindExp, exitExp });
+			initExp.Generate(context);
 			whileExp.Generate(context);
 		}
 

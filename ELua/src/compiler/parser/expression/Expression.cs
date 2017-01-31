@@ -10,7 +10,7 @@ namespace ELua {
 		/// <summary>
 		/// @author Easily
 		/// </summary>
-		public enum Type {
+		public enum Type : byte {
 
 			Undef,
 			Word, // var

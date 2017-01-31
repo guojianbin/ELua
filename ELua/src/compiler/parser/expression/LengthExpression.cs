@@ -23,7 +23,7 @@ namespace ELua {
 		public override void Generate(ModuleContext context) {
 			targetExp.Generate(context);
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = context.vm.luaLibrary.lenFunc });
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call, opArg = new LuaInteger(context.vm, 1) });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Call });
 		}
 
 		public override string GetDebugInfo() {

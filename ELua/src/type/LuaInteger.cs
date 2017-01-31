@@ -7,7 +7,7 @@
 
 		public int value;
 
-		public LuaInteger(LVM vm, int value) : base(vm) {
+		public LuaInteger(LVM vm, int value) : base(vm, Type.Integer) {
 			this.value = value;
 		}
 

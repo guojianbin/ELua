@@ -9,6 +9,7 @@ namespace ELua {
 	public class LVM : IDisposable {
 
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
+		public List<Module> modulesList = new List<Module>();
 		public Dictionary<string, Executor> executorDict = new Dictionary<string, Executor>();
 		public StackFrame stackFrame;
 		public LuaPools luaPools;
@@ -36,12 +37,26 @@ namespace ELua {
 
 	    public void Add(Module module) {
 		    modulesDict[module.name] = module;
+		    module.index = modulesList.Count;
+			modulesList.Add(module);
 	    }
 
+		public Module GetModule(int index) {
+			return modulesList[index];
+		}
+
+		public LuaObject Call(int index) {
+			return Call(GetModule(index));			
+		}
+
 	    public LuaObject Call(string name) {
-			modulesDict[name].Call(stackFrame);
-	        return stackFrame.PopResult();
+			return Call(modulesDict[name]);
 	    }
+
+		public LuaObject Call(Module module) {
+			module.Call(stackFrame);
+			return stackFrame.PopResult();
+		}
 
 		public void Execute(Executor executor) {
 			executorDict.Add(executor.uid, executor);

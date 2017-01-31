@@ -7,7 +7,7 @@
 
 		public string value;
 
-	    public LuaString(LVM vm, string value) : base(vm) {
+	    public LuaString(LVM vm, string value) : base(vm, Type.String) {
 		    this.value = value;
 	    }
 

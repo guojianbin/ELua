@@ -9,6 +9,15 @@ namespace ELua {
 	/// </summary>
 	public class Logger {
 
+		/// <summary>
+		/// @author Easily
+		/// </summary>
+		public enum Type : byte {
+
+			Undef, Console, File, All
+
+		}
+
 	    /// <summary>
 	    /// @author Easily
 	    /// </summary>
@@ -24,20 +33,12 @@ namespace ELua {
 
 	    }
 
-		/// <summary>
-		/// @author Easily
-		/// </summary>
-		public enum Type {
-
-			Undef, Console, File, All
-
-		}
-
+		public bool IsTest;
 		public StreamWriter logWriter;
 	    public Queue<Message> msgQueue = new Queue<Message>();
 
 	    public Logger() {
-            // ignored
+		    IsTest = true;
 	    }
 
 	    public Logger(string file) {
@@ -46,6 +47,9 @@ namespace ELua {
 
 		public void WriteLine(string msg, Type type = Type.All) {
             msgQueue.Enqueue(new Message(msg, type));
+			if (!IsTest) {
+				Flush();
+			}
 		}
 
 		public void Flush() {

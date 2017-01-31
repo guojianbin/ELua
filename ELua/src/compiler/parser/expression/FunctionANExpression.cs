@@ -22,6 +22,15 @@ namespace ELua {
 			moduleExp = new ModuleExpression(itemsList);
 		}
 
+		public FunctionANExpression(string name, string[] argsList, Expression moduleExp) {
+			IsRightValue = true;
+			type = Type.Function;
+			debugInfo = moduleExp.debugInfo;
+			this.name = name;
+			this.argsList = argsList;
+			this.moduleExp = moduleExp;
+		}
+
 		public override void Extract(SyntaxContext context) {
 			moduleExp.Extract(context);
 		}

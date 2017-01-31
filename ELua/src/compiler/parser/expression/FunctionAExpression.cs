@@ -19,12 +19,20 @@ namespace ELua {
 			moduleExp = new ModuleExpression(itemsList);
 		}
 
+		public FunctionAExpression(string name, Expression moduleExp) {
+			IsRightValue = true;
+			type = Type.Function;
+			debugInfo = moduleExp.debugInfo;
+			this.name = name;
+			this.moduleExp = moduleExp;
+		}
+
 		public override void Extract(SyntaxContext context) {
+			name = context.NewUID();
 			moduleExp.Extract(context);
 		}
 
 		public override void Generate(ModuleContext context) {
-			name = context.NewUID();
 			var module = new Module(new ModuleContext(context.vm, name, context.level + 1));
 			context.vm.Add(module);
 			moduleExp.Generate(context.Bind(name, module.context));

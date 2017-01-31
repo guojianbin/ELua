@@ -5,13 +5,12 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public class $name$Parser : IParser {
+	public static class $name$Parser {
 
-		public bool Parse(SyntaxContext context, int position) {
+		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
 			var offset = 0;
 			var index = position;
-			IParser parser;
 
 $body$
 
@@ -75,8 +74,7 @@ move_pre == --[[
 ]]
 
 parser == --[[
-			parser = new $name$Parser();
-			while (parser.Parse(context, index));
+			while ($name$Parser.Parse(context, index));
 ]]
 
 pool_parser == --[[

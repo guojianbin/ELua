@@ -11,7 +11,7 @@
         public LuaObject lindex;
         public LuaObject value;
 
-	    public LuaListItem(LVM vm, LuaTable table, LuaList list, int index, LuaObject value) : base(vm) {
+	    public LuaListItem(LVM vm, LuaTable table, LuaList list, int index, LuaObject value) : base(vm, Type.ListItem) {
 		    this.table = table;
 		    this.list = list;
 		    this.index = index;

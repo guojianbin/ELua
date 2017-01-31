@@ -82,7 +82,11 @@ namespace ELua {
 		}
 
 	    public void Clear() {
-	        stack.ClearAll();
+	        stack.Clear();
+	    }
+
+	    public LuaObject[] TakeAll() {
+	        return Take(stackLen);
 	    }
 
 		public LuaObject[] Take(int len) {
@@ -121,15 +125,12 @@ namespace ELua {
 			return context[binder.name] = binder;
 		}
 
-		public LuaBinder Find(string name, int deep=0) {
-			if (deep > 100) {
-				Console.WriteLine("??");
-			}
+		public LuaBinder Find(string name) {
 			LuaBinder value;
 			if (context.TryGetValue(name, out value)) {
 				return value;
 			}
-			value = FindUpvalue(name,deep+1);
+			value = FindUpvalue(name);
 			if (value != null) {
 				return Bind(value);
 			}
@@ -141,8 +142,8 @@ namespace ELua {
 			}
 		}
 
-		public LuaBinder FindUpvalue(string name, int deep) {
-			return upvalue == null ? null : upvalue.Find(name,deep+1);
+		public LuaBinder FindUpvalue(string name) {
+			return upvalue == null ? null : upvalue.Find(name);
 		}
 
 		public LuaBinder FindParent(string name) {
@@ -199,13 +200,6 @@ namespace ELua {
 			executor = null;
 			iterator = null;
 		}
-
-	    ~StackFrame() {
-		    if (!vm.IsDisposed) {
-			    GC.ReRegisterForFinalize(this);
-				vm.PutStackFrame(this);
-		    }
-	    }
 
 	}
 

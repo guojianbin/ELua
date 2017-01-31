@@ -9,15 +9,18 @@ namespace ELua {
 	public class Module {
 
 		public LVM vm;
+		public int index;
 		public Module parent;
 		public ModuleContext context;
         public List<ByteCode> codesList;
 		public string name;
+	    public string uid;
 		public int level;
 
 		public Module(ModuleContext context) {
 			this.context = context;
 			vm = context.vm;
+		    uid = vm.NewUID();
 			name = context.name;
 			codesList = context.list;
 			level = context.level;
@@ -33,9 +36,6 @@ namespace ELua {
 		public void Call(StackFrame parent, StackFrame upvalue, string[] argsNames, LuaObject[] argsList) {
 			var executor = parent.executor;
 			var stackFrame = vm.GetStackFrame(this, parent, upvalue);
-			if (stackFrame == upvalue) {
-				Console.WriteLine("???");
-			}
 			var len = Math.Min(argsNames.Length, argsList.Length);
 			for (var i = 0; i < len; i++) {
 				stackFrame.Bind(argsNames[i], argsList[i]);

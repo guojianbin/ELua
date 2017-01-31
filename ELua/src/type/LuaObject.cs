@@ -7,12 +7,38 @@ namespace ELua {
 	/// </summary>
 	public abstract class LuaObject {
 
+		/// <summary>
+		/// @author Easily
+		/// </summary>
+		public enum Type : byte {
+
+			Undef,
+			Nil,
+			String,
+			Boolean,
+			Number,
+			Integer,
+			Table,
+			Userdata,
+			Tuple,
+			Var,
+			Native,
+			Module,
+			ListItem,
+			DictItem,
+			Label,
+			Function,
+
+		}
+
 	    public LVM vm;
+		public Type type;
 		public string uid;
 
-	    protected LuaObject(LVM vm) {
-			this.vm = vm;
-		}
+	    protected LuaObject(LVM vm, Type type) {
+		    this.vm = vm;
+		    this.type = type;
+	    }
 
 		public virtual void Unpack(StackFrame stackFrame) {
 			stackFrame.Push(this);

@@ -7,3 +7,12 @@ C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\obj\Debug\E
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\obj\Debug\ELua.Test.pdb
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\bin\Debug\ELua.exe
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\ELua.Test\bin\Debug\ELua.pdb
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\bin\Debug\ELua.Test.dll
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\bin\Debug\ELua.Test.pdb
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\bin\Debug\ELua.exe
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\bin\Debug\nunit.framework.dll
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\bin\Debug\ELua.pdb
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\bin\Debug\nunit.framework.xml
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\obj\Debug\ELua.Test.csprojResolveAssemblyReference.cache
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\obj\Debug\ELua.Test.dll
+D:\My Documents\Visual Studio\Repository\ELua\ELua.Test\obj\Debug\ELua.Test.pdb

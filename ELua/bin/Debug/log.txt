@@ -1,55 +1,128 @@
 [source]
-local t = { }
-local mt = { 1, 2, 3 }
-setmetatable(t, mt)
-print(getmetatable(t))
+function test()
+return 1, 2, 3
+end
+function test2(a, b, c)
+print(a, b, c)
+end
+test2(test())
+local t = { test() }
+for i, v in ipairs(t) do
+print(i, v)
+end
 
 [extract]
-local #12 = { }
-local t = #12
-local #13 = { 1, 2, 3 }
-local mt = #13
-setmetatable(t, mt)
-local #14 = getmetatable(t)
-print(unpack(#14))
-complie 94ms
+function test()
+return 1, 2, 3
+end
+function test2(a, b, c)
+print(a, b, c)
+end
+local #16 = test()
+test2(unpack(#16))
+local #17 = test()
+local #18 = { unpack(#17) }
+local t = #18
+local #19 = ipairs(t)
+for i, v in unpack(#19) do
+print(i, v)
+end
+complie 79ms
+
+[test]
+0   Push       3         
+1   Push       2         
+2   Push       1         
+3   Return
+4   Clear
+
+[test2]
+0   Var        c         
+1   Var        b         
+2   Var        a         
+3   Var        print     
+4   Call
+5   Clear
 
 [test.lua]
-0   List       0         
-1   Define     #12       
+0   Function   test      
+1   Var        test      
 2   Bind
 3   Clear
-4   Var        #12       
-5   Define     t         
+4   Function   test2     
+5   Var        test2     
 6   Bind
 7   Clear
-8   Push       3         
-9   Push       2         
-10  Push       1         
-11  List       3         
-12  Define     #13       
-13  Bind
-14  Clear
-15  Var        #13       
-16  Define     mt        
-17  Bind
-18  Clear
-19  Var        mt        
-20  Var        t         
-21  Var        setmetatable
-22  Call       2         
-23  Clear
-24  Var        t         
-25  Var        getmetatable
-26  Call       1         
-27  Define     #14       
-28  Bind
-29  Clear
-30  Var        #14       
-31  Unpack
-32  Var        print     
-33  Call       1         
-34  Clear
+8   Var        test      
+9   Call
+10  Define     #16       
+11  Bind
+12  Clear
+13  Var        #16       
+14  Unpack
+15  Var        test2     
+16  Call
+17  Clear
+18  Var        test      
+19  Call
+20  Define     #17       
+21  Bind
+22  Clear
+23  Var        #17       
+24  Unpack
+25  List
+26  Define     #18       
+27  Bind
+28  Clear
+29  Var        #18       
+30  Define     t         
+31  Bind
+32  Clear
+33  Var        t         
+34  Var        ipairs    
+35  Call
+36  Define     #19       
+37  Bind
+38  Clear
+39  Var        #19       
+40  Unpack
+41  Define     #26       
+42  Define     #25       
+43  Define     #24       
+44  BindN      3         
+45  Label      #27:45    
+46  Var        #26       
+47  Var        #25       
+48  Var        #24       
+49  Call
+50  Unpack
+51  Define     v         
+52  Define     i         
+53  BindN      2         
+54  Clear
+55  Var        i         
+56  Var        #26       
+57  Bind
+58  Clear
+59  Push       nil       
+60  Var        #26       
+61  Equal
+62  JumpNot    #32:65    
+63  Jump       #30:73    
+64  Clear
+65  Label      #32:65    
+66  Clear
+67  Var        v         
+68  Var        i         
+69  Var        print     
+70  Call
+71  Clear
+72  Jump       #27:45    
+73  Label      #30:73    
+74  Clear
 
 [output]
-{ 1, 2, 3 }
+1, 2, 3
+1, 1
+2, 2
+3, 3

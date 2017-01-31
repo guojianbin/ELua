@@ -23,7 +23,7 @@ namespace Doge {
 			var tempDict = ParseTemp(tempStr);
 
 			WriteParser(syntaxDict, defDict, expDict, tempDict);
-            WritePools(syntaxDict, tempDict);
+            // WritePools(syntaxDict, tempDict);
 		}
 
 		private static void WriteParser(Dictionary<string, string> syntaxDict, Dictionary<string, string> defDict, Dictionary<string, int> expDict, Dictionary<string, string> tempDict) {

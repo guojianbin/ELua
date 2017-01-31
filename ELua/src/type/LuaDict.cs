@@ -49,7 +49,7 @@ namespace ELua {
 		}
 
 	    public override string ToString() {
-		    return string.Format("{{ {0} }}", itemsDict.Values.Select(t => string.Format("{0} = {1}", t.key, t.value)).FormatListString(", "));
+		    return string.Format("{{ {0} }}", itemsDict.Values.Select(t => string.Format("{0} = {1}", t.key, t.value)).FormatListString());
         }
 
     }

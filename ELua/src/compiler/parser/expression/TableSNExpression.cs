@@ -6,18 +6,20 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class TableN2Expression : Expression {
+	public class TableSNExpression : Expression {
 
 		public List<KeyValuePair<Expression, Expression>> itemsList;
 
-		public TableN2Expression(List<Expression> list, int position, int len) {
+		public TableSNExpression(List<Expression> list, int position, int len) {
 			IsRightValue = true;
 			type = Type.Table;
 			debugInfo = list[position].debugInfo;
 			itemsList = new List<KeyValuePair<Expression, Expression>>();
 			var argLen = len - 2;
-			for (var i = 0; i < argLen; i += 6) {
-				itemsList.Add(new KeyValuePair<Expression, Expression>(list[position + i + 2], list[position + i + 5]));
+			for (var i = 0; i < argLen; i += 4) {
+			    var itemKey = ParserHelper.Word2String(list[position + i + 1]);
+			    var itemValue = list[position + i + 3];
+			    itemsList.Add(new KeyValuePair<Expression, Expression>(itemKey, itemValue));
 			}
 		}
 
@@ -44,7 +46,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("{{ {0} }}", itemsList.Select(t => string.Format("[{0}] = {1}", t.Key, t.Value)).FormatListString());
+			return string.Format("{{ {0} }}", itemsList.Select(t => string.Format("{0} = {1}", t.Key, t.Value)).FormatListString());
 		}
 
 	}

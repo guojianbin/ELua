@@ -10,7 +10,7 @@
         public LuaObject key;
         public LuaObject value;
 
-	    public LuaDictItem(LVM vm, LuaTable table, LuaDict dict, LuaObject key, LuaObject value) : base(vm) {
+	    public LuaDictItem(LVM vm, LuaTable table, LuaDict dict, LuaObject key, LuaObject value) : base(vm, Type.DictItem) {
 		    this.table = table;
 		    this.dict = dict;
 		    this.key = key;
