@@ -33,20 +33,18 @@ namespace ELua {
 
 		public void Execute() {
 			while (true) {
-				if (isExecuting) {
-					if (!currentFrame.MoveNext()) {
-						isExecuting = false;
-					}
-				} else {
-					if (callStack.Count == 0) {
-						isExecuting = false;
-						vm.Remove(this);
-						break;
-					} else {
-						currentFrame = callStack.Pop();
-						isExecuting = true;
-					}
-				}
+			    if (isExecuting) {
+			        if (!currentFrame.MoveNext()) {
+			            isExecuting = false;
+			        }
+			    } else if (callStack.Count == 0) {
+			        isExecuting = false;
+			        vm.Remove(this);
+			        break;
+			    } else {
+			        currentFrame = callStack.Pop();
+			        isExecuting = true;
+			    }
 			}
 		}
 
