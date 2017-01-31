@@ -50,6 +50,7 @@
     <Compile Include="src\compiler\parser\expression\BreakExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ConcatExpression.cs" />
     <Compile Include="src\compiler\parser\expression\DefineNExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\DoExpression.cs" />
     <Compile Include="src\compiler\parser\expression\EqualExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ForEachExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ForExpression.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="src\compiler\parser\syntax\DefineNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\DefineParser.cs" />
     <Compile Include="src\compiler\parser\syntax\DivisionParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\DoParser.cs" />
     <Compile Include="src\compiler\parser\syntax\EqualParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ForEachParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ForNParser.cs" />

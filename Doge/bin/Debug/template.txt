@@ -102,19 +102,19 @@ is_exp == --[[
 ]]
 
 is_stat == --[[
-			if (!list[index].IsStatement) {
+			if (!list[index].isStatement) {
 				return false;
 			}
 ]]
 
 is_left == --[[
-			if (!list[index].IsLeftValue) {
+			if (!list[index].isLeftValue) {
 				return false;
 			}
 ]]
 
 is_right == --[[
-			if (!list[index].IsRightValue) {
+			if (!list[index].isRightValue) {
 				return false;
 			}
 ]]

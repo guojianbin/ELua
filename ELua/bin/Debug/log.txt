@@ -1,5 +1,8 @@
 [source]
 function test()
+do
+return
+end
 return 1, 2, 3
 end
 function test2(a, b, c)
@@ -13,6 +16,9 @@ end
 
 [extract]
 function test()
+do
+return
+end
 return 1, 2, 3
 end
 function test2(a, b, c)
@@ -27,14 +33,18 @@ local #19 = ipairs(t)
 for i, v in unpack(#19) do
 print(i, v)
 end
-complie 83ms
+complie 85ms
 
 [test]
-0   Push       3         
-1   Push       2         
-2   Push       1         
-3   Return
-4   Clear
+0   Clear
+1   Return
+2   Clear
+3   Clear
+4   Push       3         
+5   Push       2         
+6   Push       1         
+7   Return
+8   Clear
 
 [test2]
 0   Var        c         
@@ -122,7 +132,4 @@ complie 83ms
 74  Clear
 
 [output]
-1, 2, 3
-1, 1
-2, 2
-3, 3
+nil, nil, nil

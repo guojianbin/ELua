@@ -1,4 +1,5 @@
 ﻿function test()
+	do return end
 	return 1,2,3
 end
 

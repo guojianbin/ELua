@@ -30,6 +30,7 @@ namespace ELua {
 			while (ReturnNParser.Parse(context, index));
 			while (ReturnParser.Parse(context, index));
 			while (BreakParser.Parse(context, index));
+			while (DoParser.Parse(context, index));
 			while (WhileParser.Parse(context, index));
 			while (ForNParser.Parse(context, index));
 			while (ForParser.Parse(context, index));

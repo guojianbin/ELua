@@ -51,6 +51,7 @@ namespace ELua {
 			For, // for i=x,y,z do ... end
 			ForEach, // for x,y in list do ... end
             While, // while do
+            Do, // do
             Loop, // while true 
             If, // if end
             IfElse, // if else end
