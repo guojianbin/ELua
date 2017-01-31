@@ -39,7 +39,7 @@ namespace ELua {
 			while (MultiplyParser.Parse(context, index));
 			while (DivisionParser.Parse(context, index));
 			while (ModParser.Parse(context, index));
-			while (PlusParser.Parse(context, index));
+			while (AddParser.Parse(context, index));
 			while (SubtractParser.Parse(context, index));
 			while (ConcatParser.Parse(context, index));
 			while (LessParser.Parse(context, index));
@@ -82,7 +82,7 @@ namespace ELua {
 			while (MultiplyParser.Parse(context, index));
 			while (DivisionParser.Parse(context, index));
 			while (ModParser.Parse(context, index));
-			while (PlusParser.Parse(context, index));
+			while (AddParser.Parse(context, index));
 			while (SubtractParser.Parse(context, index));
 			while (ConcatParser.Parse(context, index));
 			while (LessParser.Parse(context, index));

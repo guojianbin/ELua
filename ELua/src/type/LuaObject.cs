@@ -88,7 +88,7 @@ namespace ELua {
 	        throw new InvalidOperationException(GetType().Name);
 	    }
 
-	    public virtual LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
+	    public virtual LuaObject Add(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}
 

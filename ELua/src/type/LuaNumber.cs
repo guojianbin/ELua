@@ -29,7 +29,7 @@ namespace ELua {
             return vm.GetNumber(value % obj.ToNumber().value);
         }
 
-        public override LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
+        public override LuaObject Add(StackFrame stackFrame, LuaObject obj) {
             return vm.GetNumber(value + obj.ToNumber().value);
         }
 

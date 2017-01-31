@@ -74,8 +74,8 @@
             return value.Mod(stackFrame, obj);
         }
 
-        public override LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
-            return value.Plus(stackFrame, obj);
+        public override LuaObject Add(StackFrame stackFrame, LuaObject obj) {
+            return value.Add(stackFrame, obj);
         }
 
         public override LuaObject Subtract(StackFrame stackFrame, LuaObject obj) {

@@ -46,8 +46,8 @@ namespace ELua {
 			return ToNumber().Negate(stackFrame);
 		}
 
-		public override LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
-			return ToNumber().Plus(stackFrame, obj);
+		public override LuaObject Add(StackFrame stackFrame, LuaObject obj) {
+			return ToNumber().Add(stackFrame, obj);
 		}
 
 		public override LuaObject Subtract(StackFrame stackFrame, LuaObject obj) {

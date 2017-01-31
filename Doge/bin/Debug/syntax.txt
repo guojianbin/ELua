@@ -1,11 +1,11 @@
 ﻿#begin exprexsion
-ReturnN,Return,FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Multiply,Division,Mod,Plus,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+ReturnN,Return,FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end exprexsion
 
 #begin define
 stats 		 := ReturnN,Return,Break,While,ForN,For,ForEach,FunctionN,FunctionNN,FunctionS,FunctionSN,If,IfElse,Define,DefineN,Bind,BindN,Call,CallN
 lvalue 	   	 := Property,Index
-rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Multiply,Division,Mod,Plus,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end define
 
 #begin syntax
@@ -44,7 +44,7 @@ Negate 	   	 := op=- .. is_right;parser=[Paren,CallN]
 Multiply   	 := is_right;parser=[Paren,Negate] .. op=* .. is_right;parser=[Paren,Negate]
 Division   	 := is_right;parser=[Paren,Negate] .. op=/ .. is_right;parser=[Paren,Negate]
 Mod		   	 := is_right;parser=[Paren,Negate] .. op=% .. is_right;parser=[Paren,Negate]
-Plus 	   	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
+Add 	   	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
 Subtract   	 := is_right;parser=[Paren,Mod] .. op=- .. is_right;parser=[Paren,Mod]
 Concat 	   	 := is_right;parser=[Paren,Subtract] .. op=. .. op=. .. is_right;parser=[Paren,Subtract]
 Less 	   	 := is_right;parser=[Paren,Subtract] .. op=< .. is_right;parser=[Paren,Subtract]

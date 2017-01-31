@@ -25,7 +25,7 @@ namespace ELua {
             endExp = list[position + 5];
             stepExp = new NumberExpression(1, debugInfo);
             condExp = new GreaterExpression(indexExp, endExp);
-            changeExp = new BindExpression(indexExp, new PlusExpression(indexExp, stepExp));
+            changeExp = new BindExpression(indexExp, new AddExpression(indexExp, stepExp));
             var itemsList = list.Skip(position + 7).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
             moduleExp = new ModuleExpression(itemsList);
         }

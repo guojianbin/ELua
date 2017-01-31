@@ -28,7 +28,7 @@ namespace ELua {
 			Length, // #x
 			Multiply, // x * y
 			Division, // x / y
-			Plus, // x + y
+			Add, // x + y
 			Subtract, // x - y
 			Mod, // x % y
             Less, // x < y

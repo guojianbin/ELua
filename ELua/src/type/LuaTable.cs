@@ -154,7 +154,7 @@ namespace ELua {
 			}
 		}
 
-	    public override LuaObject Plus(StackFrame stackFrame, LuaObject obj) {
+	    public override LuaObject Add(StackFrame stackFrame, LuaObject obj) {
 		    if (metatable == null) {
 			    return vm.nil;
 			} else if (metatable.status != Status.Dict) {
