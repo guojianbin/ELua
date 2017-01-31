@@ -11,7 +11,7 @@ namespace ELua {
 		public Expression item2Exp;
 
 		public ModExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Mod;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];

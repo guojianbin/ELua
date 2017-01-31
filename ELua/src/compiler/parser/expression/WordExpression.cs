@@ -9,9 +9,9 @@ namespace ELua {
 
         public WordExpression(string value, DebugInfo debugInfo) {
             type = Type.Word;
-            IsFinally = true;
-			IsLeftValue = true;
-			IsRightValue = true;
+            isFinally = true;
+			isLeftValue = true;
+			isRightValue = true;
 			this.value = value;
 			this.debugInfo = debugInfo;
         }

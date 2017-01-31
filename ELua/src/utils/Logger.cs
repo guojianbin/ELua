@@ -33,12 +33,12 @@ namespace ELua {
 
 	    }
 
-		public bool IsTest;
+		public bool isTest;
 		public StreamWriter logWriter;
 	    public Queue<Message> msgQueue = new Queue<Message>();
 
 	    public Logger() {
-		    IsTest = true;
+		    isTest = true;
 	    }
 
 	    public Logger(string file) {
@@ -47,7 +47,7 @@ namespace ELua {
 
 		public void WriteLine(string msg, Type type = Type.All) {
             msgQueue.Enqueue(new Message(msg, type));
-			if (!IsTest) {
+			if (!isTest) {
 				Flush();
 			}
 		}

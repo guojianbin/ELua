@@ -44,7 +44,7 @@ namespace ELua {
 			while (NotEqualParser.Parse(context, index));
 			while (AndParser.Parse(context, index));
 			while (OrParser.Parse(context, index));
-			if (!list[index].IsRightValue) {
+			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;

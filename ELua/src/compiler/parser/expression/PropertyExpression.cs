@@ -11,8 +11,8 @@ namespace ELua {
 		public Expression item2Exp;
 
 		public PropertyExpression(List<Expression> list, int position, int len) {
-			IsLeftValue = true;
-			IsRightValue = true;
+			isLeftValue = true;
+			isRightValue = true;
 			type = Type.Property;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];
@@ -20,8 +20,8 @@ namespace ELua {
 		}
 
 		public PropertyExpression(Expression item1Exp, Expression item2Exp) {
-			IsLeftValue = true;
-			IsRightValue = true;
+			isLeftValue = true;
+			isRightValue = true;
 			type = Type.Property;
 			debugInfo = item1Exp.debugInfo;
 			this.item1Exp = item1Exp;

@@ -12,7 +12,7 @@ namespace ELua {
 
 		public ConcatExpression(List<Expression> list, int position, int len) {
 			type = Type.Concat;
-			IsRightValue = true;
+			isRightValue = true;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];
 			item2Exp = list[position + 3];

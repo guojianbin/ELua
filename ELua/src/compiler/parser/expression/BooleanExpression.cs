@@ -8,17 +8,17 @@ namespace ELua {
 	    public bool value;
 
         public BooleanExpression(string value, DebugInfo debugInfo) {
-            IsFinally = true;
+            isFinally = true;
             type = Type.Boolean;
-			IsRightValue = true;
+			isRightValue = true;
 			this.debugInfo = debugInfo;
             this.value = bool.Parse(value);
         }
 
 		public BooleanExpression(bool value, DebugInfo debugInfo) {
-			IsFinally = true;
+			isFinally = true;
 			type = Type.Boolean;
-			IsRightValue = true;
+			isRightValue = true;
 			this.debugInfo = debugInfo;
 		    this.value = value;
 	    }

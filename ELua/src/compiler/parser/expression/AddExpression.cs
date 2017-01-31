@@ -11,7 +11,7 @@ namespace ELua {
 		public Expression item2Exp;
 
 		public AddExpression(List<Expression> list, int position, int len) {
-            IsRightValue = true;
+            isRightValue = true;
             type = Type.Add;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];
@@ -19,7 +19,7 @@ namespace ELua {
 		}
 
 	    public AddExpression(Expression item1Exp, Expression item2Exp) {
-            IsRightValue = true;
+            isRightValue = true;
             type = Type.Add;
             debugInfo = item1Exp.debugInfo;
             this.item1Exp = item1Exp;

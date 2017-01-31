@@ -27,7 +27,7 @@ local #19 = ipairs(t)
 for i, v in unpack(#19) do
 print(i, v)
 end
-complie 118ms
+complie 111ms
 
 [test]
 0   Push       3         

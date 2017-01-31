@@ -11,7 +11,7 @@ namespace ELua {
 		public Expression item2Exp;
 
 		public SubtractExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Subtract;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];

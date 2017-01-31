@@ -8,9 +8,9 @@ namespace ELua {
         public string value;
 
         public StringExpression(string value, DebugInfo debugInfo) {
-			IsFinally = true;
+			isFinally = true;
 			type = Type.String;
-			IsRightValue = true;
+			isRightValue = true;
 			this.value = value;
 			this.debugInfo = debugInfo;
 		}

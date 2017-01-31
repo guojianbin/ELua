@@ -46,7 +46,7 @@ namespace ELua {
 			while (BindNParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
 			while (CallNParser.Parse(context, index));
-			if (!list[index].IsStatement) {
+			if (!list[index].isStatement) {
 				break;
 			}
 			offset += 1;

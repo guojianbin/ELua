@@ -28,7 +28,7 @@ namespace ELua {
 			while (ModParser.Parse(context, index));
 			while (AddParser.Parse(context, index));
 			while (SubtractParser.Parse(context, index));
-			if (!list[index].IsRightValue) {
+			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;
@@ -60,7 +60,7 @@ namespace ELua {
 			while (ModParser.Parse(context, index));
 			while (AddParser.Parse(context, index));
 			while (SubtractParser.Parse(context, index));
-			if (!list[index].IsRightValue) {
+			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;

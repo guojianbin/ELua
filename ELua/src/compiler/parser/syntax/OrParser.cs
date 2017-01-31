@@ -36,7 +36,7 @@ namespace ELua {
 			while (EqualParser.Parse(context, index));
 			while (NotEqualParser.Parse(context, index));
 			while (AndParser.Parse(context, index));
-			if (!list[index].IsRightValue) {
+			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;
@@ -71,7 +71,7 @@ namespace ELua {
 			while (EqualParser.Parse(context, index));
 			while (NotEqualParser.Parse(context, index));
 			while (AndParser.Parse(context, index));
-			if (!list[index].IsRightValue) {
+			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;

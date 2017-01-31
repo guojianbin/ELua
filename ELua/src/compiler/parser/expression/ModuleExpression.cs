@@ -11,7 +11,7 @@ namespace ELua {
 		public List<Expression> itemsList;
 
 		public ModuleExpression(List<Expression> list, int position, int len) {
-			IsModule = true;
+			isModule = true;
 			type = Type.Module;
 			debugInfo = list[position].debugInfo;
 			itemsList = new List<Expression>();
@@ -21,7 +21,7 @@ namespace ELua {
 		}
 
 		public ModuleExpression(List<Expression> itemsList) {
-			IsModule = true;
+			isModule = true;
 			type = Type.Module;
 			this.itemsList = itemsList;
             if (itemsList.Count > 0) {

@@ -17,7 +17,7 @@ namespace ELua {
 		public Expression moduleExp;
 
         public ForNExpression(List<Expression> list, int position, int len) {
-            IsStatement = true;
+            isStatement = true;
             type = Type.For;
             debugInfo = list[position].debugInfo;
             indexExp = list[position + 1];

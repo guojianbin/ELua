@@ -8,7 +8,7 @@ namespace ELua {
 		public Expression moduleExp;
 
 		public LoopExpression(Expression moduleExp) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.Loop;
 			debugInfo = moduleExp.debugInfo;
 			this.moduleExp = moduleExp;

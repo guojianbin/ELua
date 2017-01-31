@@ -6,9 +6,9 @@ namespace ELua {
     public class NilExpression : Expression {
 
         public NilExpression(DebugInfo debugInfo) {
-            IsFinally = true;
+            isFinally = true;
             type = Type.Nil;
-            IsRightValue = true;
+            isRightValue = true;
             this.debugInfo = debugInfo;
         }
 

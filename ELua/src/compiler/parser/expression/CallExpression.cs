@@ -10,8 +10,8 @@ namespace ELua {
 		public Expression targetExp;
 
 		public CallExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
-			IsStatement = true;
+			isRightValue = true;
+			isStatement = true;
 			type = Type.Call;
 			debugInfo = list[position].debugInfo;
 			targetExp = list[position];

@@ -11,7 +11,7 @@ namespace ELua {
 		public List<KeyValuePair<Expression, Expression>> itemsList;
 
 		public TableINExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Table;
 			debugInfo = list[position].debugInfo;
 			itemsList = new List<KeyValuePair<Expression, Expression>>();

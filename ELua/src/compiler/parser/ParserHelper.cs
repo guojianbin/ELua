@@ -51,14 +51,14 @@ namespace ELua {
         }
 
 		public static Expression Extract(SyntaxContext context, Expression expression) {
-			if (expression.IsFinally) {
+			if (expression.isFinally) {
 				return expression;
 			}
 			expression.Extract(context);
-			if (context.IsCutting) {
-				context.IsCutting = false;
+			if (context.isCutting) {
+				context.isCutting = false;
 				return context.cuttingExp;
-			} else if (expression.IsRightValue && !expression.IsLeftValue) {
+			} else if (expression.isRightValue && !expression.isLeftValue) {
 				var ret = Wrapper(expression, context.NewUID());
 				context.Add(ret.Value);
 				if (expression.type == Expression.Type.Call) {

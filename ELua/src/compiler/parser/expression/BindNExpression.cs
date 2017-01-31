@@ -12,11 +12,11 @@ namespace ELua {
 		public List<Expression> items2List;
 
 		public BindNExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.Define;
 			debugInfo = list[position].debugInfo;
-			items1List = list.Skip(position).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.IsLeftValue).ToList();
-			items2List = list.Skip(position + items1List.Count * 2).Take(len - items1List.Count * 2).Where(t => t.IsRightValue).ToList();
+			items1List = list.Skip(position).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.isLeftValue).ToList();
+			items2List = list.Skip(position + items1List.Count * 2).Take(len - items1List.Count * 2).Where(t => t.isRightValue).ToList();
 		}
 
 		public override void Extract(SyntaxContext context) {

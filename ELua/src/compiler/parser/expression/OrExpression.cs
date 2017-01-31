@@ -11,7 +11,7 @@ namespace ELua {
         public Expression item2Exp;
 
         public OrExpression(List<Expression> list, int position, int len) {
-            IsRightValue = true;
+            isRightValue = true;
             type = Type.Or;
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];
@@ -25,7 +25,7 @@ namespace ELua {
 			var step2Item = ParserHelper.Wrapper(item2Exp, itemKey);
 			var condExp = new IfElseExpression(item1Exp, step1Item.Value, step2Item.Value);
 			context.Add(condExp);
-			context.IsCutting = true;
+			context.isCutting = true;
 			context.cuttingExp = step1Item.Key;
         }
 

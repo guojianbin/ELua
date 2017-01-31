@@ -9,7 +9,7 @@ namespace ELua {
 	    public int index;
 
         public LabelExpression(string value, DebugInfo debugInfo) {
-            IsStatement = true;
+            isStatement = true;
             type = Type.Label;
             this.value = value;
             this.debugInfo = debugInfo;

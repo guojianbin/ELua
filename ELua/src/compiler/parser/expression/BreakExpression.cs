@@ -8,9 +8,9 @@ namespace ELua {
 	public class BreakExpression : Expression {
 
 		public BreakExpression(List<Expression> list, int position, int len) {
-			IsFinally = true;
+			isFinally = true;
 			type = Type.Break;
-			IsStatement = true;
+			isStatement = true;
 			debugInfo = list[position].debugInfo;
 		}
 

@@ -11,7 +11,7 @@ namespace ELua {
 	    public Expression item2Exp;
 
         public NotEqualExpression(List<Expression> list, int position, int len) {
-            IsRightValue = true;
+            isRightValue = true;
             type = Type.NotEqual;
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];

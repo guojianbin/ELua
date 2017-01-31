@@ -8,17 +8,17 @@ namespace ELua {
         public float value;
 
         public NumberExpression(string value, DebugInfo debugInfo) {
-			IsFinally = true;
+			isFinally = true;
 			type = Type.Number;
-			IsRightValue = true;
+			isRightValue = true;
 			this.value = float.Parse(value);
 			this.debugInfo = debugInfo;
         }
 
 	    public NumberExpression(float value, DebugInfo debugInfo) {
-            IsFinally = true;
+            isFinally = true;
             type = Type.Number;
-            IsRightValue = true;
+            isRightValue = true;
 	        this.value = value;
             this.debugInfo = debugInfo;
         }

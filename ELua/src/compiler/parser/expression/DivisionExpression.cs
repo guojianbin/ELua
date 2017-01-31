@@ -11,7 +11,7 @@ namespace ELua {
 		public Expression item2Exp;
 
 		public DivisionExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Division;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];

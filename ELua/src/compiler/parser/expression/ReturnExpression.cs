@@ -8,7 +8,7 @@ namespace ELua {
 	public class ReturnExpression : Expression {
 
 		public ReturnExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.Return;
 			debugInfo = list[position].debugInfo;
 		}

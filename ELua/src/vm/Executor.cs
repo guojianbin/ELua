@@ -12,7 +12,7 @@ namespace ELua {
 		public StackFrame stackFrame;
 		public Stack<StackFrame> callStack = new Stack<StackFrame>();
 		public StackFrame currentFrame;
-		public bool IsExecuting;
+		public bool isExecuting;
 
 		public Executor(StackFrame stackFrame) {
 			this.stackFrame = stackFrame;
@@ -21,7 +21,7 @@ namespace ELua {
 		}
 
 		public void Start() {
-			IsExecuting = true;
+			isExecuting = true;
 			currentFrame = stackFrame;
 			Execute();
 		}
@@ -33,18 +33,18 @@ namespace ELua {
 
 		public void Execute() {
 			while (true) {
-				if (IsExecuting) {
+				if (isExecuting) {
 					if (!currentFrame.MoveNext()) {
-						IsExecuting = false;
+						isExecuting = false;
 					}
 				} else {
 					if (callStack.Count == 0) {
-						IsExecuting = false;
+						isExecuting = false;
 						vm.Remove(this);
 						break;
 					} else {
 						currentFrame = callStack.Pop();
-						IsExecuting = true;
+						isExecuting = true;
 					}
 				}
 			}

@@ -8,7 +8,7 @@ namespace ELua {
         public string value;
 
         public KeywordExpression(string value, DebugInfo debugInfo) {
-            IsFinally = true;
+            isFinally = true;
             type = Type.Keyword;
             this.value = value;
             this.debugInfo = debugInfo;

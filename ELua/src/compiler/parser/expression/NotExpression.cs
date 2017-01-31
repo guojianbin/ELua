@@ -10,7 +10,7 @@ namespace ELua {
         public Expression targetExp;
 
         public NotExpression(List<Expression> list, int position, int len) {
-            IsRightValue = true;
+            isRightValue = true;
             type = Type.Not;
             debugInfo = list[position].debugInfo;
             targetExp = list[position + 1];

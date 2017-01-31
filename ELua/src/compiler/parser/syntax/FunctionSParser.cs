@@ -19,7 +19,7 @@ namespace ELua {
 			if (list[index].type != Expression.Type.Word) {
 				return false;
 			}
-			if (!list[index].IsLeftValue) {
+			if (!list[index].isLeftValue) {
 				return false;
 			}
 			offset += 1;
@@ -32,7 +32,7 @@ namespace ELua {
 			if (list[index].type != Expression.Type.Word) {
 				return false;
 			}
-			if (!list[index].IsLeftValue) {
+			if (!list[index].isLeftValue) {
 				return false;
 			}
 			offset += 1;
@@ -67,7 +67,7 @@ namespace ELua {
 			while (BindNParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
 			while (CallNParser.Parse(context, index));
-			if (!list[index].IsStatement) {
+			if (!list[index].isStatement) {
 				break;
 			}
 			offset += 1;

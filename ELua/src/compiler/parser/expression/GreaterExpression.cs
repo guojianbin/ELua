@@ -11,7 +11,7 @@ namespace ELua {
 	    public Expression item2Exp;
 
         public GreaterExpression(List<Expression> list, int position, int len) {
-            IsRightValue = true;
+            isRightValue = true;
             type = Type.Greater;
             debugInfo = list[position].debugInfo;
             item1Exp = list[position];
@@ -19,7 +19,7 @@ namespace ELua {
         }
 
         public GreaterExpression(Expression item1Exp, Expression item2Exp) {
-            IsRightValue = true;
+            isRightValue = true;
             type = Type.Greater;
             debugInfo = item1Exp.debugInfo;
             this.item1Exp = item1Exp;

@@ -10,7 +10,7 @@ namespace ELua {
 		public List<Expression> itemsList;
 
 		public ListNExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.List;
 			debugInfo = list[position].debugInfo;
 			itemsList = new List<Expression>();

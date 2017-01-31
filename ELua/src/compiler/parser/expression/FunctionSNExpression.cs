@@ -14,7 +14,7 @@ namespace ELua {
 		public Expression moduleExp;
 
 		public FunctionSNExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			targetExp = (WordExpression)list[position + 1];

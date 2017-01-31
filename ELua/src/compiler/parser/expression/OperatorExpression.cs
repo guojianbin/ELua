@@ -8,7 +8,7 @@ namespace ELua {
         public string value;
 
         public OperatorExpression(string value, DebugInfo debugInfo) {
-            IsFinally = true;
+            isFinally = true;
             type = Type.Operator;
             this.value = value;
             this.debugInfo = debugInfo;

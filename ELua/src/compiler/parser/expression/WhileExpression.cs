@@ -12,7 +12,7 @@ namespace ELua {
 		public Expression moduleExp;
 
 		public WhileExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.While;
 			debugInfo = list[position].debugInfo;
 			condExp = list[position + 1];
@@ -21,7 +21,7 @@ namespace ELua {
 		}
 
 		public WhileExpression(Expression condExp, Expression moduleExp) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.While;
 			debugInfo = condExp.debugInfo;
 			this.condExp = condExp;

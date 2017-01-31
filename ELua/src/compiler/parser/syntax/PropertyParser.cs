@@ -16,7 +16,7 @@ namespace ELua {
 			while (ListNParser.Parse(context, index));
 			while (TableSNParser.Parse(context, index));
 			while (TableINParser.Parse(context, index));
-			if (!list[index].IsRightValue) {
+			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;

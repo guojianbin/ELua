@@ -11,7 +11,7 @@ namespace ELua {
 		public LVM vm;
 	    public int level;
 		public List<Expression> list;
-		public bool IsCutting;
+		public bool isCutting;
 		public Expression cuttingExp;
 
 		public SyntaxContext(Parser parser, int level) {

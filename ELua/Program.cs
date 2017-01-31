@@ -32,7 +32,6 @@ namespace ELua {
 			OnTimer(null);
 //			timer = new Timer(OnTimer, null, 0, Timeout.Infinite);
 //			Thread.Sleep(1000000);
-			vm.Dispose();
         }
 
 		public static void OnTimer(object status) {

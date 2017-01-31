@@ -11,7 +11,7 @@ namespace ELua {
 		public Expression item2Exp;
 
 		public DefineExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.Define;
 			debugInfo = list[position].debugInfo;
 			item1Exp = new LocalExpression(list[position + 1]);
@@ -19,7 +19,7 @@ namespace ELua {
 		}
 
 		public DefineExpression(Expression item1Exp, Expression item2Exp) {
-			IsStatement = true;
+			isStatement = true;
             type = Type.Define;
 		    debugInfo = item1Exp.debugInfo;
             this.item1Exp = new LocalExpression(item1Exp);

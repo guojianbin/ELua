@@ -13,7 +13,7 @@ namespace ELua {
 		public Expression module2Exp;
 
         public IfElseExpression(List<Expression> list, int position, int len) {
-            IsStatement = true;
+            isStatement = true;
             type = Type.IfElse;
             debugInfo = list[position].debugInfo;
             condExp = list[position + 1];
@@ -24,7 +24,7 @@ namespace ELua {
         }
 
 		public IfElseExpression(Expression condExp, Expression item1Exp, Expression item2Exp) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.IfElse;
 			debugInfo = condExp.debugInfo;
 			this.condExp = condExp;

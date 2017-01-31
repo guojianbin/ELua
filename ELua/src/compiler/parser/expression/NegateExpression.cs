@@ -10,7 +10,7 @@ namespace ELua {
 		public Expression targetExp;
 
 		public NegateExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Negate;
 			debugInfo = list[position].debugInfo;
 			targetExp = list[position + 1];

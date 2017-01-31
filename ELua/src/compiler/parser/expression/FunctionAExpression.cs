@@ -12,7 +12,7 @@ namespace ELua {
 		public Expression moduleExp;
 
 		public FunctionAExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			var itemsList = list.Skip(position + 3).Take(len - 4).ToList();
@@ -20,7 +20,7 @@ namespace ELua {
 		}
 
 		public FunctionAExpression(string name, Expression moduleExp) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Function;
 			debugInfo = moduleExp.debugInfo;
 			this.name = name;

@@ -13,7 +13,7 @@ namespace ELua {
 		public Expression moduleExp;
 
 		public FunctionANExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			var wordList = list.Skip(position + 2).TakeWhile(t => !ParserHelper.IsOperator(t, ")")).Where(t => t.type == Type.Word);
@@ -23,7 +23,7 @@ namespace ELua {
 		}
 
 		public FunctionANExpression(string name, string[] argsList, Expression moduleExp) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Function;
 			debugInfo = moduleExp.debugInfo;
 			this.name = name;

@@ -13,7 +13,7 @@ namespace ELua {
 		public Expression moduleExp;
 
 		public FunctionNNExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			nameExp = (WordExpression)list[position + 1];

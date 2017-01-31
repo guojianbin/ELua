@@ -11,8 +11,8 @@ namespace ELua {
 		public Expression item2Exp;
 
 		public IndexExpression(List<Expression> list, int position, int len) {
-			IsLeftValue = true;
-			IsRightValue = true;
+			isLeftValue = true;
+			isRightValue = true;
 			type = Type.Index;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];

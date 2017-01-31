@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ELua {
 
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class LVM : IDisposable {
+	public class LVM {
 
 		public Dictionary<string, Module> modulesDict = new Dictionary<string, Module>();
 		public List<Module> modulesList = new List<Module>();
@@ -17,7 +16,6 @@ namespace ELua {
 		public LuaNil nil;
 		public ulong uid;
 		public Logger logger;
-	    public bool IsDisposed;
 
         public LVM(Logger logger) {
             this.logger = logger;
@@ -66,10 +64,6 @@ namespace ELua {
 		public void Remove(Executor executor) {
 			executorDict.Remove(executor.uid);
 		}
-
-	    public void Dispose() {
-	        IsDisposed = true;
-	    }
 
 	}
 

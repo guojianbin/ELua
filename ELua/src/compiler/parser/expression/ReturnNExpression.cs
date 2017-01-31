@@ -11,7 +11,7 @@ namespace ELua {
 		public List<Expression> itemsList;
 
 		public ReturnNExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.Return;
 			debugInfo = list[position].debugInfo;
 			itemsList = list.Skip(position + 1).Take(len - 1).Where(t => !ParserHelper.IsOperator(t, ",")).ToList();

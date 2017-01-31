@@ -8,7 +8,7 @@ namespace ELua {
 	public class ListExpression : Expression {
 
 		public ListExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.List;
 			debugInfo = list[position].debugInfo;
 		}

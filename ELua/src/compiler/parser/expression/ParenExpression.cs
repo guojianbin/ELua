@@ -10,7 +10,7 @@ namespace ELua {
 		public Expression targetExp;
 
 		public ParenExpression(List<Expression> list, int position, int len) {
-			IsRightValue = true;
+			isRightValue = true;
 			type = Type.Paren;
 			debugInfo = list[position].debugInfo;
 			targetExp = list[position + 1];

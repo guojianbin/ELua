@@ -13,11 +13,11 @@ namespace ELua {
 		public ModuleExpression moduleExp;
 
 		public ForEachExpression(List<Expression> list, int position, int len) {
-			IsStatement = true;
+			isStatement = true;
 			type = Type.ForEach;
 			debugInfo = list[position].debugInfo;
 			items1List = list.Skip(position + 1).TakeWhile(t => !ParserHelper.IsKeyword(t, "in")).Where(t => t.type == Type.Word).ToList();
-			items2List = list.Skip(position + items1List.Count * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "do")).Where(t => t.IsRightValue).ToList();
+			items2List = list.Skip(position + items1List.Count * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "do")).Where(t => t.isRightValue).ToList();
 			var itemsList = list.Skip(position + 1 + items1List.Count * 2 + items2List.Count * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
 			moduleExp = new ModuleExpression(itemsList);
 		}

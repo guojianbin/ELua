@@ -12,7 +12,7 @@ namespace ELua {
 
 		public BindExpression(List<Expression> list, int position, int len) {
 			type = Type.Bind;
-			IsStatement = true;
+			isStatement = true;
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];
 			item2Exp = list[position + 2];
@@ -20,7 +20,7 @@ namespace ELua {
 
 	    public BindExpression(Expression item1Exp, Expression item2Exp) {
             type = Type.Bind;
-			IsStatement = true;
+			isStatement = true;
 			debugInfo = item1Exp.debugInfo;
             this.item1Exp = item1Exp;
 	        this.item2Exp = item2Exp;
