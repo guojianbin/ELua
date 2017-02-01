@@ -182,8 +182,7 @@ namespace ELua {
 	                break;
                 }
                 case OpCode.Table: {
-	                var len = ((LuaInteger)opArg).value;
-	                var list = stackFrame.Take(len);
+	                var list = stackFrame.TakeAll();
 	                stackFrame.Push(TableHelper.CreateTable(stackFrame, list));
 	                break;
                 }

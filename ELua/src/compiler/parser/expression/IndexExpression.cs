@@ -20,6 +20,7 @@ namespace ELua {
 		}
 
 		public override void Extract(SyntaxContext context) {
+            item1Exp = ParserHelper.Extract(context, item1Exp);
             item2Exp = ParserHelper.Extract(context, item2Exp);
         }
 

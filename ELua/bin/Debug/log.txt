@@ -9,6 +9,7 @@ for i, v in ipairs(t["t"]) do
 s = s .. v
 end
 print(s)
+return s
 
 [extract]
 local ~16 = { }
@@ -30,7 +31,8 @@ local ~26 = s .. v
 s = ~26
 end
 print(s)
-complie 114ms
+return s
+complie 110ms
 
 [test.lua]
 0       List
@@ -39,7 +41,7 @@ complie 114ms
 3       Clear
 4       Var          ~16
 5       Push         t
-6       Table        2
+6       Table
 7       Define       ~17
 8       Bind
 9       Clear
@@ -161,6 +163,9 @@ complie 114ms
 125     Var          print
 126     Call
 127     Clear
+128     Var          s
+129     Return
+130     Clear
 
 [output]
 1
