@@ -49,6 +49,7 @@
     <Compile Include="src\compiler\parser\expression\BooleanExpression.cs" />
     <Compile Include="src\compiler\parser\expression\BreakExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ConcatExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\ConditionExpression.cs" />
     <Compile Include="src\compiler\parser\expression\DefineNExpression.cs" />
     <Compile Include="src\compiler\parser\expression\DoExpression.cs" />
     <Compile Include="src\compiler\parser\expression\EqualExpression.cs" />

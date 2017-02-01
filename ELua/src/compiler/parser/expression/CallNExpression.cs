@@ -14,7 +14,7 @@ namespace ELua {
 		public CallNExpression(List<Expression> list, int position, int len) {
 			isRightValue = true;
 			isStatement = true;
-			type = Type.Call;
+            type = Type.Call;
 			debugInfo = list[position].debugInfo;
 			targetExp = list[position];
 			itemsList = new List<Expression>();
@@ -27,7 +27,7 @@ namespace ELua {
 		public CallNExpression(Expression targetExp, List<Expression> itemsList) {
 			isRightValue = true;
 			isStatement = true;
-			type = Type.Call;
+            type = Type.Call;
 			debugInfo =targetExp.debugInfo;
 			this.targetExp = targetExp;
 			this.itemsList = itemsList;

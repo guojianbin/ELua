@@ -17,6 +17,9 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			items1List = list.Skip(position).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.isLeftValue).ToList();
 			items2List = list.Skip(position + items1List.Count * 2).Take(len - items1List.Count * 2).Where(t => t.isRightValue).ToList();
+		    foreach (var expression in items1List) {
+		        expression.isBinder = true;
+		    }
 		}
 
 		public override void Extract(SyntaxContext context) {

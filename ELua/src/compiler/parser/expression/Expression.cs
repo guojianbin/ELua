@@ -65,11 +65,12 @@ namespace ELua {
 
 		}
 
-		public bool isStatement { get; set; }
-		public bool isLeftValue { get; set; }
-		public bool isRightValue { get; set; }
-		public bool isFinally { get; set; }
-		public bool isModule { get; set; }
+	    public bool isStatement;
+	    public bool isLeftValue;
+	    public bool isRightValue;
+	    public bool isBinder;
+	    public bool isFinally;
+	    public bool isModule;
 
 		public Type type;
 		public DebugInfo debugInfo;

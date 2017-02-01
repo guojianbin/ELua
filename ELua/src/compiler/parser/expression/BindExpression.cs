@@ -16,6 +16,7 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			item1Exp = list[position];
 			item2Exp = list[position + 2];
+		    item1Exp.isBinder = true;
 		}
 
 	    public BindExpression(Expression item1Exp, Expression item2Exp) {
@@ -24,7 +25,8 @@ namespace ELua {
 			debugInfo = item1Exp.debugInfo;
             this.item1Exp = item1Exp;
 	        this.item2Exp = item2Exp;
-        }
+	        this.item1Exp.isBinder = true;
+	    }
 
 	    public override void Extract(SyntaxContext context) {
 			item1Exp = ParserHelper.Extract(context, item1Exp);

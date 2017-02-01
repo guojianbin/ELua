@@ -26,7 +26,7 @@ namespace ELua {
 		}
 
 		public string NewUID() {
-			return string.Format("#{0}", (++uid).ToString());
+			return string.Format("~{0}", (++uid).ToString());
 		}
 
 		public void WriteLine(string msg, Logger.Type type = Logger.Type.All) {

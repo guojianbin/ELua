@@ -58,17 +58,17 @@ namespace ELua {
 			if (context.isCutting) {
 				context.isCutting = false;
 				return context.cuttingExp;
-			} else if (expression.isRightValue && !expression.isLeftValue) {
-				var ret = Wrapper(expression, context.NewUID());
-				context.Add(ret.Value);
-				if (expression.type == Expression.Type.Call) {
-					return new UnpackExpression(ret.Key);
-				} else {
-					return ret.Key;
-				}
+			} else if (expression.isBinder) {
+			    return expression;
 			} else {
-				return expression;
-			}
+                var ret = Wrapper(expression, context.NewUID());
+                context.Add(ret.Value);
+                if (expression.type == Expression.Type.Call) {
+                    return new UnpackExpression(ret.Key);
+                } else {
+                    return ret.Key;
+                }
+            }
 		}
 
 		public static KeyValuePair<WordExpression, DefineExpression> Wrapper(Expression expression, string name) {

@@ -15,21 +15,14 @@ namespace ELua {
 			isStatement = true;
 			type = Type.While;
 			debugInfo = list[position].debugInfo;
-			condExp = list[position + 1];
-			var itemsList = list.Skip(position + 3).Take(len - 4).ToList();
+            condExp = new ConditionExpression(new List<Expression> { list[position + 1] });
+            var itemsList = list.Skip(position + 3).Take(len - 4).ToList();
 			moduleExp = new ModuleExpression(itemsList);
 		}
 
-		public WhileExpression(Expression condExp, Expression moduleExp) {
-			isStatement = true;
-			type = Type.While;
-			debugInfo = condExp.debugInfo;
-			this.condExp = condExp;
-			this.moduleExp = moduleExp;
-		}
-
 		public override void Extract(SyntaxContext context) {
-			moduleExp.Extract(context);
+            condExp.Extract(context);
+            moduleExp.Extract(context);
 		}
 
 		public override void Generate(ModuleContext context) {

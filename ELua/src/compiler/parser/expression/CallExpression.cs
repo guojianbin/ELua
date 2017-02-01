@@ -12,7 +12,7 @@ namespace ELua {
 		public CallExpression(List<Expression> list, int position, int len) {
 			isRightValue = true;
 			isStatement = true;
-			type = Type.Call;
+            type = Type.Call;
 			debugInfo = list[position].debugInfo;
 			targetExp = list[position];
 		}
