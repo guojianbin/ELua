@@ -241,9 +241,9 @@ namespace ELua {
 
 		public override string ToString() {
 			if (opArg == null) {
-				return string.Format("{0,-3} {1}", index, opCode.ToString());
+				return string.Format("{0,-7} {1}", index, opCode.ToString());
 			} else {
-				return string.Format("{2,-3} {0,-10} {1,-10}", opCode, opArg, index);
+				return string.Format("{0,-7} {1,-12} {2}", index, opCode, opArg);
 			}
 		}
 

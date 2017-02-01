@@ -28,7 +28,9 @@ namespace ELua {
         public override void Generate(ModuleContext context) {
             foreach (var item in itemsList) {
                 item.Generate(context);
+                context.Add(new ByteCode { opCode = ByteCode.OpCode.Clear });
             }
+            context.RemoveAt(context.Count - 1);
         }
 
         public override string GetDebugInfo() {

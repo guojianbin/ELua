@@ -39,7 +39,7 @@ namespace ELua {
 			name = context.NewUID();
 			var module = new Module(new ModuleContext(context.vm, name, context.level + 1) { argsList = argsList });
 			context.vm.Add(module);
-			moduleExp.Generate(context.Bind(name, module.context));
+			moduleExp.Generate(module.context);
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg = new LuaModule(context.vm, module) });
 		}
 

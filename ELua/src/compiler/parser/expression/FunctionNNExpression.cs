@@ -30,7 +30,7 @@ namespace ELua {
 		public override void Generate(ModuleContext context) {
 			var module = new Module(new ModuleContext(context.vm, nameExp.value, context.level + 1) { argsList = argsList });
 			context.vm.Add(module);
-			moduleExp.Generate(context.Bind(nameExp.value, module.context));
+			moduleExp.Generate(module.context);
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Function, opArg = new LuaModule(context.vm, module) });
 			nameExp.Generate(context);
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Bind });

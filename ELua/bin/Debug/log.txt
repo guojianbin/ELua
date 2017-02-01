@@ -30,135 +30,137 @@ local ~26 = s .. v
 s = ~26
 end
 print(s)
-complie 102ms
+complie 114ms
 
 [test.lua]
-0   List
-1   Define     ~16       
-2   Bind
-3   Clear
-4   Var        ~16       
-5   Push       t         
-6   Table      2         
-7   Define     ~17       
-8   Bind
-9   Clear
-10  Var        ~17       
-11  Define     t         
-12  Bind
-13  Clear
-14  Label      ~27:14    
-15  Push       t         
-16  Var        t         
-17  Property
-18  Define     ~18       
-19  Bind
-20  Var        ~18       
-21  Push       native:len
-22  Call
-23  Define     ~19       
-24  Bind
-25  Push       5         
-26  Var        ~19       
-27  Less
-28  JumpNot    ~30:63    
-29  Push       insert    
-30  Var        table     
-31  Property
-32  Define     ~20       
-33  Bind
-34  Clear
-35  Push       t         
-36  Var        t         
-37  Property
-38  Define     ~21       
-39  Bind
-40  Clear
-41  Push       10        
-42  Var        ~21       
-43  Var        ~20       
-44  Call
-45  Clear
-46  Push       t         
-47  Var        t         
-48  Property
-49  Define     ~22       
-50  Bind
-51  Clear
-52  Var        ~22       
-53  Push       native:len
-54  Call
-55  Define     ~23       
-56  Bind
-57  Clear
-58  Var        ~23       
-59  Var        print     
-60  Call
-61  Clear
-62  Jump       ~27:14    
-63  Label      ~30:63    
-64  Clear
-65  Push                 
-66  Var        s         
-67  Bind
-68  Clear
-69  Push       t         
-70  Var        t         
-71  Property
-72  Define     ~24       
-73  Bind
-74  Clear
-75  Var        ~24       
-76  Var        ipairs    
-77  Call
-78  Define     ~25       
-79  Bind
-80  Clear
-81  Var        ~25       
-82  Unpack
-83  Define     ~35       
-84  Define     ~34       
-85  Define     ~33       
-86  BindN      3         
-87  Label      ~36:87    
-88  Var        ~35       
-89  Var        ~34       
-90  Var        ~33       
-91  Call
-92  Unpack
-93  Define     v         
-94  Define     i         
-95  BindN      2         
-96  Clear
-97  Var        i         
-98  Var        ~35       
-99  Bind
-100 Clear
-101 Push       nil       
-102 Var        ~35       
-103 Equal
-104 JumpNot    ~41:107   
-105 Jump       ~39:120   
-106 Clear
-107 Label      ~41:107   
-108 Clear
-109 Var        v         
-110 Var        s         
-111 Concat
-112 Define     ~26       
-113 Bind
-114 Clear
-115 Var        ~26       
-116 Var        s         
-117 Bind
-118 Clear
-119 Jump       ~36:87    
-120 Label      ~39:120   
-121 Clear
-122 Var        s         
-123 Var        print     
-124 Call
-125 Clear
+0       List
+1       Define       ~16
+2       Bind
+3       Clear
+4       Var          ~16
+5       Push         t
+6       Table        2
+7       Define       ~17
+8       Bind
+9       Clear
+10      Var          ~17
+11      Define       t
+12      Bind
+13      Clear
+14      Label        ~27:14
+15      Push         t
+16      Var          t
+17      Property
+18      Define       ~18
+19      Bind
+20      Clear
+21      Var          ~18
+22      Push         native:len
+23      Call
+24      Define       ~19
+25      Bind
+26      Clear
+27      Push         5
+28      Var          ~19
+29      Less
+30      JumpNot      ~30:65
+31      Push         insert
+32      Var          table
+33      Property
+34      Define       ~20
+35      Bind
+36      Clear
+37      Push         t
+38      Var          t
+39      Property
+40      Define       ~21
+41      Bind
+42      Clear
+43      Push         10
+44      Var          ~21
+45      Var          ~20
+46      Call
+47      Clear
+48      Push         t
+49      Var          t
+50      Property
+51      Define       ~22
+52      Bind
+53      Clear
+54      Var          ~22
+55      Push         native:len
+56      Call
+57      Define       ~23
+58      Bind
+59      Clear
+60      Var          ~23
+61      Var          print
+62      Call
+63      Clear
+64      Jump         ~27:14
+65      Label        ~30:65
+66      Clear
+67      Push         
+68      Var          s
+69      Bind
+70      Clear
+71      Push         t
+72      Var          t
+73      Property
+74      Define       ~24
+75      Bind
+76      Clear
+77      Var          ~24
+78      Var          ipairs
+79      Call
+80      Define       ~25
+81      Bind
+82      Clear
+83      Var          ~25
+84      Unpack
+85      Define       ~35
+86      Define       ~34
+87      Define       ~33
+88      BindN        3
+89      Label        ~36:89
+90      Var          ~35
+91      Var          ~34
+92      Var          ~33
+93      Call
+94      Unpack
+95      Define       v
+96      Define       i
+97      BindN        2
+98      Clear
+99      Var          i
+100     Var          ~35
+101     Bind
+102     Clear
+103     Push         nil
+104     Var          ~35
+105     Equal
+106     JumpNot      ~41:109
+107     Jump         ~39:122
+108     Clear
+109     Label        ~41:109
+110     Clear
+111     Var          v
+112     Var          s
+113     Concat
+114     Define       ~26
+115     Bind
+116     Clear
+117     Var          ~26
+118     Var          s
+119     Bind
+120     Clear
+121     Jump         ~36:89
+122     Label        ~39:122
+123     Clear
+124     Var          s
+125     Var          print
+126     Call
+127     Clear
 
 [output]
 1

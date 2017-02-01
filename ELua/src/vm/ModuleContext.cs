@@ -9,7 +9,6 @@ namespace ELua {
 
 		public static readonly string[] emptyList = new string[0];
 		public string[] argsList = emptyList;
-		public Dictionary<string, ModuleContext> childDict;
 		public LVM vm;
 		public string name;
 		public int level;
@@ -29,17 +28,16 @@ namespace ELua {
 			this.name = name;
 			this.level = level;
 			list = new List<ByteCode>();
-			childDict = new Dictionary<string, ModuleContext>();
-		}
-
-		public ModuleContext Bind(string name, ModuleContext context) {
-			return childDict[name] = context;
 		}
 
 		public void Add(ByteCode byteCode) {
 		    byteCode.index = Count;
             list.Add(byteCode);
         }
+
+	    public void RemoveAt(int index) {
+	        list.RemoveAt(index);
+	    }
 
         public void BeginLoop() {
             breakStack.Push(new Queue<LuaLabel>());
