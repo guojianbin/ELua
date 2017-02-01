@@ -26,6 +26,7 @@ namespace ELua {
 			Paren, // (x)
 			Negate, // -x
 			Length, // #x
+			Power, // x ^ y
 			Multiply, // x * y
 			Division, // x / y
 			Add, // x + y

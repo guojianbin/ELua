@@ -17,6 +17,10 @@ namespace ELua {
 	        return vm.GetNumber(-value);
         }
 
+        public override LuaObject Power(StackFrame stackFrame, LuaObject obj) {
+            return vm.GetNumber((float)Math.Pow(value, obj.ToNumber().value));
+        }
+
         public override LuaObject Multiply(StackFrame stackFrame, LuaObject obj) {
             return vm.GetNumber(value * obj.ToNumber().value);
         }

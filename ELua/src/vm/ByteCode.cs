@@ -15,7 +15,7 @@ namespace ELua {
 			Undef,
 			Push, Pop, Bind, BindN, Clear, Unpack, Concat, Define,
             Jump, JumpIf, JumpNot, Label, 
-            Negate, Multiply, Division, Mod, Add, Subtract,
+            Negate, Power, Multiply, Division, Mod, Add, Subtract,
             Not, And, Or,
             Less, Greater, LessEqual, GreaterEqual, Equal, NotEqual,
 			Property, Index, Call, Function, Var,
@@ -84,6 +84,12 @@ namespace ELua {
 				case OpCode.Negate: {
 					var item = stackFrame.Pop();
 					stackFrame.Push(item.Negate(stackFrame));
+					break;
+				}
+				case OpCode.Power: {
+					var item1 = stackFrame.Pop();
+					var item2 = stackFrame.Pop();
+					stackFrame.Push(item1.Power(stackFrame, item2));
 					break;
 				}
 				case OpCode.Multiply: {

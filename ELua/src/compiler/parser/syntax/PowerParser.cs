@@ -4,7 +4,7 @@ namespace ELua {
 	/// @author Easily
 	/// auto generated! don't modify !
 	/// </summary>
-	public static class NotEqualParser {
+	public static class PowerParser {
 
 		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -23,23 +23,12 @@ namespace ELua {
 			while (NotParser.Parse(context, index));
 			while (LengthParser.Parse(context, index));
 			while (NegateParser.Parse(context, index));
-			while (PowerParser.Parse(context, index));
-			while (MultiplyParser.Parse(context, index));
-			while (DivisionParser.Parse(context, index));
-			while (ModParser.Parse(context, index));
-			while (AddParser.Parse(context, index));
-			while (SubtractParser.Parse(context, index));
 			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], "~")) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], "=")) {
+			if (!ParserHelper.IsOperator(list[index], "^")) {
 				return false;
 			}
 			offset += 1;
@@ -56,19 +45,13 @@ namespace ELua {
 			while (NotParser.Parse(context, index));
 			while (LengthParser.Parse(context, index));
 			while (NegateParser.Parse(context, index));
-			while (PowerParser.Parse(context, index));
-			while (MultiplyParser.Parse(context, index));
-			while (DivisionParser.Parse(context, index));
-			while (ModParser.Parse(context, index));
-			while (AddParser.Parse(context, index));
-			while (SubtractParser.Parse(context, index));
 			if (!list[index].isRightValue) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
 
-			context.Insert(position, new NotEqualExpression(list, position, offset));
+			context.Insert(position, new PowerExpression(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

@@ -76,6 +76,10 @@ namespace ELua {
             throw new InvalidOperationException(GetType().Name);
         }
 
+        public virtual LuaObject Power(StackFrame stackFrame, LuaObject obj) {
+			throw new InvalidOperationException(GetType().Name);
+		}
+
         public virtual LuaObject Multiply(StackFrame stackFrame, LuaObject obj) {
 			throw new InvalidOperationException(GetType().Name);
 		}

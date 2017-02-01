@@ -1,11 +1,11 @@
 ﻿#begin exprexsion
-ReturnN,Return,FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+ReturnN,Return,FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end exprexsion
 
 #begin define
 stats 		 := ReturnN,Return,Break,Do,While,ForN,For,ForEach,FunctionN,FunctionNN,FunctionS,FunctionSN,If,IfElse,Define,DefineN,Bind,BindN,Call,CallN
 lvalue 	   	 := Property,Index
-rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end define
 
 #begin syntax
@@ -42,6 +42,7 @@ CallN 	   	 := is_right;parser=[Paren,Index] .. op=( .. <;is_right;parser=$rvalu
 Not    	   	 := keyword=not .. is_right;parser=[Paren,CallN]
 Length 		 := op=# .. is_right;parser=[Paren,CallN]
 Negate 	   	 := op=- .. is_right;parser=[Paren,CallN]
+Power   	 := is_right;parser=[Paren,Negate] .. op=^ .. is_right;parser=[Paren,Negate]
 Multiply   	 := is_right;parser=[Paren,Negate] .. op=* .. is_right;parser=[Paren,Negate]
 Division   	 := is_right;parser=[Paren,Negate] .. op=/ .. is_right;parser=[Paren,Negate]
 Mod		   	 := is_right;parser=[Paren,Negate] .. op=% .. is_right;parser=[Paren,Negate]

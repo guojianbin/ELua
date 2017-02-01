@@ -51,6 +51,7 @@ namespace ELua {
 			while (NotParser.Parse(context, index));
 			while (LengthParser.Parse(context, index));
 			while (NegateParser.Parse(context, index));
+			while (PowerParser.Parse(context, index));
 			while (MultiplyParser.Parse(context, index));
 			while (DivisionParser.Parse(context, index));
 			while (ModParser.Parse(context, index));

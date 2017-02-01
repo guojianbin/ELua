@@ -94,6 +94,7 @@
     <Compile Include="src\compiler\parser\expression\OrExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ParenExpression.cs" />
     <Compile Include="src\compiler\parser\expression\AddExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\PowerExpression.cs" />
     <Compile Include="src\compiler\parser\expression\PropertyExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ReturnExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ReturnNExpression.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="src\compiler\parser\syntax\OrParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ParenParser.cs" />
     <Compile Include="src\compiler\parser\syntax\AddParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\PowerParser.cs" />
     <Compile Include="src\compiler\parser\syntax\PropertyParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ReturnNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ReturnParser.cs" />

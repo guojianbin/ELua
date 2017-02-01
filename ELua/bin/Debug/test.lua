@@ -1,10 +1,10 @@
 ﻿function test()
-	do return end
 	return 1,2,3
 end
 
 function test2(a,b,c)
 	print(a,b,c)
+	print(b^c)
 end
 
 test2(test())
