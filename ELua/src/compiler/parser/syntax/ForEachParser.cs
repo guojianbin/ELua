@@ -114,8 +114,8 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-
-			context.Insert(position, new ForEachExpression(list, position, offset));
+			
+			context.Insert(position, ExpressionCreator.CreateForEach(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

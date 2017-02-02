@@ -67,8 +67,8 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-
-			context.Insert(position, new NotEqualExpression(list, position, offset));
+			
+			context.Insert(position, ExpressionCreator.CreateNotEqual(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

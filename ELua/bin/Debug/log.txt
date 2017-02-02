@@ -32,7 +32,7 @@ s = ~26
 end
 print(s)
 return s
-complie 110ms
+complie 82ms
 
 [test.lua]
 0       List

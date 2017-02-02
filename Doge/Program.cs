@@ -24,6 +24,7 @@ namespace Doge {
 
 			WriteParser(syntaxDict, defDict, expDict, tempDict);
             // WritePools(syntaxDict, tempDict);
+            WriteCreators(syntaxDict, tempDict);
 		}
 
 		private static void WriteParser(Dictionary<string, string> syntaxDict, Dictionary<string, string> defDict, Dictionary<string, int> expDict, Dictionary<string, string> tempDict) {
@@ -39,9 +40,22 @@ namespace Doge {
 				var filePath = string.Format("{0}/{1}Parser.cs", syntaxRoot, syntaxInfo.name);
 				File.WriteAllText(filePath, fileStr);
 			}
-		}
+        }
 
-	    public static void WritePools(Dictionary<string, string> syntaxDict, Dictionary<string, string> tempDict) {
+        public static void WriteCreators(Dictionary<string, string> syntaxDict, Dictionary<string, string> tempDict) {
+            var funcSb = new StringBuilder();
+            foreach (var item in syntaxDict) {
+                funcSb.Append(tempDict["creator_func"].Replace("$name$", item.Key));
+                funcSb.Append('\n');
+                funcSb.Append('\n');
+            }
+            funcSb.Remove(funcSb.Length - 2, 2);
+            var content = tempDict["creator_file"].Replace("$func_list$", funcSb.ToString());
+            var filePath = string.Format("{0}/ExpressionCreator.cs", syntaxRoot);
+            File.WriteAllText(filePath, content);
+        }
+
+        public static void WritePools(Dictionary<string, string> syntaxDict, Dictionary<string, string> tempDict) {
             var poolSb = new StringBuilder();
             var getSb = new StringBuilder();
             var putSb = new StringBuilder();

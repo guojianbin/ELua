@@ -111,8 +111,8 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-
-			context.Insert(position, new TableINExpression(list, position, offset));
+			
+			context.Insert(position, ExpressionCreator.CreateTableIN(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

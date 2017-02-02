@@ -13,8 +13,8 @@ namespace ELua {
 			var index = position;
 
 $body$
-
-			context.Insert(position, new $name$Expression(list, position, offset));
+			
+			context.Insert(position, ExpressionCreator.Create$name$(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}
@@ -41,6 +41,29 @@ $put_parser$
     }
 
 }
+]]
+
+creator_file == --[[
+using System.Collections.Generic;
+
+namespace ELua {
+
+    /// <summary>
+    /// @author Easily
+    /// </summary>
+    public static class ExpressionCreator {
+
+$func_list$
+
+    }
+
+}
+]]
+
+creator_func == --[[
+		public static Expression Create$name$(List<Expression> list, int position, int len) {
+			return new $name$Expression(list, position, len);
+		}
 ]]
 
 pool_list == --[[

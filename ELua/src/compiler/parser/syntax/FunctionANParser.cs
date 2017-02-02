@@ -73,8 +73,8 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-
-			context.Insert(position, new FunctionANExpression(list, position, offset));
+			
+			context.Insert(position, ExpressionCreator.CreateFunctionAN(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

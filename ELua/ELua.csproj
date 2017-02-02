@@ -121,6 +121,7 @@
     <Compile Include="src\compiler\parser\syntax\DivisionParser.cs" />
     <Compile Include="src\compiler\parser\syntax\DoParser.cs" />
     <Compile Include="src\compiler\parser\syntax\EqualParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\ExpressionCreator.cs" />
     <Compile Include="src\compiler\parser\syntax\ForEachParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ForNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ForParser.cs" />
