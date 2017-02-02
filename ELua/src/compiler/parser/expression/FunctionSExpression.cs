@@ -17,9 +17,8 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			targetExp = (WordExpression)list[position + 1];
 			nameExp = (WordExpression)list[position + 3];
-			var itemsList = list.GetRange(position + 6, len - 7);
-			moduleExp = new ModuleExpression(itemsList);
-		}
+            moduleExp = list[position + 6];
+        }
 
 		public override void Extract(SyntaxContext context) {
 			moduleExp.Extract(context);

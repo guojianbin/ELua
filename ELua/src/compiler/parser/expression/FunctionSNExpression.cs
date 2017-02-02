@@ -21,9 +21,8 @@ namespace ELua {
 			nameExp = (WordExpression)list[position + 3];
 			var wordList = list.Skip(position + 5).TakeWhile(t => !ParserHelper.IsOperator(t, ")")).Where(t => t.type == Type.Word);
 			argsList = wordList.Cast<WordExpression>().Select(t => t.value).ToArray();
-			var itemsList = list.Skip(position + 5 + argsList.Length * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
-			moduleExp = new ModuleExpression(itemsList);
-		}
+            moduleExp = list[position + 5 + argsList.Length * 2];
+        }
 
 		public override void Extract(SyntaxContext context) {
 			moduleExp.Extract(context);

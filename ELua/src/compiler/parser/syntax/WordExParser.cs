@@ -3,7 +3,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public static class DoParser {
+	public static class WordExParser {
 
 		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -11,24 +11,21 @@ namespace ELua {
 			var index = position;
 			var count = 0;
 
-			if (!ParserHelper.IsKeyword(list[index], "do")) {
+			if (list[index].type != Expression.Type.Word) {
+				return false;
+			}
+			if (!list[index].isLeftValue) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
-			while (ModuleParser.Parse(context, index));
-			if (list[index].type != Expression.Type.Module) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
-			if (!ParserHelper.IsKeyword(list[index], "end")) {
+			if (!ParserHelper.IsOperator(list[index], ",")) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
 			
-			context.Insert(position, ExpressionCreator.CreateDo(list, position, offset));
+			context.Insert(position, ExpressionCreator.CreateWordEx(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -26,8 +25,7 @@ namespace ELua {
             stepExp = list[position + 7];
             condExp = new GreaterExpression(indexExp, endExp);
             changeExp = new BindExpression(indexExp, new AddExpression(indexExp, stepExp));
-            var itemsList = list.Skip(position + 9).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
-            moduleExp = new ModuleExpression(itemsList);
+            moduleExp = list[position + 9];
         }
 
         public override void Extract(SyntaxContext context) {

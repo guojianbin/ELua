@@ -18,9 +18,8 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			var wordList = list.Skip(position + 2).TakeWhile(t => !ParserHelper.IsOperator(t, ")")).Where(t => t.type == Type.Word);
 			argsList = wordList.Cast<WordExpression>().Select(t => t.value).ToArray();
-			var itemsList = list.Skip(position + 2 + argsList.Length * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
-			moduleExp = new ModuleExpression(itemsList);
-		}
+            moduleExp = list[position + 2 + argsList.Length * 2];
+        }
 
 		public FunctionANExpression(string name, string[] argsList, Expression moduleExp) {
 			isRightValue = true;

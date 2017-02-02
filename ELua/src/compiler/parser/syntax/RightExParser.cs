@@ -3,7 +3,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public static class WhileParser {
+	public static class RightExParser {
 
 		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -11,11 +11,6 @@ namespace ELua {
 			var index = position;
 			var count = 0;
 
-			if (!ParserHelper.IsKeyword(list[index], "while")) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
 			while (FunctionAParser.Parse(context, index));
 			while (FunctionANParser.Parse(context, index));
 			while (ParenParser.Parse(context, index));
@@ -50,24 +45,13 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			if (!ParserHelper.IsKeyword(list[index], "do")) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
-			while (ModuleParser.Parse(context, index));
-			if (list[index].type != Expression.Type.Module) {
-				return false;
-			}
-			offset += 1;
-			index = position + offset;
-			if (!ParserHelper.IsKeyword(list[index], "end")) {
+			if (!ParserHelper.IsOperator(list[index], ",")) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
 			
-			context.Insert(position, ExpressionCreator.CreateWhile(list, position, offset));
+			context.Insert(position, ExpressionCreator.CreateRightEx(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

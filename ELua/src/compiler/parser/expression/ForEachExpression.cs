@@ -18,11 +18,10 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			items1List = list.Skip(position + 1).TakeWhile(t => !ParserHelper.IsKeyword(t, "in")).Where(t => t.type == Type.Word).ToList();
 			items2List = list.Skip(position + items1List.Count * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "do")).Where(t => t.isRightValue).ToList();
-			var itemsList = list.Skip(position + 1 + items1List.Count * 2 + items2List.Count * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
-			moduleExp = new ModuleExpression(itemsList);
-		}
+            moduleExp = (ModuleExpression)list[position + 1 + items1List.Count * 2 + items2List.Count * 2];
+        }
 
-		public override void Extract(SyntaxContext context) {
+        public override void Extract(SyntaxContext context) {
 			for (var i = 0; i < items2List.Count; i++) {
 				items2List[i] = ParserHelper.Extract(context, items2List[i]);
 			}

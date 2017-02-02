@@ -13,8 +13,7 @@ namespace ELua {
             isStatement = true;
             type = Type.Do;
             debugInfo = list[position].debugInfo;
-            var itemsList = list.GetRange(position + 1, len - 2);
-            moduleExp = new ModuleExpression(itemsList);
+            moduleExp = list[position + 1];
         }
 
         public override void Extract(SyntaxContext context) {

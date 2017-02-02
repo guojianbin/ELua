@@ -14,23 +14,23 @@ LeftEx 		 := is_left;exp=$lvalue$ .. op=,
 RightEx 	 := is_right;parser=$rvalue$ .. op=,
 Module 		 := +;is_stat;parser=$stats$
 Break 		 := keyword=break
-Do		  	 := keyword=do .. <;is_stat;parser=$stats$;> .. keyword=end
-While		 := keyword=while .. is_right;parser=$rvalue$ .. keyword=do .. <;is_stat;parser=$stats$;> .. keyword=end
-ForN	   	 := keyword=for .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. <;is_stat;parser=$stats$;> .. keyword=end
-For	   		 := keyword=for .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. <;is_stat;parser=$stats$;> .. keyword=end
-ForEach	  	 := keyword=for .. <;is_left;exp=Word .. op=,;> .. keyword=in .. <;is_right;parser=$rvalue$ .. op=,;> .. keyword=do .. <;is_stat;parser=$stats$;> .. keyword=end
+Do		  	 := keyword=do .. parser=Module;exp=Module .. keyword=end
+While		 := keyword=while .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
+ForN	   	 := keyword=for .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
+For	   		 := keyword=for .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
+ForEach	  	 := keyword=for .. <;is_left;exp=Word .. op=,;> .. keyword=in .. <;is_right;parser=$rvalue$ .. op=,;> .. keyword=do .. parser=Module;exp=Module .. keyword=end
 Define	   	 := keyword=local .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$
 DefineN	   	 := keyword=local .. <;is_left;exp=Word .. op=,;> .. op=<eq> .. <;is_right;parser=$rvalue$ .. op=,;>
 Bind 	   	 := is_left;parser=$lvalue$ .. op=<eq> .. is_right;parser=$rvalue$
 BindN 	   	 := <;is_left;parser=$lvalue$ .. op=,;> .. op=<eq> .. <;is_right;parser=$rvalue$ .. op=,;>
 ReturnN		 := keyword=return .. <;is_right;parser=$rvalue$ .. op=,;>
 Return 	   	 := keyword=return
-FunctionA 	 := keyword=function .. op=( .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
-FunctionAN 	 := keyword=function .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
-FunctionN 	 := keyword=function .. is_left;exp=Word .. op=( .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
-FunctionNN 	 := keyword=function .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
-FunctionS 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
-FunctionSN 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
+FunctionA 	 := keyword=function .. op=( .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionAN 	 := keyword=function .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionN 	 := keyword=function .. is_left;exp=Word .. op=( .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionNN 	 := keyword=function .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionS 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionSN 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. parser=Module;exp=Module .. keyword=end
 If   	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=end
 IfElse	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=else .. parser=Module;exp=Module .. keyword=end
 Paren	   	 := op=( .. is_right;parser=$rvalue$ .. op=)

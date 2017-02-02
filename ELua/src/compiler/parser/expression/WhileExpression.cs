@@ -15,9 +15,8 @@ namespace ELua {
 			type = Type.While;
 			debugInfo = list[position].debugInfo;
             condExp = new ConditionExpression(new List<Expression> { list[position + 1] });
-            var itemsList = list.GetRange(position + 3, len - 4);
-			moduleExp = new ModuleExpression(itemsList);
-		}
+            moduleExp = list[position + 3];
+        }
 
 		public override void Extract(SyntaxContext context) {
             condExp.Extract(context);

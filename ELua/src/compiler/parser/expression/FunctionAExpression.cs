@@ -14,9 +14,8 @@ namespace ELua {
 			isRightValue = true;
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
-			var itemsList = list.GetRange(position + 3, len - 4);
-			moduleExp = new ModuleExpression(itemsList);
-		}
+            moduleExp = list[position + 3];
+        }
 
 		public FunctionAExpression(string name, Expression moduleExp) {
 			isRightValue = true;
