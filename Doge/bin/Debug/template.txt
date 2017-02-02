@@ -3,7 +3,6 @@ namespace ELua {
 
 	/// <summary>
 	/// @author Easily
-	/// auto generated! don't modify !
 	/// </summary>
 	public static class $name$Parser {
 
@@ -11,6 +10,7 @@ namespace ELua {
 			var list = context.list;
 			var offset = 0;
 			var index = position;
+			var count = 0;
 
 $body$
 			
@@ -31,7 +31,6 @@ namespace ELua {
 
     /// <summary>
     /// @author Easily
-    /// auto generated! don't modify !
     /// </summary>
     public static class ParserPools {
 
@@ -146,6 +145,19 @@ begin_loop == --[[
 			while (true) {
 ]]
 
+begin_loop2 == --[[
+			count = 0;
+			while (true) {
+]]
+
 end_loop == --[[
+			}
+]]
+
+end_loop2 == --[[
+			count += 1;
+			}
+			if (count == 0) {
+				return false;
 			}
 ]]

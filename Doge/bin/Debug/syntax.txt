@@ -9,7 +9,10 @@ rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,I
 #end define
 
 #begin syntax
-Module 	   	 := <;is_stat;parser=$stats$;>
+WordEx 		 := is_left;exp=Word .. op=,
+LeftEx 		 := is_left;exp=$lvalue$ .. op=,
+RightEx 	 := is_right;parser=$rvalue$ .. op=,
+Module 		 := +;is_stat;parser=$stats$
 Break 		 := keyword=break
 Do		  	 := keyword=do .. <;is_stat;parser=$stats$;> .. keyword=end
 While		 := keyword=while .. is_right;parser=$rvalue$ .. keyword=do .. <;is_stat;parser=$stats$;> .. keyword=end
@@ -28,8 +31,8 @@ FunctionN 	 := keyword=function .. is_left;exp=Word .. op=( .. op=) .. <;is_stat
 FunctionNN 	 := keyword=function .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
 FunctionS 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
 FunctionSN 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. <;is_stat;parser=$stats$;> .. keyword=end
-If   	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. <;is_stat;parser=$stats$;> .. keyword=end
-IfElse	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. <;is_stat;parser=$stats$;> .. keyword=else .. <;is_stat;parser=$stats$;> .. keyword=end
+If   	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=end
+IfElse	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=else .. parser=Module;exp=Module .. keyword=end
 Paren	   	 := op=( .. is_right;parser=$rvalue$ .. op=)
 List 	   	 := op={ .. op=}
 ListN 	   	 := op={ .. <;is_right;parser=$rvalue$ .. op=,;> .. op=}

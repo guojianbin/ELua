@@ -24,7 +24,7 @@ namespace Doge {
 
 			WriteParser(syntaxDict, defDict, expDict, tempDict);
             // WritePools(syntaxDict, tempDict);
-            WriteCreators(syntaxDict, tempDict);
+            // WriteCreators(syntaxDict, tempDict);
 		}
 
 		private static void WriteParser(Dictionary<string, string> syntaxDict, Dictionary<string, string> defDict, Dictionary<string, int> expDict, Dictionary<string, string> tempDict) {
@@ -204,7 +204,15 @@ namespace Doge {
 
 			public string Generate(Dictionary<string, string> tempDict, int index) {
 				var sb = new StringBuilder();
-				if (values.ContainsKey("<")) {
+				if (values.ContainsKey("+")) {
+					sb.Append(tempDict["begin_loop2"]);
+					sb.Append('\n');
+				}
+                if (values.ContainsKey("<")) {
+					sb.Append(tempDict["begin_loop"]);
+					sb.Append('\n');
+				}
+                if (values.ContainsKey("*")) {
 					sb.Append(tempDict["begin_loop"]);
 					sb.Append('\n');
 				}
@@ -251,10 +259,10 @@ namespace Doge {
 					sb.Append('\n');
 				}
 				if (values.ContainsKey("is_stat")) {
-					var rightTemp = tempDict["is_stat"];
-					var rightStr = rightTemp.Replace("$index$", index.ToString());
-					sb.Append(rightStr);
-					sb.Append('\n');
+				    var rightTemp = tempDict["is_stat"];
+		            var rightStr = rightTemp.Replace("$index$", index.ToString());
+				    sb.Append(rightStr);     
+				    sb.Append('\n');
 				}
 				if (values.ContainsKey(">")) {
 					sb.Replace("return false", "break");
@@ -265,6 +273,16 @@ namespace Doge {
 					sb.Append(tempDict["end_loop"]);
 					sb.Append('\n');
 				}
+				if (values.ContainsKey("*")) {
+                    sb.Replace("return false", "break");
+                    sb.Append(tempDict["end_loop"]);
+					sb.Append('\n');
+				}
+				if (values.ContainsKey("+")) {
+                    sb.Replace("return false", "break");
+                    sb.Append(tempDict["end_loop2"]);
+					sb.Append('\n');
+                }
 				return sb.ToString();
 			}
 

@@ -11,6 +11,14 @@ namespace ELua {
 			return new ModuleExpression(list, position, len);
 		}
 
+		public static Expression CreateChunk(List<Expression> list, int position, int len) {
+			return new ModuleExpression(list, position, len);
+		}
+
+		public static Expression CreateFile(List<Expression> list, int position, int len) {
+			return new ModuleExpression(list, position, len);
+		}
+
 		public static Expression CreateBreak(List<Expression> list, int position, int len) {
 			return new BreakExpression(list, position, len);
 		}

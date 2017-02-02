@@ -2,7 +2,6 @@ namespace ELua {
 
 	/// <summary>
 	/// @author Easily
-	/// auto generated! don't modify !
 	/// </summary>
 	public static class MultiplyParser {
 
@@ -10,6 +9,7 @@ namespace ELua {
 			var list = context.list;
 			var offset = 0;
 			var index = position;
+			var count = 0;
 
 			while (ParenParser.Parse(context, index));
 			while (ListParser.Parse(context, index));

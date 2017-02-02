@@ -2,7 +2,6 @@ namespace ELua {
 
 	/// <summary>
 	/// @author Easily
-	/// auto generated! don't modify !
 	/// </summary>
 	public static class ModuleParser {
 
@@ -10,7 +9,9 @@ namespace ELua {
 			var list = context.list;
 			var offset = 0;
 			var index = position;
+			var count = 0;
 
+			count = 0;
 			while (true) {
 			while (ReturnNParser.Parse(context, index));
 			while (ReturnParser.Parse(context, index));
@@ -37,6 +38,10 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
+			count += 1;
+			}
+			if (count == 0) {
+				return false;
 			}
 			
 			context.Insert(position, ExpressionCreator.CreateModule(list, position, offset));

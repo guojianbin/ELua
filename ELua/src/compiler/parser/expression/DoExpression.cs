@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -14,7 +13,7 @@ namespace ELua {
             isStatement = true;
             type = Type.Do;
             debugInfo = list[position].debugInfo;
-            var itemsList = list.Skip(position + 1).Take(len - 2).ToList();
+            var itemsList = list.GetRange(position + 1, len - 2);
             moduleExp = new ModuleExpression(itemsList);
         }
 

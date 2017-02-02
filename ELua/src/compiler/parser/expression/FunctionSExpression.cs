@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -18,7 +17,7 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			targetExp = (WordExpression)list[position + 1];
 			nameExp = (WordExpression)list[position + 3];
-			var itemsList = list.Skip(position + 6).Take(len - 7).ToList();
+			var itemsList = list.GetRange(position + 6, len - 7);
 			moduleExp = new ModuleExpression(itemsList);
 		}
 

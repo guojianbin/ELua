@@ -17,10 +17,8 @@ namespace ELua {
             type = Type.IfElse;
             debugInfo = list[position].debugInfo;
             condExp = list[position + 1];
-	        var items1List = list.Skip(position + 3).TakeWhile(t => !ParserHelper.IsKeyword(t, "else")).ToList();
-			var items2List = list.Skip(position + 4 + items1List.Count).TakeWhile(t => !ParserHelper.IsKeyword(t, "end")).ToList();
-			module1Exp = new ModuleExpression(items1List);
-			module2Exp = new ModuleExpression(items2List);
+			module1Exp = list[position + 3];
+			module2Exp = list[position + 5];
         }
 
 		public IfElseExpression(Expression condExp, Expression item1Exp, Expression item2Exp) {

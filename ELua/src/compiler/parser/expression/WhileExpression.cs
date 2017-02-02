@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -16,7 +15,7 @@ namespace ELua {
 			type = Type.While;
 			debugInfo = list[position].debugInfo;
             condExp = new ConditionExpression(new List<Expression> { list[position + 1] });
-            var itemsList = list.Skip(position + 3).Take(len - 4).ToList();
+            var itemsList = list.GetRange(position + 3, len - 4);
 			moduleExp = new ModuleExpression(itemsList);
 		}
 
