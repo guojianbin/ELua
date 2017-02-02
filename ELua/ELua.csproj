@@ -158,6 +158,7 @@
     <Compile Include="src\compiler\parser\syntax\TableINParser.cs" />
     <Compile Include="src\compiler\parser\syntax\TableSNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\WhileParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\WordExParser.cs" />
     <Compile Include="src\compiler\scanner\Scanner.cs" />
     <Compile Include="src\compiler\scanner\Token.cs" />
     <Compile Include="src\Lua.cs" />

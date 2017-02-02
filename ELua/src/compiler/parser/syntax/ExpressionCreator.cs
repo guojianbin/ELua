@@ -7,6 +7,10 @@ namespace ELua {
     /// </summary>
     public static class ExpressionCreator {
 
+		public static Expression CreateWordEx(List<Expression> list, int position, int len) {
+			return new ModuleExpression(list, position, len);
+		}
+
 		public static Expression CreateModule(List<Expression> list, int position, int len) {
 			return new ModuleExpression(list, position, len);
 		}

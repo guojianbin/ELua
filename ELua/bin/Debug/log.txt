@@ -19,7 +19,7 @@ end
 else
 print(100)
 end
-complie 71ms
+complie 69ms
 
 [test.lua]
 0       Push         3
