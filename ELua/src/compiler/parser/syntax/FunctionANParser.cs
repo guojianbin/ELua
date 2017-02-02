@@ -33,9 +33,9 @@ namespace ELua {
 			if (!ParserHelper.IsOperator(list[index], ",")) {
 				break;
 			}
+			}
 			offset += 1;
 			index = position + offset;
-			}
 			if (!ParserHelper.IsOperator(list[index], ")")) {
 				return false;
 			}

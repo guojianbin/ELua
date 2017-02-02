@@ -20,7 +20,8 @@ namespace ELua {
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsOperator(list[index], ",")) {
-				return false;
+				offset -= 1;
+				index = position + offset;
 			}
 			offset += 1;
 			index = position + offset;

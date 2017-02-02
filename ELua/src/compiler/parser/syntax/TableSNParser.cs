@@ -36,6 +36,7 @@ namespace ELua {
 			while (TableINParser.Parse(context, index));
 			while (PropertyParser.Parse(context, index));
 			while (IndexParser.Parse(context, index));
+			while (InvokeParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
 			while (CallNParser.Parse(context, index));
 			while (NotParser.Parse(context, index));
@@ -64,9 +65,9 @@ namespace ELua {
 			if (!ParserHelper.IsOperator(list[index], ",")) {
 				break;
 			}
+			}
 			offset += 1;
 			index = position + offset;
-			}
 			if (!ParserHelper.IsOperator(list[index], "}")) {
 				return false;
 			}

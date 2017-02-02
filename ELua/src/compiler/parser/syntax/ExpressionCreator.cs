@@ -11,6 +11,18 @@ namespace ELua {
 			return new ModuleExpression(list, position, len);
 		}
 
+		public static Expression CreateLeftEx(List<Expression> list, int position, int len) {
+			return new ModuleExpression(list, position, len);
+		}
+
+		public static Expression CreateRightEx(List<Expression> list, int position, int len) {
+			return new RightExExpression(list[position]);
+		}
+
+		public static Expression CreateInvoke(List<Expression> list, int position, int len) {
+			return new InvokeExpression(list, position, len);
+		}
+
 		public static Expression CreateModule(List<Expression> list, int position, int len) {
 			return new ModuleExpression(list, position, len);
 		}

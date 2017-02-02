@@ -13,6 +13,10 @@ namespace ELua {
 		public enum Type : byte {
 
 			Undef,
+            RightEx,
+            LeftEx,
+            WordEx,
+
 			Word, // var
 			Keyword, // for,if,else,end...
 			Number, // 0.1,11...

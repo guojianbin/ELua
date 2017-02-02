@@ -267,13 +267,16 @@ namespace Doge {
 				if (values.ContainsKey(">")) {
 					sb.Replace("return false", "break");
 				}
-				sb.Append(tempDict["move_next"]);
-				sb.Append('\n');
 				if (values.ContainsKey(">")) {
 					sb.Append(tempDict["end_loop"]);
 					sb.Append('\n');
 				}
-				if (values.ContainsKey("*")) {
+				if (values.ContainsKey("?")) {
+                    sb.Replace("return false;", tempDict["move_pre"]);
+				}
+                sb.Append(tempDict["move_next"]);
+                sb.Append('\n');
+                if (values.ContainsKey("*")) {
                     sb.Replace("return false", "break");
                     sb.Append(tempDict["end_loop"]);
 					sb.Append('\n');

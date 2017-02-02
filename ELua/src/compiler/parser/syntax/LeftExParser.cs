@@ -11,16 +11,16 @@ namespace ELua {
 			var index = position;
 			var count = 0;
 
-			if (list[index].type != Expression.Type.Property,Index) {
-				return false;
-			}
+			while (PropertyParser.Parse(context, index));
+			while (IndexParser.Parse(context, index));
 			if (!list[index].isLeftValue) {
 				return false;
 			}
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsOperator(list[index], ",")) {
-				return false;
+				offset -= 1;
+				index = position + offset;
 			}
 			offset += 1;
 			index = position + offset;

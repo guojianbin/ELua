@@ -66,6 +66,7 @@
     <Compile Include="src\compiler\parser\expression\GreaterExpression.cs" />
     <Compile Include="src\compiler\parser\expression\IfExpression.cs" />
     <Compile Include="src\compiler\parser\expression\IfElseExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\InvokeExpression.cs" />
     <Compile Include="src\compiler\parser\expression\KeywordExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LabelExpression.cs" />
     <Compile Include="src\compiler\parser\expression\LengthExpression.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="src\compiler\parser\expression\PropertyExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ReturnExpression.cs" />
     <Compile Include="src\compiler\parser\expression\ReturnNExpression.cs" />
+    <Compile Include="src\compiler\parser\expression\RightExExpression.cs" />
     <Compile Include="src\compiler\parser\expression\StringExpression.cs" />
     <Compile Include="src\compiler\parser\expression\SubtractExpression.cs" />
     <Compile Include="src\compiler\parser\expression\TableINExpression.cs" />
@@ -136,6 +138,8 @@
     <Compile Include="src\compiler\parser\syntax\IfParser.cs" />
     <Compile Include="src\compiler\parser\syntax\IfElseParser.cs" />
     <Compile Include="src\compiler\parser\syntax\IndexParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\InvokeParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\LeftExParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LengthParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessEqualParser.cs" />
     <Compile Include="src\compiler\parser\syntax\LessParser.cs" />
@@ -154,6 +158,7 @@
     <Compile Include="src\compiler\parser\syntax\PropertyParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ReturnNParser.cs" />
     <Compile Include="src\compiler\parser\syntax\ReturnParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\RightExParser.cs" />
     <Compile Include="src\compiler\parser\syntax\SubtractParser.cs" />
     <Compile Include="src\compiler\parser\syntax\TableINParser.cs" />
     <Compile Include="src\compiler\parser\syntax\TableSNParser.cs" />

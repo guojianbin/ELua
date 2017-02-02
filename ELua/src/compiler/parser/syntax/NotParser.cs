@@ -23,6 +23,7 @@ namespace ELua {
 			while (TableINParser.Parse(context, index));
 			while (PropertyParser.Parse(context, index));
 			while (IndexParser.Parse(context, index));
+			while (InvokeParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
 			while (CallNParser.Parse(context, index));
 			if (!list[index].isRightValue) {

@@ -1,17 +1,17 @@
 ﻿#begin exprexsion
-ReturnN,Return,FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+ReturnN,Return,FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Invoke,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end exprexsion
 
 #begin define
-stats 		 := ReturnN,Return,Break,Do,While,ForN,For,ForEach,FunctionN,FunctionNN,FunctionS,FunctionSN,If,IfElse,Define,DefineN,Bind,BindN,Call,CallN
+stats 		 := ReturnN,Return,Break,Do,While,ForN,For,ForEach,FunctionN,FunctionNN,FunctionS,FunctionSN,If,IfElse,Define,DefineN,Bind,BindN,Invoke,Call,CallN
 lvalue 	   	 := Property,Index
-rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Invoke,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end define
 
 #begin syntax
-WordEx 		 := is_left;exp=Word .. op=,
-LeftEx 		 := is_left;exp=$lvalue$ .. op=,
-RightEx 	 := is_right;parser=$rvalue$ .. op=,
+WordEx 		 := is_left;exp=Word .. ?;op=,
+LeftEx 		 := is_left;parser=$lvalue$ .. ?;op=,
+RightEx 	 := is_right;parser=$rvalue$ .. ?;op=,
 Module 		 := +;is_stat;parser=$stats$
 Break 		 := keyword=break
 Do		  	 := keyword=do .. parser=Module;exp=Module .. keyword=end
@@ -40,6 +40,7 @@ TableSN 	 := op={ .. <;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;>
 TableIN 	 := op={ .. <;op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
 Property   	 := is_right;parser=[Paren,TableIN] .. op=. .. exp=Word
 Index 	   	 := is_right;parser=[Paren,TableIN] .. op=[ .. is_right;parser=$rvalue$ .. op=]
+Invoke 		 := is_right;parser=[Paren,Index] .. op=( .. *;parser=RightEx;exp=RightEx .. op=)
 Call 	   	 := is_right;parser=[Paren,Index] .. op=( .. op=)
 CallN 	   	 := is_right;parser=[Paren,Index] .. op=( .. <;is_right;parser=$rvalue$ .. op=,;> .. op=)
 Not    	   	 := keyword=not .. is_right;parser=[Paren,CallN]
