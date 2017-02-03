@@ -16,16 +16,16 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			leftList = list[position + 1];
 			rightList = list[position + 3];
-			((WordListExpression)leftList).ToVars();
+			((WordList2Expression)leftList).ToVars();
 		}
 
 		public DefineNExpression(List<Expression> items1List, List<Expression> items2List) {
 			isStatement = true;
 			type = Type.Define;
 			debugInfo = items1List[0].debugInfo;
-			leftList = new WordListExpression(items1List);
+			leftList = new WordList2Expression(items1List);
 			rightList = new RightList1Expression(items2List);
-			((WordListExpression)leftList).ToVars();
+			((WordList2Expression)leftList).ToVars();
 		}
 
 		public override void Extract(SyntaxContext context) {
@@ -35,7 +35,7 @@ namespace ELua {
 		public override void Generate(ModuleContext context) {
 			rightList.Generate(context);
 			leftList.Generate(context);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.BindN, opArg = new LuaInteger(context.vm, ((WordListExpression)leftList).itemsList.Count) });
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.BindN, opArg = new LuaInteger(context.vm, ((WordList2Expression)leftList).itemsList.Count) });
 		}
 
 		public override string GetDebugInfo() {

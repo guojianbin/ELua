@@ -33,8 +33,8 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
-			while (WordListParser.Parse(context, index));
-			if (list[index].type != Expression.Type.WordList) {
+			while (WordList1Parser.Parse(context, index));
+			if (list[index].type != Expression.Type.WordList1) {
 				return false;
 			} else {
 				// ignored

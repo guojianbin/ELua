@@ -1,86 +1,219 @@
 [source]
-a, b = 1, 2
-local arr = { 11, 22, 33 }
-for i, v in ipairs(arr) do
-print(i, v)
+function unpack(list, i)
+if i == nil then
+return unpack(list, 1)
+else
+if i <= len(list) then
+return list[i], unpack(list, i + 1)
+end
+end
+end
+print(unpack({ 1, 2, 3 }))
+function test1()
+return 4, 5
+end
+function test2()
+return 1, 2, 3, test1()
+end
+print(test2())
+for i=1,10 do
+print(i)
 end
 
 [extract]
-a, b = 1, 2
-local ~16 = { 11, 22, 33 }
-local arr = ~16
-local ~17 = ipairs(arr)
-for i, v in unpack(~17) do
-print(i, v)
+function unpack(list, i)
+local ~16 = i == nil
+if ~16 then
+local ~17 = unpack(list, 1)
+return unpack(~17)
+else
+local ~18 = len(list)
+local ~19 = i <= unpack(~18)
+if ~19 then
+local ~20 = list[i]
+local ~21 = i + 1
+local ~22 = unpack(list, ~21)
+return ~20, unpack(~22)
 end
-complie 71ms
+end
+end
+local ~23 = { 1, 2, 3 }
+local ~24 = unpack(~23)
+print(unpack(~24))
+function test1()
+return 4, 5
+end
+function test2()
+local ~25 = test1()
+return 1, 2, 3, unpack(~25)
+end
+local ~26 = test2()
+print(unpack(~26))
+for i=1,10 do
+print(i)
+end
+complie 79ms
+
+[unpack]
+0       Push         nil
+1       Var          i
+2       Equal
+3       Define       ~16
+4       Bind
+5       Clear
+6       Var          ~16
+7       JumpNot      ~28:20
+8       Push         1
+9       Var          list
+10      Var          unpack
+11      Call
+12      Define       ~17
+13      Bind
+14      Clear
+15      Var          ~17
+16      Unpack
+17      Return
+18      Clear
+19      Jump         ~29:62
+20      Label        ~28:20
+21      Var          list
+22      Var          len
+23      Call
+24      Define       ~18
+25      Bind
+26      Clear
+27      Var          ~18
+28      Unpack
+29      Var          i
+30      LessEqual
+31      Define       ~19
+32      Bind
+33      Clear
+34      Var          ~19
+35      JumpNot      ~33:60
+36      Var          i
+37      Var          list
+38      Index
+39      Define       ~20
+40      Bind
+41      Clear
+42      Push         1
+43      Var          i
+44      Add
+45      Define       ~21
+46      Bind
+47      Clear
+48      Var          ~21
+49      Var          list
+50      Var          unpack
+51      Call
+52      Define       ~22
+53      Bind
+54      Clear
+55      Var          ~22
+56      Unpack
+57      Var          ~20
+58      Return
+59      Clear
+60      Label        ~33:60
+61      Clear
+62      Label        ~29:62
+63      Clear
+
+[test1]
+0       Push         5
+1       Push         4
+2       Return
+3       Clear
+
+[test2]
+0       Var          test1
+1       Call
+2       Define       ~25
+3       Bind
+4       Clear
+5       Var          ~25
+6       Unpack
+7       Push         3
+8       Push         2
+9       Push         1
+10      Return
+11      Clear
 
 [test.lua]
-0       Push         2
-1       Push         1
-2       Var          b
-3       Var          a
-4       BindN        2
-5       Clear
-6       Push         33
-7       Push         22
-8       Push         11
-9       List
-10      Define       ~16
-11      Bind
-12      Clear
-13      Var          ~16
-14      Define       arr
-15      BindN        1
+0       Function     unpack
+1       Var          unpack
+2       Bind
+3       Clear
+4       Push         3
+5       Push         2
+6       Push         1
+7       List
+8       Define       ~23
+9       Bind
+10      Clear
+11      Var          ~23
+12      Var          unpack
+13      Call
+14      Define       ~24
+15      Bind
 16      Clear
-17      Var          arr
-18      Var          ipairs
-19      Call
-20      Define       ~17
-21      Bind
-22      Clear
-23      Var          ~17
-24      Unpack
-25      Define       ~20
-26      Define       ~19
-27      Define       ~18
-28      BindN        3
-29      Label        ~22:29
-30      Var          ~20
-31      Var          ~19
-32      Var          ~18
-33      Call
-34      Define       ~21
-35      Bind
-36      Clear
-37      Var          ~21
-38      Unpack
-39      Var          v
-40      Var          i
-41      BindN        2
-42      Clear
-43      Var          i
-44      Var          ~20
-45      Bind
-46      Clear
-47      Push         nil
-48      Var          ~20
-49      Equal
-50      JumpNot      ~27:53
-51      Jump         ~25:61
-52      Clear
-53      Label        ~27:53
-54      Clear
-55      Var          v
-56      Var          i
-57      Var          print
-58      Call
-59      Clear
-60      Jump         ~22:29
-61      Label        ~25:61
-62      Clear
+17      Var          ~24
+18      Unpack
+19      Var          print
+20      Call
+21      Clear
+22      Function     test1
+23      Var          test1
+24      Bind
+25      Clear
+26      Function     test2
+27      Var          test2
+28      Bind
+29      Clear
+30      Var          test2
+31      Call
+32      Define       ~26
+33      Bind
+34      Clear
+35      Var          ~26
+36      Unpack
+37      Var          print
+38      Call
+39      Clear
+40      Push         1
+41      Var          i
+42      Bind
+43      Clear
+44      Label        ~42:44
+45      Push         10
+46      Var          i
+47      Greater
+48      JumpIf       ~45:60
+49      Clear
+50      Var          i
+51      Var          print
+52      Call
+53      Clear
+54      Push         1
+55      Var          i
+56      Add
+57      Var          i
+58      Bind
+59      Jump         ~42:44
+60      Label        ~45:60
+61      Clear
 
 [output]
-1, 11
-2, 22
-3, 33
+1, 2, 3
+1, 2, 3, 4, 5
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10

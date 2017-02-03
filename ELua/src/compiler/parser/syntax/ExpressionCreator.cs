@@ -11,8 +11,12 @@ namespace ELua {
 			return new WordExExpression(list, position, len);
 		}
 
-		public static Expression CreateWordList(List<Expression> list, int position, int len) {
-			return new WordListExpression(list, position, len);
+		public static Expression CreateWordList1(List<Expression> list, int position, int len) {
+			return new WordList1Expression(list, position, len);
+		}
+
+		public static Expression CreateWordList2(List<Expression> list, int position, int len) {
+			return new WordList2Expression(list, position, len);
 		}
 
 		public static Expression CreateLeftEx(List<Expression> list, int position, int len) {

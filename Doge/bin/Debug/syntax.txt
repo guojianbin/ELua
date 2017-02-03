@@ -10,17 +10,18 @@ rvalue 	   	 := FunctionA,Paren,TableI,TableS,List,Property,Index,Call,Not,Lengt
 
 #begin syntax
 WordEx 		 := exp=Word .. ?;op=,
-WordList 	 := *;parser=WordEx;exp=WordEx;exclude_exp=WordList
+WordList1 	 := *;parser=WordEx;exp=WordEx;exclude_exp=WordList1
+WordList2 	 := +;parser=WordEx;exp=WordEx;exclude_exp=WordList2
 LeftEx 		 := is_left;parser=$lvalue$ .. ?;op=,
 LeftList1 	 := *;parser=LeftEx;exp=LeftEx;exclude_exp=LeftList1
 LeftList2 	 := +;parser=LeftEx;exp=LeftEx;exclude_exp=LeftList2
-RightEx 	 	 := is_right;parser=$rvalue$ .. ?;op=,
+RightEx 	 := is_right;parser=$rvalue$ .. ?;op=,
 RightList1 	 := *;parser=RightEx;exp=RightEx;exclude_exp=RightList1
 RightList2 	 := +;parser=RightEx;exp=RightEx;exclude_exp=RightList2
-KV1 			 := exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. ?;op=,
-KV2 			 := op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. ?;op=,
-KVList1 	 	 := +;parser=KV1;exp=KV1;exclude_exp=KVList1
-KVList2 	 	 := +;parser=KV2;exp=KV2;exclude_exp=KVList2
+KV1 		 := exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. ?;op=,
+KV2 		 := op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. ?;op=,
+KVList1 	 := +;parser=KV1;exp=KV1;exclude_exp=KVList1
+KVList2 	 := +;parser=KV2;exp=KV2;exclude_exp=KVList2
 Module 		 := +;is_stat;parser=$stats$
 Break 		 := keyword=break
 Do		  	 := keyword=do .. parser=Module;exp=Module .. keyword=end
@@ -28,11 +29,11 @@ While		 := keyword=while .. is_right;parser=$rvalue$ .. keyword=do .. parser=Mod
 ForN	   	 := keyword=for .. exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
 For	   		 := keyword=for .. exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
 ForEach	  	 := keyword=for .. parser=LeftList2;exp=LeftList2 .. keyword=in .. parser=RightList2;exp=RightList2 .. keyword=do .. parser=Module;exp=Module .. keyword=end
-DefineN	   	 := keyword=local .. parser=WordList;exp=WordList .. op=<eq> .. parser=RightList2;exp=RightList2
+DefineN	   	 := keyword=local .. parser=WordList2;exp=WordList2 .. op=<eq> .. parser=RightList2;exp=RightList2
 Return		 := keyword=return .. parser=RightList1;exp=RightList1
-FunctionA 	 := keyword=function .. op=( .. parser=WordList;exp=WordList .. op=) .. parser=Module;exp=Module .. keyword=end
-FunctionN 	 := keyword=function .. exp=Word .. op=( .. parser=WordList;exp=WordList .. op=) .. parser=Module;exp=Module .. keyword=end
-FunctionS 	 := keyword=function .. exp=Word .. op=. .. exp=Word .. op=( .. parser=WordList;exp=WordList .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionA 	 := keyword=function .. op=( .. parser=WordList1;exp=WordList1 .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionN 	 := keyword=function .. exp=Word .. op=( .. parser=WordList1;exp=WordList1 .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionS 	 := keyword=function .. exp=Word .. op=. .. exp=Word .. op=( .. parser=WordList1;exp=WordList1 .. op=) .. parser=Module;exp=Module .. keyword=end
 If   	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=end
 IfElse	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=else .. parser=Module;exp=Module .. keyword=end
 Paren	   	 := op=( .. is_right;parser=$rvalue$ .. op=)
@@ -45,11 +46,11 @@ Call 		 := is_right;parser=[Paren,Index] .. op=( .. parser=RightList1;exp=RightL
 Not    	   	 := keyword=not .. is_right;parser=[Paren,Call]
 Length 		 := op=# .. is_right;parser=[Paren,Call]
 Negate 	   	 := op=- .. is_right;parser=[Paren,Call]
-Power   	 	 := is_right;parser=[Paren,Negate] .. op=^ .. is_right;parser=[Paren,Negate]
+Power   	 := is_right;parser=[Paren,Negate] .. op=^ .. is_right;parser=[Paren,Negate]
 Multiply   	 := is_right;parser=[Paren,Negate] .. op=* .. is_right;parser=[Paren,Negate]
 Division   	 := is_right;parser=[Paren,Negate] .. op=/ .. is_right;parser=[Paren,Negate]
 Mod		   	 := is_right;parser=[Paren,Negate] .. op=% .. is_right;parser=[Paren,Negate]
-Add 	   	 	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
+Add 	   	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
 Subtract   	 := is_right;parser=[Paren,Mod] .. op=- .. is_right;parser=[Paren,Mod]
 Concat 	   	 := is_right;parser=[Paren,Subtract] .. op=. .. op=. .. is_right;parser=[Paren,Subtract]
 Less 	   	 := is_right;parser=[Paren,Subtract] .. op=< .. is_right;parser=[Paren,Subtract]

@@ -28,19 +28,54 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class WordListExpression : Expression {
+	public class WordList1Expression : Expression {
 
 		public List<Expression> itemsList;
 
-		public WordListExpression(List<Expression> list, int position, int len) {
-			type = Type.WordList;
+		public WordList1Expression(List<Expression> list, int position, int len) {
+			type = Type.WordList1;
 			itemsList = new List<Expression>();
 			for (var i = 0; i < len; i++) {
 				itemsList.Add(((WordExExpression)list[position + i]).targetExp);
 			}
 		}
 
-		public WordListExpression(List<Expression> itemsList) {
+		public string[] ToParams() {
+			return itemsList.Cast<WordExpression>().Select(t => t.value).ToArray();
+		}
+
+		public override void Generate(ModuleContext context) {
+			for (var i = itemsList.Count - 1; i >= 0; i--) {
+				itemsList[i].Generate(context);
+			}
+		}
+
+		public override string GetDebugInfo() {
+			return DebugInfo.ToString(itemsList.ToArray());
+		}
+
+		public override string ToString() {
+			return itemsList.FormatListString();
+		}
+
+	}
+
+	/// <summary>
+	/// @author Easily
+	/// </summary>
+	public class WordList2Expression : Expression {
+
+		public List<Expression> itemsList;
+
+		public WordList2Expression(List<Expression> list, int position, int len) {
+			type = Type.WordList2;
+			itemsList = new List<Expression>();
+			for (var i = 0; i < len; i++) {
+				itemsList.Add(((WordExExpression)list[position + i]).targetExp);
+			}
+		}
+
+		public WordList2Expression(List<Expression> itemsList) {
 			this.itemsList = itemsList;
 		}
 
@@ -48,10 +83,6 @@ namespace ELua {
 			for (var i = 0; i < itemsList.Count; i++) {
 				itemsList[i] = new LocalExpression(itemsList[i]);
 			}
-		}
-
-		public string[] ToParams() {
-			return itemsList.Cast<WordExpression>().Select(t => t.value).ToArray();
 		}
 
 		public override void Generate(ModuleContext context) {

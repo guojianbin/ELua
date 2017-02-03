@@ -157,7 +157,8 @@
     <Compile Include="src\compiler\parser\syntax\TableSParser.cs" />
     <Compile Include="src\compiler\parser\syntax\WhileParser.cs" />
     <Compile Include="src\compiler\parser\syntax\WordExParser.cs" />
-    <Compile Include="src\compiler\parser\syntax\WordListParser.cs" />
+    <Compile Include="src\compiler\parser\syntax\WordList1Parser.cs" />
+    <Compile Include="src\compiler\parser\syntax\WordList2Parser.cs" />
     <Compile Include="src\compiler\scanner\Scanner.cs" />
     <Compile Include="src\compiler\scanner\Token.cs" />
     <Compile Include="src\Lua.cs" />

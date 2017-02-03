@@ -303,7 +303,7 @@ end
 test2(1)
 
 b = {b={b={b={b={b=function()
-	print(""haha"")
+	print(111)
 end}}}}}
 b.b.b.b.b.b()
 ";

@@ -3,7 +3,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public static class WordListParser {
+	public static class WordList2Parser {
 
 		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -12,15 +12,17 @@ namespace ELua {
 			var count = 0;
 			var isMissed = false;
 
-			if (list[index].type == Expression.Type.WordList) {
+			if (list[index].type == Expression.Type.WordList2) {
 				return false;
 			}
+			count = 0;
 			while (true) {
 			while (WordExParser.Parse(context, index));
 			if (context.isMissed) {
 				context.isMissed = false;
 				offset += 1;
 				index = position + offset;
+				count += 1;
 				break;
 			}
 			if (list[index].type != Expression.Type.WordEx) {
@@ -30,8 +32,12 @@ namespace ELua {
 			}
 			offset += 1;
 			index = position + offset;
+			count += 1;
 			}
-			context.Insert(position, ExpressionCreator.CreateWordList(list, position, offset));
+			if (count == 0) {
+				return false;
+			}
+			context.Insert(position, ExpressionCreator.CreateWordList2(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;
 		}

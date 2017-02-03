@@ -65,8 +65,8 @@ namespace ELua {
 			Unpack, // unpack(x) -> x,y,z
 			
 			// utility
-			WordEx, WordList,
-			LeftEx, LeftList1, LeftList2,
+			WordEx, WordList1, WordList2,
+            LeftEx, LeftList1, LeftList2,
 			RightEx, RightList1, RightList2,
 			KV1, KVList1,
 			KV2, KVList2,

@@ -16,7 +16,7 @@ namespace ELua {
 			type = Type.Function;
 			debugInfo = list[position].debugInfo;
 			nameExp = (WordExpression)list[position + 1];
-			argsList = ((WordListExpression)list[position + 3]).ToParams();
+			argsList = ((WordList1Expression)list[position + 3]).ToParams();
             moduleExp = list[position + 5];
         }
 

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace ELua {
 
 	/// <summary>
@@ -9,14 +7,6 @@ namespace ELua {
 
 		public Expression item1Exp;
 		public Expression item2Exp;
-
-		public DefineExpression(List<Expression> list, int position, int len) {
-			isStatement = true;
-			type = Type.Define;
-			debugInfo = list[position].debugInfo;
-			item1Exp = new LocalExpression(list[position + 1]);
-			item2Exp = list[position + 3];
-		}
 
 		public DefineExpression(Expression item1Exp, Expression item2Exp) {
 			isStatement = true;
