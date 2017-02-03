@@ -11,6 +11,7 @@ namespace ELua {
 		public LVM vm;
 	    public int level;
 		public List<Expression> list;
+		public bool isMissed;
 		public bool isCutting;
 		public Expression cuttingExp;
 

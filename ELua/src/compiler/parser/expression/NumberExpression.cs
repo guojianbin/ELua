@@ -23,7 +23,11 @@ namespace ELua {
             this.debugInfo = debugInfo;
         }
 
-	    public override void Generate(ModuleContext context) {
+		public override void Extract(SyntaxContext context) {
+			// ignored
+		}
+
+		public override void Generate(ModuleContext context) {
 			context.Add(new ByteCode { opCode = ByteCode.OpCode.Push, opArg = context.vm.GetNumber(value) });
 		}
 

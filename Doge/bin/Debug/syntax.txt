@@ -1,56 +1,55 @@
 ﻿#begin exprexsion
-ReturnN,Return,FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Invoke,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+Return,FunctionA,Paren,TableI,TableS,List,Property,Index,Call,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end exprexsion
 
 #begin define
-stats 		 := ReturnN,Return,Break,Do,While,ForN,For,ForEach,FunctionN,FunctionNN,FunctionS,FunctionSN,If,IfElse,Define,DefineN,Bind,BindN,Invoke,Call,CallN
+stats 		 := Return,Break,Do,While,ForN,For,ForEach,FunctionN,FunctionS,If,IfElse,DefineN,Call,Bind,BindN
 lvalue 	   	 := Property,Index
-rvalue 	   	 := FunctionA,FunctionAN,Paren,List,ListN,TableSN,TableIN,Property,Index,Invoke,Call,CallN,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
+rvalue 	   	 := FunctionA,Paren,TableI,TableS,List,Property,Index,Call,Not,Length,Negate,Power,Multiply,Division,Mod,Add,Subtract,Concat,Less,Greater,LessEqual,GreaterEqual,Equal,NotEqual,And,Or
 #end define
 
 #begin syntax
-WordEx 		 := is_left;exp=Word .. ?;op=,
+WordEx 		 := exp=Word .. ?;op=,
+WordList 	 := *;parser=WordEx;exp=WordEx;exclude_exp=WordList
 LeftEx 		 := is_left;parser=$lvalue$ .. ?;op=,
-RightEx 	 := is_right;parser=$rvalue$ .. ?;op=,
+LeftList1 	 := *;parser=LeftEx;exp=LeftEx;exclude_exp=LeftList1
+LeftList2 	 := +;parser=LeftEx;exp=LeftEx;exclude_exp=LeftList2
+RightEx 	 	 := is_right;parser=$rvalue$ .. ?;op=,
+RightList1 	 := *;parser=RightEx;exp=RightEx;exclude_exp=RightList1
+RightList2 	 := +;parser=RightEx;exp=RightEx;exclude_exp=RightList2
+KV1 			 := exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. ?;op=,
+KV2 			 := op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. ?;op=,
+KVList1 	 	 := +;parser=KV1;exp=KV1;exclude_exp=KVList1
+KVList2 	 	 := +;parser=KV2;exp=KV2;exclude_exp=KVList2
 Module 		 := +;is_stat;parser=$stats$
 Break 		 := keyword=break
 Do		  	 := keyword=do .. parser=Module;exp=Module .. keyword=end
 While		 := keyword=while .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
-ForN	   	 := keyword=for .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
-For	   		 := keyword=for .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
-ForEach	  	 := keyword=for .. <;is_left;exp=Word .. op=,;> .. keyword=in .. <;is_right;parser=$rvalue$ .. op=,;> .. keyword=do .. parser=Module;exp=Module .. keyword=end
-Define	   	 := keyword=local .. is_left;exp=Word .. op=<eq> .. is_right;parser=$rvalue$
-DefineN	   	 := keyword=local .. <;is_left;exp=Word .. op=,;> .. op=<eq> .. <;is_right;parser=$rvalue$ .. op=,;>
-Bind 	   	 := is_left;parser=$lvalue$ .. op=<eq> .. is_right;parser=$rvalue$
-BindN 	   	 := <;is_left;parser=$lvalue$ .. op=,;> .. op=<eq> .. <;is_right;parser=$rvalue$ .. op=,;>
-ReturnN		 := keyword=return .. <;is_right;parser=$rvalue$ .. op=,;>
-Return 	   	 := keyword=return
-FunctionA 	 := keyword=function .. op=( .. op=) .. parser=Module;exp=Module .. keyword=end
-FunctionAN 	 := keyword=function .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. parser=Module;exp=Module .. keyword=end
-FunctionN 	 := keyword=function .. is_left;exp=Word .. op=( .. op=) .. parser=Module;exp=Module .. keyword=end
-FunctionNN 	 := keyword=function .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. parser=Module;exp=Module .. keyword=end
-FunctionS 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. op=) .. parser=Module;exp=Module .. keyword=end
-FunctionSN 	 := keyword=function .. is_left;exp=Word .. op=. .. is_left;exp=Word .. op=( .. <;is_left;exp=Word .. op=,;> .. op=) .. parser=Module;exp=Module .. keyword=end
+ForN	   	 := keyword=for .. exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
+For	   		 := keyword=for .. exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=, .. is_right;parser=$rvalue$ .. keyword=do .. parser=Module;exp=Module .. keyword=end
+ForEach	  	 := keyword=for .. parser=LeftList2;exp=LeftList2 .. keyword=in .. parser=RightList2;exp=RightList2 .. keyword=do .. parser=Module;exp=Module .. keyword=end
+DefineN	   	 := keyword=local .. parser=WordList;exp=WordList .. op=<eq> .. parser=RightList2;exp=RightList2
+Return		 := keyword=return .. parser=RightList1;exp=RightList1
+FunctionA 	 := keyword=function .. op=( .. parser=WordList;exp=WordList .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionN 	 := keyword=function .. exp=Word .. op=( .. parser=WordList;exp=WordList .. op=) .. parser=Module;exp=Module .. keyword=end
+FunctionS 	 := keyword=function .. exp=Word .. op=. .. exp=Word .. op=( .. parser=WordList;exp=WordList .. op=) .. parser=Module;exp=Module .. keyword=end
 If   	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=end
 IfElse	   	 := keyword=if .. is_right;parser=$rvalue$ .. keyword=then .. parser=Module;exp=Module .. keyword=else .. parser=Module;exp=Module .. keyword=end
 Paren	   	 := op=( .. is_right;parser=$rvalue$ .. op=)
-List 	   	 := op={ .. op=}
-ListN 	   	 := op={ .. <;is_right;parser=$rvalue$ .. op=,;> .. op=}
-TableSN 	 := op={ .. <;exp=Word .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
-TableIN 	 := op={ .. <;op=[ .. is_right;parser=$rvalue$ .. op=] .. op=<eq> .. is_right;parser=$rvalue$ .. op=,;> .. op=}
-Property   	 := is_right;parser=[Paren,TableIN] .. op=. .. exp=Word
-Index 	   	 := is_right;parser=[Paren,TableIN] .. op=[ .. is_right;parser=$rvalue$ .. op=]
-Invoke 		 := is_right;parser=[Paren,Index] .. op=( .. *;parser=RightEx;exp=RightEx .. op=)
-Call 	   	 := is_right;parser=[Paren,Index] .. op=( .. op=)
-CallN 	   	 := is_right;parser=[Paren,Index] .. op=( .. <;is_right;parser=$rvalue$ .. op=,;> .. op=)
-Not    	   	 := keyword=not .. is_right;parser=[Paren,CallN]
-Length 		 := op=# .. is_right;parser=[Paren,CallN]
-Negate 	   	 := op=- .. is_right;parser=[Paren,CallN]
-Power   	 := is_right;parser=[Paren,Negate] .. op=^ .. is_right;parser=[Paren,Negate]
+TableI 	 	 := op={ .. parser=KVList1;exp=KVList1 .. op=}
+TableS 	 	 := op={ .. parser=KVList2;exp=KVList2 .. op=}
+List 	   	 := op={ .. parser=RightList1;exp=RightList1 .. op=}
+Property   	 := is_right;parser=[Paren,List] .. op=. .. exp=Word
+Index 	   	 := is_right;parser=[Paren,List] .. op=[ .. is_right;parser=$rvalue$ .. op=]
+Call 		 := is_right;parser=[Paren,Index] .. op=( .. parser=RightList1;exp=RightList1 .. op=)
+Not    	   	 := keyword=not .. is_right;parser=[Paren,Call]
+Length 		 := op=# .. is_right;parser=[Paren,Call]
+Negate 	   	 := op=- .. is_right;parser=[Paren,Call]
+Power   	 	 := is_right;parser=[Paren,Negate] .. op=^ .. is_right;parser=[Paren,Negate]
 Multiply   	 := is_right;parser=[Paren,Negate] .. op=* .. is_right;parser=[Paren,Negate]
 Division   	 := is_right;parser=[Paren,Negate] .. op=/ .. is_right;parser=[Paren,Negate]
 Mod		   	 := is_right;parser=[Paren,Negate] .. op=% .. is_right;parser=[Paren,Negate]
-Add 	   	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
+Add 	   	 	 := is_right;parser=[Paren,Mod] .. op=+ .. is_right;parser=[Paren,Mod]
 Subtract   	 := is_right;parser=[Paren,Mod] .. op=- .. is_right;parser=[Paren,Mod]
 Concat 	   	 := is_right;parser=[Paren,Subtract] .. op=. .. op=. .. is_right;parser=[Paren,Subtract]
 Less 	   	 := is_right;parser=[Paren,Subtract] .. op=< .. is_right;parser=[Paren,Subtract]
@@ -61,4 +60,6 @@ Equal	   	 := is_right;parser=[Paren,Subtract] .. op=<eq> .. op=<eq> .. is_right
 NotEqual   	 := is_right;parser=[Paren,Subtract] .. op=~ .. op=<eq> .. is_right;parser=[Paren,Subtract]
 And       	 := is_right;parser=[Paren,NotEqual] .. keyword=and .. is_right;parser=[Paren,NotEqual]
 Or        	 := is_right;parser=[Paren,And] .. keyword=or .. is_right;parser=[Paren,And]
+Bind 	   	 := is_left;parser=$lvalue$ .. op=<eq> .. is_right;parser=$rvalue$
+BindN 	   	 := parser=LeftList2;exp=LeftList2 .. op=<eq> .. parser=RightList2;exp=RightList2
 #end syntax

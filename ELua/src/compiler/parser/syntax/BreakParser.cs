@@ -10,13 +10,15 @@ namespace ELua {
 			var offset = 0;
 			var index = position;
 			var count = 0;
+			var isMissed = false;
 
 			if (!ParserHelper.IsKeyword(list[index], "break")) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
-			
 			context.Insert(position, ExpressionCreator.CreateBreak(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;

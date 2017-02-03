@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -8,45 +7,41 @@ namespace ELua {
 	/// </summary>
 	public class BindNExpression : Expression {
 
-		public List<Expression> items1List;
-		public List<Expression> items2List;
+		public Expression leftList;
+		public Expression rightList;
 
 		public BindNExpression(List<Expression> list, int position, int len) {
 			isStatement = true;
-			type = Type.Define;
+			type = Type.Bind;
 			debugInfo = list[position].debugInfo;
-			items1List = list.Skip(position).TakeWhile(t => !ParserHelper.IsOperator(t, "=")).Where(t => t.isLeftValue).ToList();
-			items2List = list.Skip(position + items1List.Count * 2).Take(len - items1List.Count * 2).Where(t => t.isRightValue).ToList();
-		    foreach (var expression in items1List) {
-		        expression.isBinder = true;
-		    }
+			leftList = list[position];
+			rightList = list[position + 2];
 		}
 
-		public override void Extract(SyntaxContext context) {
-			for (var i = 0; i < items1List.Count; i++) {
-				items1List[i] = ParserHelper.Extract(context, items1List[i]);
-			}
-			for (var i = 0; i < items2List.Count; i++) {
-				items2List[i] = ParserHelper.Extract(context, items2List[i]);
-			}
+	    public BindNExpression(Expression leftList, Expression rightList) {
+            isStatement = true;
+            type = Type.Bind;
+            this.leftList = leftList;
+	        this.rightList = rightList;
+	    }
+
+	    public override void Extract(SyntaxContext context) {
+			leftList.Extract(context);
+			rightList.Extract(context);
 		}
 
 		public override void Generate(ModuleContext context) {
-			for (var i = items2List.Count - 1; i >= 0; i--) {
-				items2List[i].Generate(context);
-			}
-			for (var i = items1List.Count - 1; i >= 0; i--) {
-				items1List[i].Generate(context);
-			}
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.BindN, opArg = new LuaInteger(context.vm, items1List.Count) });
+			rightList.Generate(context);
+			leftList.Generate(context);
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.BindN, opArg = new LuaInteger(context.vm, ((LeftList2Expression)leftList).itemsList.Count) });
 		}
 
 		public override string GetDebugInfo() {
-			return DebugInfo.ToString(items1List.Concat(items2List).ToArray());
+			return DebugInfo.ToString(leftList, rightList);
 		}
 
 		public override string ToString() {
-			return string.Format("{0} = {1}", items1List.FormatListString(), items2List.FormatListString());
+			return string.Format("{0} = {1}", leftList, rightList);
 		}
 
 	}

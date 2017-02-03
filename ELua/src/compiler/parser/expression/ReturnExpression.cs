@@ -7,27 +7,30 @@ namespace ELua {
 	/// </summary>
 	public class ReturnExpression : Expression {
 
+		public Expression paramsExp;
+
 		public ReturnExpression(List<Expression> list, int position, int len) {
 			isStatement = true;
 			type = Type.Return;
 			debugInfo = list[position].debugInfo;
+			paramsExp = list[position + 1];
 		}
 
 		public override void Extract(SyntaxContext context) {
-			// ignored
-		}
+			paramsExp.Extract(context);
+        }
 
-		public override void Generate(ModuleContext context) {
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Clear });
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.Return });
-		}
+        public override void Generate(ModuleContext context) {
+			paramsExp.Generate(context);
+            context.Add(new ByteCode { opCode = ByteCode.OpCode.Return });
+        }
 
 		public override string GetDebugInfo() {
-			return DebugInfo.ToString(this);
+			return DebugInfo.ToString(paramsExp);
 		}
 
 		public override string ToString() {
-			return "return";
+			return string.Format("return {0}", paramsExp);
 		}
 
 	}

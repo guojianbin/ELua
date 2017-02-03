@@ -8,30 +8,54 @@ namespace ELua {
     public static class ExpressionCreator {
 
 		public static Expression CreateWordEx(List<Expression> list, int position, int len) {
-			return new ModuleExpression(list, position, len);
+			return new WordExExpression(list, position, len);
+		}
+
+		public static Expression CreateWordList(List<Expression> list, int position, int len) {
+			return new WordListExpression(list, position, len);
 		}
 
 		public static Expression CreateLeftEx(List<Expression> list, int position, int len) {
-			return new ModuleExpression(list, position, len);
+			return new LeftExExpression(list, position, len);
+		}
+
+		public static Expression CreateLeftList1(List<Expression> list, int position, int len) {
+			return new LeftList1Expression(list, position, len);
+		}
+
+		public static Expression CreateLeftList2(List<Expression> list, int position, int len) {
+			return new LeftList2Expression(list, position, len);
 		}
 
 		public static Expression CreateRightEx(List<Expression> list, int position, int len) {
-			return new RightExExpression(list[position]);
+			return new RightExExpression(list, position, len);
 		}
 
-		public static Expression CreateInvoke(List<Expression> list, int position, int len) {
-			return new InvokeExpression(list, position, len);
+		public static Expression CreateRightList1(List<Expression> list, int position, int len) {
+			return new RightList1Expression(list, position, len);
+		}
+
+		public static Expression CreateRightList2(List<Expression> list, int position, int len) {
+			return new RightList2Expression(list, position, len);
+		}
+
+		public static Expression CreateKV1(List<Expression> list, int position, int len) {
+			return new KV1Expression(list, position, len);
+		}
+
+		public static Expression CreateKV2(List<Expression> list, int position, int len) {
+			return new KV2Expression(list, position, len);
+		}
+
+		public static Expression CreateKVList1(List<Expression> list, int position, int len) {
+			return new KVList1Expression(list, position, len);
+		}
+
+		public static Expression CreateKVList2(List<Expression> list, int position, int len) {
+			return new KVList2Expression(list, position, len);
 		}
 
 		public static Expression CreateModule(List<Expression> list, int position, int len) {
-			return new ModuleExpression(list, position, len);
-		}
-
-		public static Expression CreateChunk(List<Expression> list, int position, int len) {
-			return new ModuleExpression(list, position, len);
-		}
-
-		public static Expression CreateFile(List<Expression> list, int position, int len) {
 			return new ModuleExpression(list, position, len);
 		}
 
@@ -59,24 +83,8 @@ namespace ELua {
 			return new ForEachExpression(list, position, len);
 		}
 
-		public static Expression CreateDefine(List<Expression> list, int position, int len) {
-			return new DefineExpression(list, position, len);
-		}
-
 		public static Expression CreateDefineN(List<Expression> list, int position, int len) {
 			return new DefineNExpression(list, position, len);
-		}
-
-		public static Expression CreateBind(List<Expression> list, int position, int len) {
-			return new BindExpression(list, position, len);
-		}
-
-		public static Expression CreateBindN(List<Expression> list, int position, int len) {
-			return new BindNExpression(list, position, len);
-		}
-
-		public static Expression CreateReturnN(List<Expression> list, int position, int len) {
-			return new ReturnNExpression(list, position, len);
 		}
 
 		public static Expression CreateReturn(List<Expression> list, int position, int len) {
@@ -87,24 +95,12 @@ namespace ELua {
 			return new FunctionAExpression(list, position, len);
 		}
 
-		public static Expression CreateFunctionAN(List<Expression> list, int position, int len) {
-			return new FunctionANExpression(list, position, len);
-		}
-
 		public static Expression CreateFunctionN(List<Expression> list, int position, int len) {
 			return new FunctionNExpression(list, position, len);
 		}
 
-		public static Expression CreateFunctionNN(List<Expression> list, int position, int len) {
-			return new FunctionNNExpression(list, position, len);
-		}
-
 		public static Expression CreateFunctionS(List<Expression> list, int position, int len) {
 			return new FunctionSExpression(list, position, len);
-		}
-
-		public static Expression CreateFunctionSN(List<Expression> list, int position, int len) {
-			return new FunctionSNExpression(list, position, len);
 		}
 
 		public static Expression CreateIf(List<Expression> list, int position, int len) {
@@ -119,20 +115,16 @@ namespace ELua {
 			return new ParenExpression(list, position, len);
 		}
 
+		public static Expression CreateTableI(List<Expression> list, int position, int len) {
+			return new TableIExpression(list, position, len);
+		}
+
+		public static Expression CreateTableS(List<Expression> list, int position, int len) {
+			return new TableSExpression(list, position, len);
+		}
+
 		public static Expression CreateList(List<Expression> list, int position, int len) {
 			return new ListExpression(list, position, len);
-		}
-
-		public static Expression CreateListN(List<Expression> list, int position, int len) {
-			return new ListNExpression(list, position, len);
-		}
-
-		public static Expression CreateTableSN(List<Expression> list, int position, int len) {
-			return new TableSNExpression(list, position, len);
-		}
-
-		public static Expression CreateTableIN(List<Expression> list, int position, int len) {
-			return new TableINExpression(list, position, len);
 		}
 
 		public static Expression CreateProperty(List<Expression> list, int position, int len) {
@@ -145,10 +137,6 @@ namespace ELua {
 
 		public static Expression CreateCall(List<Expression> list, int position, int len) {
 			return new CallExpression(list, position, len);
-		}
-
-		public static Expression CreateCallN(List<Expression> list, int position, int len) {
-			return new CallNExpression(list, position, len);
 		}
 
 		public static Expression CreateNot(List<Expression> list, int position, int len) {
@@ -221,6 +209,14 @@ namespace ELua {
 
 		public static Expression CreateOr(List<Expression> list, int position, int len) {
 			return new OrExpression(list, position, len);
+		}
+
+		public static Expression CreateBind(List<Expression> list, int position, int len) {
+			return new BindExpression(list, position, len);
+		}
+
+		public static Expression CreateBindN(List<Expression> list, int position, int len) {
+			return new BindNExpression(list, position, len);
 		}
 
     }

@@ -1,15 +1,86 @@
 [source]
-print(1)
+a, b = 1, 2
+local arr = { 11, 22, 33 }
+for i, v in ipairs(arr) do
+print(i, v)
+end
 
 [extract]
-print(1)
-complie 62ms
+a, b = 1, 2
+local ~16 = { 11, 22, 33 }
+local arr = ~16
+local ~17 = ipairs(arr)
+for i, v in unpack(~17) do
+print(i, v)
+end
+complie 71ms
 
 [test.lua]
-0       Push         1
-1       Var          print
-2       Call
-3       Clear
+0       Push         2
+1       Push         1
+2       Var          b
+3       Var          a
+4       BindN        2
+5       Clear
+6       Push         33
+7       Push         22
+8       Push         11
+9       List
+10      Define       ~16
+11      Bind
+12      Clear
+13      Var          ~16
+14      Define       arr
+15      BindN        1
+16      Clear
+17      Var          arr
+18      Var          ipairs
+19      Call
+20      Define       ~17
+21      Bind
+22      Clear
+23      Var          ~17
+24      Unpack
+25      Define       ~20
+26      Define       ~19
+27      Define       ~18
+28      BindN        3
+29      Label        ~22:29
+30      Var          ~20
+31      Var          ~19
+32      Var          ~18
+33      Call
+34      Define       ~21
+35      Bind
+36      Clear
+37      Var          ~21
+38      Unpack
+39      Var          v
+40      Var          i
+41      BindN        2
+42      Clear
+43      Var          i
+44      Var          ~20
+45      Bind
+46      Clear
+47      Push         nil
+48      Var          ~20
+49      Equal
+50      JumpNot      ~27:53
+51      Jump         ~25:61
+52      Clear
+53      Label        ~27:53
+54      Clear
+55      Var          v
+56      Var          i
+57      Var          print
+58      Call
+59      Clear
+60      Jump         ~22:29
+61      Label        ~25:61
+62      Clear
 
 [output]
-1
+1, 11
+2, 22
+3, 33

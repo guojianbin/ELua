@@ -13,9 +13,6 @@ namespace ELua {
 		public enum Type : byte {
 
 			Undef,
-            RightEx,
-            LeftEx,
-            WordEx,
 
 			Word, // var
 			Keyword, // for,if,else,end...
@@ -66,6 +63,13 @@ namespace ELua {
 			Return, // return x
 			Function, // function x() end
 			Unpack, // unpack(x) -> x,y,z
+			
+			// utility
+			WordEx, WordList,
+			LeftEx, LeftList1, LeftList2,
+			RightEx, RightList1, RightList2,
+			KV1, KVList1,
+			KV2, KVList2,
 
 		}
 

@@ -10,37 +10,37 @@ namespace ELua {
 			var offset = 0;
 			var index = position;
 			var count = 0;
+			var isMissed = false;
 
 			if (!ParserHelper.IsKeyword(list[index], "for")) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			if (list[index].type != Expression.Type.Word) {
 				return false;
-			}
-			if (!list[index].isLeftValue) {
-				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsOperator(list[index], "=")) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			while (FunctionAParser.Parse(context, index));
-			while (FunctionANParser.Parse(context, index));
 			while (ParenParser.Parse(context, index));
+			while (TableIParser.Parse(context, index));
+			while (TableSParser.Parse(context, index));
 			while (ListParser.Parse(context, index));
-			while (ListNParser.Parse(context, index));
-			while (TableSNParser.Parse(context, index));
-			while (TableINParser.Parse(context, index));
 			while (PropertyParser.Parse(context, index));
 			while (IndexParser.Parse(context, index));
-			while (InvokeParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
-			while (CallNParser.Parse(context, index));
 			while (NotParser.Parse(context, index));
 			while (LengthParser.Parse(context, index));
 			while (NegateParser.Parse(context, index));
@@ -61,26 +61,26 @@ namespace ELua {
 			while (OrParser.Parse(context, index));
 			if (!list[index].isRightValue) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsOperator(list[index], ",")) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			while (FunctionAParser.Parse(context, index));
-			while (FunctionANParser.Parse(context, index));
 			while (ParenParser.Parse(context, index));
+			while (TableIParser.Parse(context, index));
+			while (TableSParser.Parse(context, index));
 			while (ListParser.Parse(context, index));
-			while (ListNParser.Parse(context, index));
-			while (TableSNParser.Parse(context, index));
-			while (TableINParser.Parse(context, index));
 			while (PropertyParser.Parse(context, index));
 			while (IndexParser.Parse(context, index));
-			while (InvokeParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
-			while (CallNParser.Parse(context, index));
 			while (NotParser.Parse(context, index));
 			while (LengthParser.Parse(context, index));
 			while (NegateParser.Parse(context, index));
@@ -101,26 +101,26 @@ namespace ELua {
 			while (OrParser.Parse(context, index));
 			if (!list[index].isRightValue) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsOperator(list[index], ",")) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			while (FunctionAParser.Parse(context, index));
-			while (FunctionANParser.Parse(context, index));
 			while (ParenParser.Parse(context, index));
+			while (TableIParser.Parse(context, index));
+			while (TableSParser.Parse(context, index));
 			while (ListParser.Parse(context, index));
-			while (ListNParser.Parse(context, index));
-			while (TableSNParser.Parse(context, index));
-			while (TableINParser.Parse(context, index));
 			while (PropertyParser.Parse(context, index));
 			while (IndexParser.Parse(context, index));
-			while (InvokeParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
-			while (CallNParser.Parse(context, index));
 			while (NotParser.Parse(context, index));
 			while (LengthParser.Parse(context, index));
 			while (NegateParser.Parse(context, index));
@@ -141,26 +141,33 @@ namespace ELua {
 			while (OrParser.Parse(context, index));
 			if (!list[index].isRightValue) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsKeyword(list[index], "do")) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			while (ModuleParser.Parse(context, index));
 			if (list[index].type != Expression.Type.Module) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsKeyword(list[index], "end")) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
-			
 			context.Insert(position, ExpressionCreator.CreateForN(list, position, offset));
 			context.Remove(position + 1, offset);
 			return true;

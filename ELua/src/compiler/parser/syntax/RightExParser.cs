@@ -10,19 +10,16 @@ namespace ELua {
 			var offset = 0;
 			var index = position;
 			var count = 0;
+			var isMissed = false;
 
 			while (FunctionAParser.Parse(context, index));
-			while (FunctionANParser.Parse(context, index));
 			while (ParenParser.Parse(context, index));
+			while (TableIParser.Parse(context, index));
+			while (TableSParser.Parse(context, index));
 			while (ListParser.Parse(context, index));
-			while (ListNParser.Parse(context, index));
-			while (TableSNParser.Parse(context, index));
-			while (TableINParser.Parse(context, index));
 			while (PropertyParser.Parse(context, index));
 			while (IndexParser.Parse(context, index));
-			while (InvokeParser.Parse(context, index));
 			while (CallParser.Parse(context, index));
-			while (CallNParser.Parse(context, index));
 			while (NotParser.Parse(context, index));
 			while (LengthParser.Parse(context, index));
 			while (NegateParser.Parse(context, index));
@@ -43,18 +40,27 @@ namespace ELua {
 			while (OrParser.Parse(context, index));
 			if (!list[index].isRightValue) {
 				return false;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
 			if (!ParserHelper.IsOperator(list[index], ",")) {
-				offset -= 1;
-				index = position + offset;
+				isMissed = true;
+				context.isMissed = true;
+			} else {
+				// ignored
 			}
 			offset += 1;
 			index = position + offset;
-			
+			if (isMissed) {
+				offset -= 1;
+			}
 			context.Insert(position, ExpressionCreator.CreateRightEx(list, position, offset));
 			context.Remove(position + 1, offset);
+			if (isMissed) {
+				return false;
+			}
 			return true;
 		}
 

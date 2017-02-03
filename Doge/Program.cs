@@ -10,7 +10,6 @@ namespace Doge {
 	public static class Program {
 
 		public static readonly Regex defReg = new Regex(@"\$(\w*?)\$");
-		public static readonly Regex rangeReg = new Regex(@"\[(\w+?),(\w+?)\]");
 		public const string syntaxRoot = "../../../ELua/src/compiler/parser/syntax";
 
 		public static void Main() {
@@ -23,8 +22,8 @@ namespace Doge {
 			var tempDict = ParseTemp(tempStr);
 
 			WriteParser(syntaxDict, defDict, expDict, tempDict);
+			WriteCreators(syntaxDict, tempDict);
             // WritePools(syntaxDict, tempDict);
-            // WriteCreators(syntaxDict, tempDict);
 		}
 
 		private static void WriteParser(Dictionary<string, string> syntaxDict, Dictionary<string, string> defDict, Dictionary<string, int> expDict, Dictionary<string, string> tempDict) {
@@ -69,7 +68,7 @@ namespace Doge {
 	            putSb.Append('\n');
                 putSb.Append('\n');
             }
-	        var content = tempDict["pool"].Replace("$pool_list$", poolSb.ToString()).Replace("$get_parser$", getSb.ToString()).Replace("$put_parser$", putSb.ToString());
+	        var content = tempDict["pool_file"].Replace("$pool_list$", poolSb.ToString()).Replace("$get_parser$", getSb.ToString()).Replace("$put_parser$", putSb.ToString());
 	        var filePath = string.Format("{0}/ParserPools.cs", syntaxRoot);
             File.WriteAllText(filePath, content);
 	    }
@@ -138,13 +137,19 @@ namespace Doge {
 			}
 
 			public string Generate(Dictionary<string, string> tempDict) {
-				var fileTemp = tempDict["file"];
+				var fileTemp = tempDict["parser_file"];
 				var srcStr = fileTemp.Replace("$name$", name);
 				var sb = new StringBuilder();
 				for (var i = 0; i < items.Count; i++) {
 					sb.Append(items[i].Generate(tempDict, i));
 				}
-				sb.Remove(sb.Length - 1, 1);
+				sb.Append(tempDict["create_exp"].Replace("$name$", name));
+				sb.Append('\n');
+				if (items.Last().values.ContainsKey("?")) {
+					sb.Append(tempDict["missed_ret"]);
+					sb.Append('\n');
+				}
+				sb.Append(tempDict["ret_true"]);
 				srcStr = srcStr.Replace("$body$", sb.ToString());
 				return srcStr;
 			}
@@ -179,12 +184,11 @@ namespace Doge {
 							values.Add(data[0], data[1].Replace(match.Groups[0].Value, defDict[match.Groups[1].Value]));
 						} else {
 							var valueStr = data[1].Replace("<eq>", "=");
-							match = rangeReg.Match(valueStr);
-							if (!match.Success) {
-								values.Add(data[0], valueStr);
-							} else {
-								var begin = expDict[match.Groups[1].Value];
-								var end = expDict[match.Groups[2].Value];
+							if (valueStr.StartsWith("[") && valueStr.EndsWith("]")) {
+								var rangeStr = valueStr.Substring(1, valueStr.Length - 2);
+								var rangeArr = rangeStr.Split(',');
+								var begin = expDict[rangeArr[0]];
+								var end = expDict[rangeArr[1]];
 								var sb = new StringBuilder();
 								foreach (var t in expDict.Where(t => t.Value >= begin && t.Value <= end)) {
 									sb.Append(t.Key);
@@ -192,6 +196,8 @@ namespace Doge {
 								}
 								sb.Remove(sb.Length - 1, 1);
 								values.Add(data[0], sb.ToString());
+							} else {
+								values.Add(data[0], valueStr);
 							}
 						}
 					} else if (data.Length == 1) {
@@ -203,90 +209,112 @@ namespace Doge {
 			}
 
 			public string Generate(Dictionary<string, string> tempDict, int index) {
-				var sb = new StringBuilder();
+				var contentSb = new StringBuilder();
+				if (values.ContainsKey("exclude_exp")) {
+					var exTemp = tempDict["exclude_exp"];
+					var exStr = exTemp.Replace("$exp$", values["exclude_exp"]);
+					contentSb.Append(exStr);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("exclude_op")) {
+					var opTemp = tempDict["exclude_op"];
+					var opStr = opTemp.Replace("$op$", values["exclude_op"]);
+					contentSb.Append(opStr);
+					contentSb.Append('\n');
+				}
 				if (values.ContainsKey("+")) {
-					sb.Append(tempDict["begin_loop2"]);
-					sb.Append('\n');
+					contentSb.Append(tempDict["begin_loop2"]);
+					contentSb.Append('\n');
 				}
                 if (values.ContainsKey("<")) {
-					sb.Append(tempDict["begin_loop"]);
-					sb.Append('\n');
+					contentSb.Append(tempDict["begin_loop"]);
+					contentSb.Append('\n');
 				}
                 if (values.ContainsKey("*")) {
-					sb.Append(tempDict["begin_loop"]);
-					sb.Append('\n');
+					contentSb.Append(tempDict["begin_loop"]);
+					contentSb.Append('\n');
 				}
 				if (values.ContainsKey("parser")) {
 					var parserTemp = tempDict["parser"];
 					foreach (var parserStr in values["parser"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)) {
 						var itemStr = parserTemp.Replace("$name$", parserStr);
 						itemStr = itemStr.Replace("$index$", index.ToString());
-						sb.Append(itemStr);
-						sb.Append('\n');
+						contentSb.Append(itemStr);
+						contentSb.Append('\n');
 					}
 				}
-				if (values.ContainsKey("op")) {
-					var opTemp = tempDict["is_op"];
-					var opStr = opTemp.Replace("$index$", index.ToString());
-					opStr = opStr.Replace("$op$", values["op"]);
-					sb.Append(opStr);
-					sb.Append('\n');
-				}
-				if (values.ContainsKey("keyword")) {
-					var keywordTemp = tempDict["is_keyword"];
-					var keywordStr = keywordTemp.Replace("$index$", index.ToString());
-					keywordStr = keywordStr.Replace("$keyword$", values["keyword"]);
-					sb.Append(keywordStr);
-					sb.Append('\n');
-				}
-				if (values.ContainsKey("exp")) {
-					var expTemp = tempDict["is_exp"];
-					var expStr = expTemp.Replace("$index$", index.ToString());
-					expStr = expStr.Replace("$exp$", values["exp"]);
-					sb.Append(expStr);
-					sb.Append('\n');
-				}
-				if (values.ContainsKey("is_left")) {
-					var rightTemp = tempDict["is_left"];
-					var rightStr = rightTemp.Replace("$index$", index.ToString());
-					sb.Append(rightStr);
-					sb.Append('\n');
-				}
-				if (values.ContainsKey("is_right")) {
-					var rightTemp = tempDict["is_right"];
-					var rightStr = rightTemp.Replace("$index$", index.ToString());
-					sb.Append(rightStr);
-					sb.Append('\n');
-				}
-				if (values.ContainsKey("is_stat")) {
-				    var rightTemp = tempDict["is_stat"];
-		            var rightStr = rightTemp.Replace("$index$", index.ToString());
-				    sb.Append(rightStr);     
-				    sb.Append('\n');
-				}
-				if (values.ContainsKey(">")) {
-					sb.Replace("return false", "break");
-				}
-				if (values.ContainsKey(">")) {
-					sb.Append(tempDict["end_loop"]);
-					sb.Append('\n');
-				}
-				if (values.ContainsKey("?")) {
-                    sb.Replace("return false;", tempDict["move_pre"]);
-				}
-                sb.Append(tempDict["move_next"]);
-                sb.Append('\n');
-                if (values.ContainsKey("*")) {
-                    sb.Replace("return false", "break");
-                    sb.Append(tempDict["end_loop"]);
-					sb.Append('\n');
+				if (values.ContainsKey("*")) {
+					contentSb.Append(tempDict["missed_break"]);
+					contentSb.Append('\n');
 				}
 				if (values.ContainsKey("+")) {
-                    sb.Replace("return false", "break");
-                    sb.Append(tempDict["end_loop2"]);
-					sb.Append('\n');
+					contentSb.Append(tempDict["missed_break2"]);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("op")) {
+					var opTemp = tempDict["if_else"].Replace("$cond$", tempDict["is_op"]);
+					var opStr = opTemp.Replace("$index$", index.ToString());
+					opStr = opStr.Replace("$op$", values["op"]);
+					contentSb.Append(opStr);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("keyword")) {
+					var keywordTemp = tempDict["if_else"].Replace("$cond$", tempDict["is_keyword"]);
+					var keywordStr = keywordTemp.Replace("$index$", index.ToString());
+					keywordStr = keywordStr.Replace("$keyword$", values["keyword"]);
+					contentSb.Append(keywordStr);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("exp")) {
+					var expTemp = tempDict["if_else"].Replace("$cond$", tempDict["is_exp"]);
+					var expStr = expTemp.Replace("$index$", index.ToString());
+					expStr = expStr.Replace("$exp$", values["exp"]);
+					contentSb.Append(expStr);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("is_left")) {
+					var rightTemp = tempDict["if_else"].Replace("$cond$", tempDict["is_left"]);
+					var rightStr = rightTemp.Replace("$index$", index.ToString());
+					contentSb.Append(rightStr);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("is_right")) {
+					var rightTemp = tempDict["if_else"].Replace("$cond$", tempDict["is_right"]);
+					var rightStr = rightTemp.Replace("$index$", index.ToString());
+					contentSb.Append(rightStr);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("is_stat")) {
+				    var rightTemp = tempDict["if_else"].Replace("$cond$", tempDict["is_stat"]);
+		            var rightStr = rightTemp.Replace("$index$", index.ToString());
+				    contentSb.Append(rightStr);
+				    contentSb.Append('\n');
+				}
+				contentSb.Append(tempDict["move_next"]);
+				contentSb.Append('\n');
+				if (values.ContainsKey("?")) {
+					contentSb.Replace("$if_exp$", tempDict["is_missed"]);
+					contentSb.Append(tempDict["missed_back"]);
+					contentSb.Append('\n');
+				}
+                if (values.ContainsKey("*")) {
+					contentSb.Replace("$if_exp$", tempDict["break"]);
+                    contentSb.Append(tempDict["end_loop"]);
+					contentSb.Append('\n');
+				}
+				if (values.ContainsKey("+")) {
+					contentSb.Replace("$if_exp$", tempDict["break"]);
+                    contentSb.Append(tempDict["end_loop2"]);
+					contentSb.Append('\n');
                 }
-				return sb.ToString();
+				if (values.ContainsKey(">")) {
+					contentSb.Append(tempDict["end_loop"]);
+					contentSb.Append('\n');
+				}
+
+				contentSb.Replace("$if_exp$", tempDict["ret_false"]);
+				contentSb.Replace("$else_exp$", tempDict["ignored"]);
+				return contentSb.ToString();
 			}
 
 			public override string ToString() {

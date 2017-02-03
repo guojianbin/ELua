@@ -7,6 +7,7 @@ namespace ELua {
 	/// </summary>
 	public class FunctionSExpression : Expression {
 
+		public string[] argsList;
 		public WordExpression targetExp;
 		public WordExpression nameExp;
 		public Expression moduleExp;
@@ -17,7 +18,8 @@ namespace ELua {
 			debugInfo = list[position].debugInfo;
 			targetExp = (WordExpression)list[position + 1];
 			nameExp = (WordExpression)list[position + 3];
-            moduleExp = list[position + 6];
+			argsList = ((WordListExpression)list[position + 5]).ToParams();
+			moduleExp = list[position + 7];
         }
 
 		public override void Extract(SyntaxContext context) {
@@ -25,7 +27,7 @@ namespace ELua {
 		}
 
 		public override void Generate(ModuleContext context) {
-			var funcExp = new FunctionAExpression(context.NewUID(), moduleExp);
+			var funcExp = new FunctionAExpression(context.NewUID(), argsList, moduleExp);
 			var propExp = new PropertyExpression(targetExp, ParserHelper.Word2String(nameExp));
 			var bindExp = new BindExpression(propExp, funcExp);
 			bindExp.Generate(context);
@@ -36,7 +38,7 @@ namespace ELua {
 		}
 
 		public override string ToString() {
-			return string.Format("function {0}.{1}()\n{2}\nend", targetExp, nameExp, moduleExp);
+			return string.Format("function {0}.{1}({2})\n{3}\nend", targetExp, nameExp, argsList.FormatListString(), moduleExp);
 		}
 
 	}

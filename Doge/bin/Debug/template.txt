@@ -1,4 +1,4 @@
-﻿file == --[[
+﻿parser_file == --[[
 namespace ELua {
 
 	/// <summary>
@@ -11,12 +11,9 @@ namespace ELua {
 			var offset = 0;
 			var index = position;
 			var count = 0;
+			var isMissed = false;
 
 $body$
-			
-			context.Insert(position, ExpressionCreator.Create$name$(list, position, offset));
-			context.Remove(position + 1, offset);
-			return true;
 		}
 
 	}
@@ -24,7 +21,7 @@ $body$
 }
 ]]
 
-pool == --[[
+pool_file == --[[
 using System.Collections.Generic;
 
 namespace ELua {
@@ -92,7 +89,6 @@ move_next == --[[
 
 move_pre == --[[
 offset -= 1;
-				index = position + offset;
 ]]
 
 parser == --[[
@@ -105,40 +101,96 @@ pool_parser == --[[
 			ParserPools.Put$name$Parser(parser);
 ]]
 
-is_keyword == --[[
-			if (!ParserHelper.IsKeyword(list[index], "$keyword$")) {
+exclude == --[[
+			if (list[index].type == Expression.Type.$exp$) {
 				return false;
 			}
+]]
+
+exclude_exp == --[[
+			if (list[index].type == Expression.Type.$exp$) {
+				return false;
+			}
+]]
+
+exclude_op == --[[
+			if (ParserHelper.IsOperator(list[index], "$op$")) {
+				return false;
+			}
+]]
+
+if_else == --[[
+			if ($cond$) {
+$if_exp$
+			} else {
+$else_exp$
+			}
+]]
+
+is_missed == --[[
+				isMissed = true;
+				context.isMissed = true;
+]]
+
+missed_back == --[[
+			if (isMissed) {
+				offset -= 1;
+			}
+]]
+
+missed_break == --[[
+			if (context.isMissed) {
+				context.isMissed = false;
+				offset += 1;
+				index = position + offset;
+				break;
+			}
+]]
+
+missed_break2 == --[[
+			if (context.isMissed) {
+				context.isMissed = false;
+				offset += 1;
+				index = position + offset;
+				count += 1;
+				break;
+			}
+]]
+
+ret_false == --[[
+				return false;
+]]
+
+ignored == --[[
+				// ignored
+]]
+
+break == --[[
+				break;
+]]
+
+is_keyword == --[[
+!ParserHelper.IsKeyword(list[index], "$keyword$")
 ]]
 
 is_op == --[[
-			if (!ParserHelper.IsOperator(list[index], "$op$")) {
-				return false;
-			}
+!ParserHelper.IsOperator(list[index], "$op$")
 ]]
 
 is_exp == --[[
-			if (list[index].type != Expression.Type.$exp$) {
-				return false;
-			}
+list[index].type != Expression.Type.$exp$
 ]]
 
 is_stat == --[[
-			if (!list[index].isStatement) {
-				return false;
-			}
+!list[index].isStatement
 ]]
 
 is_left == --[[
-			if (!list[index].isLeftValue) {
-				return false;
-			}
+!list[index].isLeftValue
 ]]
 
 is_right == --[[
-			if (!list[index].isRightValue) {
-				return false;
-			}
+!list[index].isRightValue
 ]]
 
 begin_loop == --[[
@@ -160,4 +212,19 @@ end_loop2 == --[[
 			if (count == 0) {
 				return false;
 			}
+]]
+
+create_exp == --[[
+			context.Insert(position, ExpressionCreator.Create$name$(list, position, offset));
+			context.Remove(position + 1, offset);
+]]
+
+missed_ret == --[[
+			if (isMissed) {
+				return false;
+			}
+]]
+
+ret_true == --[[
+			return true;
 ]]

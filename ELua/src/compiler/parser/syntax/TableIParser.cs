@@ -3,7 +3,7 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public static class LeftExParser {
+	public static class TableIParser {
 
 		public static bool Parse(SyntaxContext context, int position) {
 			var list = context.list;
@@ -12,31 +12,30 @@ namespace ELua {
 			var count = 0;
 			var isMissed = false;
 
-			while (PropertyParser.Parse(context, index));
-			while (IndexParser.Parse(context, index));
-			if (!list[index].isLeftValue) {
+			if (!ParserHelper.IsOperator(list[index], "{")) {
 				return false;
 			} else {
 				// ignored
 			}
 			offset += 1;
 			index = position + offset;
-			if (!ParserHelper.IsOperator(list[index], ",")) {
-				isMissed = true;
-				context.isMissed = true;
+			while (KVList1Parser.Parse(context, index));
+			if (list[index].type != Expression.Type.KVList1) {
+				return false;
 			} else {
 				// ignored
 			}
 			offset += 1;
 			index = position + offset;
-			if (isMissed) {
-				offset -= 1;
+			if (!ParserHelper.IsOperator(list[index], "}")) {
+				return false;
+			} else {
+				// ignored
 			}
-			context.Insert(position, ExpressionCreator.CreateLeftEx(list, position, offset));
+			offset += 1;
+			index = position + offset;
+			context.Insert(position, ExpressionCreator.CreateTableI(list, position, offset));
 			context.Remove(position + 1, offset);
-			if (isMissed) {
-				return false;
-			}
 			return true;
 		}
 

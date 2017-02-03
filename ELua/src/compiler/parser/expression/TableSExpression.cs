@@ -5,32 +5,32 @@ namespace ELua {
 	/// <summary>
 	/// @author Easily
 	/// </summary>
-	public class ListExpression : Expression {
+	public class TableSExpression : Expression {
 
-		public Expression paramsExp;
+		public Expression itemsList;
 
-		public ListExpression(List<Expression> list, int position, int len) {
+		public TableSExpression(List<Expression> list, int position, int len) {
 			isRightValue = true;
-			type = Type.List;
+			type = Type.Table;
 			debugInfo = list[position].debugInfo;
-			paramsExp = list[position + 1];
+			itemsList = list[position + 1];
 		}
 
 		public override void Extract(SyntaxContext context) {
-            paramsExp.Extract(context);
+			itemsList.Extract(context);
         }
 
         public override void Generate(ModuleContext context) {
-			paramsExp.Generate(context);
-			context.Add(new ByteCode { opCode = ByteCode.OpCode.List });
+			itemsList.Generate(context);
+			context.Add(new ByteCode { opCode = ByteCode.OpCode.Table });
         }
 
         public override string GetDebugInfo() {
-			return DebugInfo.ToString(paramsExp);
+			return DebugInfo.ToString(itemsList);
 		}
 
 		public override string ToString() {
-			return string.Format("{{ {0} }}", paramsExp);
+			return string.Format("{{ {0} }}", itemsList);
 		}
 
 	}

@@ -4,3 +4,9 @@ C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Doge\bin\Debug\Doge.p
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Doge\obj\Debug\Doge.csprojResolveAssemblyReference.cache
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Doge\obj\Debug\Doge.exe
 C:\Users\Easily\Documents\Visual Studio 2015\Projects\ELua\Doge\obj\Debug\Doge.pdb
+d:\My Documents\Visual Studio\Repository\ELua\Doge\bin\Debug\Doge.exe.config
+d:\My Documents\Visual Studio\Repository\ELua\Doge\obj\Debug\Doge.exe
+d:\My Documents\Visual Studio\Repository\ELua\Doge\obj\Debug\Doge.pdb
+d:\My Documents\Visual Studio\Repository\ELua\Doge\bin\Debug\Doge.exe
+d:\My Documents\Visual Studio\Repository\ELua\Doge\bin\Debug\Doge.pdb
+d:\My Documents\Visual Studio\Repository\ELua\Doge\obj\Debug\Doge.csprojResolveAssemblyReference.cache

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ELua {
 
@@ -16,9 +15,9 @@ namespace ELua {
 			isStatement = true;
 			type = Type.ForEach;
 			debugInfo = list[position].debugInfo;
-			items1List = list.Skip(position + 1).TakeWhile(t => !ParserHelper.IsKeyword(t, "in")).Where(t => t.type == Type.Word).ToList();
-			items2List = list.Skip(position + items1List.Count * 2).TakeWhile(t => !ParserHelper.IsKeyword(t, "do")).Where(t => t.isRightValue).ToList();
-            moduleExp = (ModuleExpression)list[position + 1 + items1List.Count * 2 + items2List.Count * 2];
+			items1List = ((LeftList2Expression)list[position + 1]).itemsList;
+			items2List = ((RightList2Expression)list[position + 3]).itemsList;
+			moduleExp = ((ModuleExpression)list[position + 5]);
         }
 
         public override void Extract(SyntaxContext context) {
@@ -34,12 +33,14 @@ namespace ELua {
 			var varExp = new WordExpression(context.NewUID(), debugInfo);
 			var initExp = new DefineNExpression(new List<Expression> { funcExp, statExp, varExp }, items2List);
 			var whileExp = new LoopExpression(moduleExp);
-			var callExp = new UnpackExpression(new CallNExpression(funcExp, new List<Expression> { statExp, varExp }));
-			var nextExp = new DefineNExpression(items1List, new List<Expression> { callExp });
+            var retExp = new WordExpression(context.NewUID(), debugInfo);
+            var retDef = new DefineExpression(retExp, new CallExpression(funcExp, new RightList1Expression(new List<Expression> { statExp, varExp })));
+            var callExp = new UnpackExpression(retExp);
+            var nextExp = new BindNExpression(new LeftList2Expression(items1List), new RightList2Expression(new List<Expression> { callExp }));
             var rebindExp  = new BindExpression(varExp, items1List[0]);
 			var breakExp = new BreakExpression();
 			var exitExp = new IfExpression(new EqualExpression(varExp, new NilExpression()), new ModuleExpression(new List<Expression> { breakExp }));
-			moduleExp.itemsList.InsertRange(0, new Expression[] { nextExp, rebindExp, exitExp });
+			moduleExp.itemsList.InsertRange(0, new Expression[] { retDef, nextExp, rebindExp, exitExp });
 			initExp.Generate(context);
 			whileExp.Generate(context);
 		}
