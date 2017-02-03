@@ -37,11 +37,24 @@ namespace ELua {
 		public static void OnTimer(object status) {
 			logger.WriteLine(string.Empty);
 			logger.WriteLine("[output]");
-			vm.Call(file);
-			logger.Flush();
+            var sw = Stopwatch.StartNew();
+            vm.Call(file);
+            logger.WriteLine(string.Format("execute {0}ms", sw.ElapsedMilliseconds));
+            logger.Flush();
+            sw.Restart();
+		    Console.WriteLine(Fab(10000));
+            logger.WriteLine(string.Format("execute {0}ms", sw.ElapsedMilliseconds));
 //			timer.Change(200, Timeout.Infinite);
-			GC.Collect();
-		}
+//			GC.Collect();
+        }
+
+	    public static int Fab(int n) {
+	        if (n <= 1) {
+	            return n;
+	        } else {
+	            return n + Fab(n - 1);
+	        }
+	    }
 
 	}
 

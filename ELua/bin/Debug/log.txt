@@ -1,219 +1,86 @@
 [source]
-function unpack(list, i)
-if i == nil then
-return unpack(list, 1)
+function fab(n)
+if n <= 1 then
+return n
 else
-if i <= len(list) then
-return list[i], unpack(list, i + 1)
+return n + fab(n - 1)
 end
 end
-end
-print(unpack({ 1, 2, 3 }))
-function test1()
-return 4, 5
-end
-function test2()
-return 1, 2, 3, test1()
-end
-print(test2())
-for i=1,10 do
-print(i)
-end
+print(fab(10000))
 
 [extract]
-function unpack(list, i)
-local ~16 = i == nil
+function fab(n)
+local ~16 = n <= 1
 if ~16 then
-local ~17 = unpack(list, 1)
-return unpack(~17)
+return n
 else
-local ~18 = len(list)
-local ~19 = i <= unpack(~18)
-if ~19 then
-local ~20 = list[i]
-local ~21 = i + 1
-local ~22 = unpack(list, ~21)
-return ~20, unpack(~22)
+local ~17 = n - 1
+local ~18 = fab(~17)
+local ~19 = n + unpack(~18)
+return ~19
 end
 end
-end
-local ~23 = { 1, 2, 3 }
-local ~24 = unpack(~23)
-print(unpack(~24))
-function test1()
-return 4, 5
-end
-function test2()
-local ~25 = test1()
-return 1, 2, 3, unpack(~25)
-end
-local ~26 = test2()
-print(unpack(~26))
-for i=1,10 do
-print(i)
-end
-complie 79ms
+local ~20 = fab(10000)
+print(unpack(~20))
+complie 61ms
 
-[unpack]
-0       Push         nil
-1       Var          i
-2       Equal
+[fab]
+0       Push         1
+1       Var          n
+2       LessEqual
 3       Define       ~16
 4       Bind
 5       Clear
 6       Var          ~16
-7       JumpNot      ~28:20
-8       Push         1
-9       Var          list
-10      Var          unpack
-11      Call
-12      Define       ~17
-13      Bind
-14      Clear
-15      Var          ~17
-16      Unpack
-17      Return
+7       JumpNot      ~22:12
+8       Var          n
+9       Return
+10      Clear
+11      Jump         ~23:35
+12      Label        ~22:12
+13      Push         1
+14      Var          n
+15      Subtract
+16      Define       ~17
+17      Bind
 18      Clear
-19      Jump         ~29:62
-20      Label        ~28:20
-21      Var          list
-22      Var          len
-23      Call
-24      Define       ~18
-25      Bind
-26      Clear
-27      Var          ~18
-28      Unpack
-29      Var          i
-30      LessEqual
-31      Define       ~19
-32      Bind
-33      Clear
-34      Var          ~19
-35      JumpNot      ~33:60
-36      Var          i
-37      Var          list
-38      Index
-39      Define       ~20
-40      Bind
-41      Clear
-42      Push         1
-43      Var          i
-44      Add
-45      Define       ~21
-46      Bind
-47      Clear
-48      Var          ~21
-49      Var          list
-50      Var          unpack
-51      Call
-52      Define       ~22
-53      Bind
-54      Clear
-55      Var          ~22
-56      Unpack
-57      Var          ~20
-58      Return
-59      Clear
-60      Label        ~33:60
-61      Clear
-62      Label        ~29:62
-63      Clear
-
-[test1]
-0       Push         5
-1       Push         4
-2       Return
-3       Clear
-
-[test2]
-0       Var          test1
-1       Call
-2       Define       ~25
-3       Bind
-4       Clear
-5       Var          ~25
-6       Unpack
-7       Push         3
-8       Push         2
-9       Push         1
-10      Return
-11      Clear
+19      Var          ~17
+20      Var          fab
+21      Call
+22      Define       ~18
+23      Bind
+24      Clear
+25      Var          ~18
+26      Unpack
+27      Var          n
+28      Add
+29      Define       ~19
+30      Bind
+31      Clear
+32      Var          ~19
+33      Return
+34      Clear
+35      Label        ~23:35
+36      Clear
 
 [test.lua]
-0       Function     unpack
-1       Var          unpack
+0       Function     fab
+1       Var          fab
 2       Bind
 3       Clear
-4       Push         3
-5       Push         2
-6       Push         1
-7       List
-8       Define       ~23
-9       Bind
-10      Clear
-11      Var          ~23
-12      Var          unpack
+4       Push         10000
+5       Var          fab
+6       Call
+7       Define       ~20
+8       Bind
+9       Clear
+10      Var          ~20
+11      Unpack
+12      Var          print
 13      Call
-14      Define       ~24
-15      Bind
-16      Clear
-17      Var          ~24
-18      Unpack
-19      Var          print
-20      Call
-21      Clear
-22      Function     test1
-23      Var          test1
-24      Bind
-25      Clear
-26      Function     test2
-27      Var          test2
-28      Bind
-29      Clear
-30      Var          test2
-31      Call
-32      Define       ~26
-33      Bind
-34      Clear
-35      Var          ~26
-36      Unpack
-37      Var          print
-38      Call
-39      Clear
-40      Push         1
-41      Var          i
-42      Bind
-43      Clear
-44      Label        ~42:44
-45      Push         10
-46      Var          i
-47      Greater
-48      JumpIf       ~45:60
-49      Clear
-50      Var          i
-51      Var          print
-52      Call
-53      Clear
-54      Push         1
-55      Var          i
-56      Add
-57      Var          i
-58      Bind
-59      Jump         ~42:44
-60      Label        ~45:60
-61      Clear
+14      Clear
 
 [output]
-1, 2, 3
-1, 2, 3, 4, 5
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+5.00029E+07
+execute 110ms
+execute 0ms

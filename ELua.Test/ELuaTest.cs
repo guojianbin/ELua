@@ -507,24 +507,24 @@ for i,v in ipairs(arr) do
 	print(i,v)
 end
 
-function values(tb)
+function values(t)
      local i = 0
      return function ()
           i = i + 1
-          return tb[i]
+          return t[i]
      end
 end
 
-local testTb = {10, 20, 30}
-for value in values(testTb) do
+local t = {10, 20, 30}
+for value in values(t) do
      print(value)
 end
 
-testTb[1] = 100
-testTb[2] = 200
-testTb[3] = 300
+t[1] = 100
+t[2] = 200
+t[3] = 300
 
-for value in values(testTb) do
+for value in values(t) do
      print(value)
 end
 ";
