@@ -12,7 +12,7 @@ namespace Doge {
 		public static readonly Regex defReg = new Regex(@"\$(\w*?)\$");
 		public const string syntaxRoot = "../../../ELua/src/compiler/parser/syntax";
 
-		public static void Main() {
+		public static void Main2() {
 			var syntaxStr = File.ReadAllText("syntax.txt");
 			Console.WriteLine(syntaxStr);
 			var defDict = ParseDef(syntaxStr);

@@ -1,0 +1,88 @@
+parser_file == --[[
+namespace Doge {
+
+    /// <summary>
+    /// @author Easily
+    /// </summary>
+    public class Parser {
+
+$parser_list$
+
+    }
+
+}
+]]
+
+parser_func == --[[
+		public static string Parse_$name$(string exprLis, int position) {
+$body$
+		}
+]]
+
+move_next == --[[
+			offset += 1;
+			index = position + offset;
+]]
+
+move_pre == --[[
+			offset -= 1;
+			index = position + offset;
+]]
+
+parser == --[[
+			while ($name$Parser.Parse(context, index));
+]]
+
+parser1 == --[[
+			$name$Parser.Parse(context, index);
+]]
+
+pool_parser == --[[
+			parser = ParserPools.Get$name$Parser();
+			while (parser.Parse(context, index));
+			ParserPools.Put$name$Parser(parser);
+]]
+
+is_keyword == --[[
+			if (!ParserHelper.IsKeyword(list[index], "$keyword$")) {
+				return false;
+			}
+]]
+
+is_op == --[[
+			if (!ParserHelper.IsOperator(list[index], "$op$")) {
+				return false;
+			}
+]]
+
+is_exp == --[[
+			if (list[index].type != Expression.Type.$exp$) {
+				return false;
+			}
+]]
+
+is_stat == --[[
+			if (!list[index].isStatement) {
+				return false;
+			}
+]]
+
+is_left == --[[
+			if (!list[index].isLeftValue) {
+				return false;
+			}
+]]
+
+is_right == --[[
+			if (!list[index].isRightValue) {
+				return false;
+			}
+]]
+
+begin_loop == --[[
+			while (true) {
+]]
+
+end_loop == --[[
+			}
+]]
